@@ -1,6 +1,5 @@
+import React, { Component } from "react";
 import { Grid, CardContent } from "@material-ui/core";
-
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,6 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button, Card } from "@material-ui/core";
+
+import { HashRouter as Router, Route, Link, Redirect } from "react-router-dom";
+
 //import Gmap from "../../public/Gmap.png";
 //import BerberMahmut from "../../public/berberMahmut.jpg";
 const useStyles = makeStyles({
@@ -30,7 +32,12 @@ const sample = [
     "Saç",
     "30min",
     "15tl",
-    <Button variant="outlined" color="secondary" size="small">
+    <Button
+      variant="outlined"
+      color="secondary"
+      size="small"
+      onClick={() => {}}
+    >
       Seç
     </Button>
   ],
@@ -67,7 +74,7 @@ for (let i = 0; i < sample.length; i += 1) {
 //   createData("Gingerbread", 356, 16.0, 49, 3.9)
 // ];
 
-function SimpleTable() {
+function SimpleTable({ updateState }) {
   const classes = useStyles();
 
   return (
@@ -89,7 +96,24 @@ function SimpleTable() {
               </TableCell>
               <TableCell align="right">{row.time}</TableCell>
               <TableCell align="right">{row.price}</TableCell>
-              <TableCell align="right">{row.button}</TableCell>
+              <TableCell
+                align="right"
+                onClick={() => {
+                  console.log(row.name, row.id);
+                  updateState({ selectedService: row.id });
+                }}
+              >
+                <Link
+                  to={{
+                    pathname: "/reservation",
+                    state: {
+                      selectedService: row.id
+                    }
+                  }}
+                >
+                  {row.button}
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -135,126 +159,157 @@ const ClocksTable = () => {
   );
 };
 
-const BarberDetail = () => {
-  const BerberMahmut = "";
-  const Gmap = "";
-  return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      spacing={0}
-    >
-      <Grid item container xs={9}>
-        <Grid
-          item
-          xs={12}
-          style={{
-            backgroundColor: "aqua",
-            height: "350px",
-            marginBottom: "5em"
-          }}
-        >
-          <img
-            style={{ height: "100%", width: "100%" }}
-            src={BerberMahmut}
-          ></img>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={7}
-          style={{
-            height: "auto",
-            paddingRight: "1em",
-            paddingTop: "1em"
-          }}
-        >
-          <SimpleTable></SimpleTable>
-          <SimpleTable></SimpleTable>
-          <SimpleTable></SimpleTable>
-          <SimpleTable></SimpleTable>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={5}
-          style={{
-            height: "auto",
-            overflow: "hidden"
-          }}
-        >
-          <Grid imte x={12}>
-            <div style={{ padding: "1em" }}>
-              <Card
-                style={{
-                  boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.50)",
-                  marginBottom: "2em"
-                }}
-              >
-                <CardContent>
-                  <Grid container>
-                    <Grid
-                      item
-                      container
-                      xs={12}
-                      style={{
-                        marginBottom: "1em",
-                        paddingBottom: "1em",
-                        borderBottom: "1px solid #e2e2e2"
-                      }}
-                    >
-                      <Grid item xs={4} style={{}}>
-                        <span>Hakkında:</span>
-                      </Grid>
-                      <Grid item xs={8} style={{}}>
-                        acıklamaasd asd asşldk asd as ubrap rakip olarak bul
-                        sdfas
-                      </Grid>
-                    </Grid>
+const BerberMahmut = "";
+const Gmap = "";
+class BarberDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedService: false
+    };
+    this.canChangeSlide = true;
+  }
 
-                    <Grid
-                      item
-                      container
-                      xs={12}
-                      style={{
-                        marginBottom: "1em",
-                        paddingBottom: "1em",
-                        borderBottom: "1px solid #e2e2e2"
-                      }}
-                    >
-                      <Grid item xs={4} style={{ marginTop: "1em" }}>
-                        Çalışma Saatleri:
-                      </Grid>
-                      <Grid item xs={8} style={{}}>
-                        <ClocksTable></ClocksTable>
-                      </Grid>
-                    </Grid>
+  _updateState = state => {
+    this.setState({ ...state });
+  };
+  render() {
+    console.log(this.state.selectedService);
 
-                    <Grid
-                      item
-                      container
-                      xs={12}
-                      style={{ marginBottom: "1em" }}
-                    >
-                      <Grid item xs={4} style={{}}>
-                        Adres Tarifi:
+    if (!this.state.selectedService) {
+      return (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          spacing={0}
+        >
+          <Grid item container xs={9}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                backgroundColor: "aqua",
+                height: "350px",
+                marginBottom: "5em"
+              }}
+            >
+              <img
+                style={{ height: "100%", width: "100%" }}
+                src={BerberMahmut}
+              ></img>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={7}
+              style={{
+                height: "auto",
+                paddingRight: "1em",
+                paddingTop: "1em"
+              }}
+            >
+              <SimpleTable updateState={this._updateState}></SimpleTable>
+              <SimpleTable></SimpleTable>
+              <SimpleTable></SimpleTable>
+              <SimpleTable></SimpleTable>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={5}
+              style={{
+                height: "auto",
+                overflow: "hidden"
+              }}
+            >
+              <Grid imte x={12}>
+                <div style={{ padding: "1em" }}>
+                  <Card
+                    style={{
+                      boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.50)",
+                      marginBottom: "2em"
+                    }}
+                  >
+                    <CardContent>
+                      <Grid container>
+                        <Grid
+                          item
+                          container
+                          xs={12}
+                          style={{
+                            marginBottom: "1em",
+                            paddingBottom: "1em",
+                            borderBottom: "1px solid #e2e2e2"
+                          }}
+                        >
+                          <Grid item xs={4} style={{}}>
+                            <span>Hakkında:</span>
+                          </Grid>
+                          <Grid item xs={8} style={{}}>
+                            acıklamaasd asd asşldk asd as ubrap rakip olarak bul
+                            sdfas
+                          </Grid>
+                        </Grid>
+
+                        <Grid
+                          item
+                          container
+                          xs={12}
+                          style={{
+                            marginBottom: "1em",
+                            paddingBottom: "1em",
+                            borderBottom: "1px solid #e2e2e2"
+                          }}
+                        >
+                          <Grid item xs={4} style={{ marginTop: "1em" }}>
+                            Çalışma Saatleri:
+                          </Grid>
+                          <Grid item xs={8} style={{}}>
+                            <ClocksTable></ClocksTable>
+                          </Grid>
+                        </Grid>
+
+                        <Grid
+                          item
+                          container
+                          xs={12}
+                          style={{ marginBottom: "1em" }}
+                        >
+                          <Grid item xs={4} style={{}}>
+                            Adres Tarifi:
+                          </Grid>
+                          <Grid item xs={8} style={{}}>
+                            Serdivan Vatan Bilgisayar yanı
+                          </Grid>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={8} style={{}}>
-                        Serdivan Vatan Bilgisayar yanı
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Grid>
+              <img
+                style={{ overflow: "hidden", height: "450px" }}
+                src={Gmap}
+              ></img>
+            </Grid>
           </Grid>
-          <img style={{ overflow: "hidden", height: "450px" }} src={Gmap}></img>
         </Grid>
-      </Grid>
-    </Grid>
-  );
-};
+      );
+    }
+    // else {
+    //   return (
+    //     <Router>
+    //       <Route
+    //         exact
+    //         path="/barberdetail"
+    //         component={() => <Redirect to="/anan" />}
+    //       />
+    //     </Router>
+    //   );
+    // }
+  }
+}
 
 export default BarberDetail;

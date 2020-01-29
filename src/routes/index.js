@@ -8,6 +8,7 @@ import Barbers from "../Pages/Barbers/Barbers";
 import Citys from "../Pages/Citys/Citys";
 import Home from "../Pages/Home/Home";
 import BarberDetail from "../Pages/BarberDetail/BarberDetail";
+import Reservation from "../Pages/Reservation/Reservation";
 //import Dashboard from "../pages/Dashboard";
 //import Profile from "../pages/Profile";
 
@@ -19,6 +20,7 @@ export default function Routes() {
       <Route path="/barbers" exact component={Barbers} />
       <Route path="/barberdetail" component={BarberDetail} />
       <Route path="/citys" component={Citys} isPrivate />
+      <Route path="/reservation" component={Reservation} />
       <Route path="/profile" component={"Profile"} isPrivate />
 
       {/* redirect user to SignIn page if route does not exist and user is not authenticated */}
