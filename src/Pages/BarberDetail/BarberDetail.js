@@ -107,7 +107,10 @@ function SimpleTable({ updateState }) {
                   to={{
                     pathname: "/reservation",
                     state: {
-                      selectedService: row.id
+                      selectedServiceId: row.id,
+                      selectedServiceName: row.name,
+                      selectedServicePrice: row.price,
+                      selectedServiceTime: row.time
                     }
                   }}
                 >
