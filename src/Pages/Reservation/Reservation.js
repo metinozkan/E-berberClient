@@ -23,6 +23,15 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+
+//servicesList
+import { ServicesList } from "../../Components/ServicesList";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,7 +51,9 @@ function getSteps() {
 function getStepContent(step, selectedService) {
   switch (step) {
     case 0:
-      return <Services selectedService={selectedService}></Services>;
+      return (
+        <ServiceSection selectedService={selectedService}></ServiceSection>
+      );
     case 1:
       return <Calender />;
     case 2:
@@ -52,7 +63,7 @@ function getStepContent(step, selectedService) {
   }
 }
 
-const Services = ({ selectedService }) => {
+const ServiceSection = ({ selectedService }) => {
   const [state, setState] = React.useState({
     age: "",
     name: "hai"
@@ -110,23 +121,7 @@ const Services = ({ selectedService }) => {
           </div>
         </CardContent>
       </Card>
-
-      <Button
-        variant="outlined"
-        color="primary"
-        style={{
-          marginTop: "2em",
-          marginBottom: "2em",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Icon fontSize="small" style={{ marginRight: ".5em" }}>
-          add_circle
-        </Icon>{" "}
-        Babacıımmmmmmmm hizmet eklee
-      </Button>
+      <ServicesListModal></ServicesListModal>
     </div>
   );
 };
@@ -137,6 +132,71 @@ const Calender = ({}) => {
 
 const Identification = ({}) => {
   return <div>Üyelik ::)</div>;
+};
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const ServicesListModal = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button
+        variant="outlined"
+        color="primary"
+        style={{
+          marginTop: "2em",
+          marginBottom: "2em",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+        onClick={handleClickOpen}
+      >
+        <Icon fontSize="small" style={{ marginRight: ".5em" }}>
+          add_circle
+        </Icon>
+        Babacıımmmmmmmm hizmet eklee
+      </Button>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
+          </DialogContentText>
+          <ServicesList></ServicesList>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 };
 
 class Reservation extends Component {
