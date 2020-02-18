@@ -29,6 +29,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import HourCalender from "../../Components/HourCalender";
 
 //servicesList
 import { ServicesList } from "../../Components/ServicesList";
@@ -127,7 +128,7 @@ const ServiceSection = ({ selectedService }) => {
 };
 
 const Calender = ({}) => {
-  return <div>Takvim</div>;
+  return <HourCalender></HourCalender>;
 };
 
 const Identification = ({}) => {
