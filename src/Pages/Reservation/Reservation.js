@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -30,6 +30,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import HourCalender from "../../Components/HourCalender";
+import TextField from "@material-ui/core/TextField";
+
+//signup Login
+import Signup from "../Signup/Signup";
+import Login from "../Login/Login";
+//ReservationDetailCard
+import ReservationDetailCard from "../../Components/ReservationDetailCard/ReservationDetailCard";
 
 //servicesList
 import { ServicesList } from "../../Components/ServicesList";
@@ -44,12 +51,12 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary
   }
 }));
-
+const isLogin = false;
 function getSteps() {
   return ["Hizmet ", "Tarih ", "Randevu al"];
 }
 
-function getStepContent(step, selectedService) {
+const getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
   switch (step) {
     case 0:
       return (
@@ -58,12 +65,55 @@ function getStepContent(step, selectedService) {
     case 1:
       return <Calender />;
     case 2:
-      return <Identification></Identification>;
+      return isLogin == true ? (
+        <div>Randevu bilgileri</div>
+      ) : selectLogin == false ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center"
+          }}
+        >
+          <div>
+            Üye girişi yapmak için{" "}
+            <u
+              onClick={() => {
+                setSelectLogin(true);
+              }}
+            >
+              Tıklayınız
+            </u>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center"
+            }}
+          >
+            <StepperEndSign></StepperEndSign>
+            <ReservationDetailCard />
+          </div>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%"
+          }}
+        >
+          <StepperEndLogin></StepperEndLogin>
+          <ReservationDetailCard />
+        </div>
+      );
     default:
       return "Unknown step";
   }
-}
-
+};
 const ServiceSection = ({ selectedService }) => {
   const [state, setState] = React.useState({
     age: "",
@@ -132,7 +182,7 @@ const Calender = ({}) => {
 };
 
 const Identification = ({}) => {
-  return <div>Üyelik ::)</div>;
+  return <div>Üyelik ::) veya randevunun son hali gözükecek </div>;
 };
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -199,15 +249,143 @@ const ServicesListModal = () => {
     </div>
   );
 };
-
+const StepperEndLogin = () => {
+  return (
+    <Grid
+      container
+      direction="row"
+      justify="flex-start"
+      alignItems="flex-start"
+    >
+      <Grid item xs={10}>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={12}>
+            <Typography
+              variant="h5"
+              component="h4"
+              style={{ marginBottom: ".2em" }}
+            >
+              Giriş Yap
+            </Typography>
+            <TextField
+              id="standard-basic"
+              placeholder="E-Posta"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+            <TextField
+              id="standard-basic"
+              placeholder="Şifre"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="flex-end"
+          >
+            <Button
+              color="secondary"
+              // endIcon={<Icon>send</Icon>}
+            >
+              şifremi unuttum
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              // endIcon={<Icon>send</Icon>}
+            >
+              Giriş Yap
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+const StepperEndSign = () => {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      <Grid item xs={12}>
+        <Typography
+          variant="h5"
+          component="h4"
+          style={{ marginBottom: ".2em" }}
+        >
+          Üye Ol
+        </Typography>
+        <Grid container direction="row" justify="center" alignItems="center">
+          <Grid item xs={6}>
+            <TextField
+              id="standard-basic"
+              placeholder="İsim"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+            <TextField
+              id="standard-basic"
+              placeholder="Soyisim"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id="standard-basic"
+              placeholder="E-posta"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+            <TextField
+              id="standard-basic"
+              placeholder="Şifre"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "1em" }}
+            ></TextField>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="flex-end"
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              // endIcon={<Icon>send</Icon>}
+            >
+              Kaydol
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 class Reservation extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLogin: false
+    };
   }
   VerticalLinearStepper = ({ selectedService }) => {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(2);
+    const [selectLogin, setSelectLogin] = React.useState(true);
     const steps = getSteps();
 
     const handleNext = () => {
@@ -230,7 +408,12 @@ class Reservation extends Component {
               <StepLabel>{label}</StepLabel>
               <StepContent>
                 <Typography>
-                  {getStepContent(index, selectedService)}
+                  {getStepContent(
+                    index,
+                    selectedService,
+                    setSelectLogin,
+                    selectLogin
+                  )}
                 </Typography>
                 <div className={classes.actionsContainer}>
                   <div>
@@ -279,7 +462,8 @@ class Reservation extends Component {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          height: "100%"
+          height: "100%",
+          marginTop: "1em"
         }}
       >
         <Grid

@@ -15,24 +15,26 @@ const dAys = [
   { day: "18/02 cars", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 pers", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 cuma", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cumrts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "18/02 cmrts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 pzts 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 salı 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 cars 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 pers 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 cuma 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cumrts", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "18/02 cmrts", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
   { day: "18/02 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] }
 ];
 class HourCalender extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      countShowDays: 0
+      countShowDays: 0,
+      selectedDate: null
     };
   }
   render() {
+    console.log(this.state.selectedDate);
     return (
       <Grid
         container
@@ -84,7 +86,9 @@ class HourCalender extends Component {
                   margin: ".5em"
                 }}
               >
-                {x.day}
+                <div style={{ fontSize: "20px", fontWeight: "bold" }}>
+                  {x.day}
+                </div>
                 <Grid
                   item
                   xs={12}
@@ -96,7 +100,16 @@ class HourCalender extends Component {
                   }}
                 >
                   {x.emptyHour.map(h => (
-                    <div style={{ padding: ".5em" }}>{h}</div>
+                    <div
+                      style={{ padding: ".5em", cursor: "pointer" }}
+                      onClick={() => {
+                        this.setState({
+                          selectedDate: { day: x.day, hour: h }
+                        });
+                      }}
+                    >
+                      {h}
+                    </div>
                   ))}
                 </Grid>
               </Grid>

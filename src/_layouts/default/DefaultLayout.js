@@ -143,10 +143,19 @@ const DefaultLayout = props => {
             )}
           </Toolbar>
         </AppBar>
-        <div style={{ height: "100%" }}>
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
           {props.children}
-          <Footer />
         </div>
+        <Footer />
       </div>
     </>
   );
