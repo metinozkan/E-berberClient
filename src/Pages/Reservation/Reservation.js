@@ -33,10 +33,10 @@ import HourCalender from "../../Components/HourCalender";
 import TextField from "@material-ui/core/TextField";
 
 //signup Login
-import Signup from "../Signup/Signup";
-import Login from "../Login/Login";
+import StepperEndSign from "../../Components/Reservation/StepperEndSign";
+import StepperEndLogin from "../../Components/Reservation/StepperEndLogin";
 //ReservationDetailCard
-import ReservationDetailCard from "../../Components/ReservationDetailCard/ReservationDetailCard";
+import ReservationDetailCard from "../../Components/Reservation/ReservationDetailCard";
 
 //servicesList
 import { ServicesList } from "../../Components/ServicesList";
@@ -93,7 +93,6 @@ const getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
             }}
           >
             <StepperEndSign></StepperEndSign>
-            <ReservationDetailCard />
           </div>
         </div>
       ) : (
@@ -249,132 +248,7 @@ const ServicesListModal = () => {
     </div>
   );
 };
-const StepperEndLogin = () => {
-  return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="flex-start"
-    >
-      <Grid item xs={10}>
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Grid item xs={12}>
-            <Typography
-              variant="h5"
-              component="h4"
-              style={{ marginBottom: ".2em" }}
-            >
-              Giriş Yap
-            </Typography>
-            <TextField
-              id="standard-basic"
-              placeholder="E-Posta"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-            <TextField
-              id="standard-basic"
-              placeholder="Şifre"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-          </Grid>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="flex-end"
-          >
-            <Button
-              color="secondary"
-              // endIcon={<Icon>send</Icon>}
-            >
-              şifremi unuttum
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              // endIcon={<Icon>send</Icon>}
-            >
-              Giriş Yap
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
-const StepperEndSign = () => {
-  return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs={12}>
-        <Typography
-          variant="h5"
-          component="h4"
-          style={{ marginBottom: ".2em" }}
-        >
-          Üye Ol
-        </Typography>
-        <Grid container direction="row" justify="center" alignItems="center">
-          <Grid item xs={6}>
-            <TextField
-              id="standard-basic"
-              placeholder="İsim"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-            <TextField
-              id="standard-basic"
-              placeholder="Soyisim"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="standard-basic"
-              placeholder="E-posta"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-            <TextField
-              id="standard-basic"
-              placeholder="Şifre"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-          </Grid>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="flex-end"
-          >
-            <Button
-              variant="contained"
-              color="secondary"
-              // endIcon={<Icon>send</Icon>}
-            >
-              Kaydol
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
+
 class Reservation extends Component {
   constructor(props) {
     super(props);
@@ -384,8 +258,8 @@ class Reservation extends Component {
   }
   VerticalLinearStepper = ({ selectedService }) => {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(2);
-    const [selectLogin, setSelectLogin] = React.useState(true);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [selectLogin, setSelectLogin] = React.useState(false);
     const steps = getSteps();
 
     const handleNext = () => {
@@ -454,7 +328,8 @@ class Reservation extends Component {
     console.log("props", this.props.location.state);
     const selectedService = this.props.location.state;
     return (
-      <div
+      <Grid
+        container
         style={{
           flexGrow: 1,
           display: "flex",
@@ -462,29 +337,39 @@ class Reservation extends Component {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          height: "100%",
-          marginTop: "1em"
+          height: "100%"
         }}
       >
         <Grid
-          container
+          item
+          xs={8}
           style={{
-            flexGrow: 1,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%"
+            alignItems: "flex-start"
           }}
         >
-          <Grid item xs={12} sm={10} md={8}>
+          <Grid item xs={8}>
+            <ReservationDetailCard></ReservationDetailCard>
             <this.VerticalLinearStepper
               selectedService={selectedService}
             ></this.VerticalLinearStepper>
           </Grid>
+          {/* <Grid
+            item
+            xs={4}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <ReservationDetailCard></ReservationDetailCard>
+          </Grid> */}
         </Grid>
-      </div>
+      </Grid>
     );
   }
 }
