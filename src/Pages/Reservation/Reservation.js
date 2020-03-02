@@ -97,7 +97,7 @@ const getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
 const CalenderOrDetail = ({}) => {
   return <HourCalender></HourCalender>;
 };
-const ServiceSectionOrDetail = ({ selectedService, switchSelect }) => {
+const ServiceSectionOrDetail = ({ selectedService, switchSelect = 1 }) => {
   return switchSelect == 1 ? (
     <ServiceSection selectedService={selectedService}></ServiceSection>
   ) : (
@@ -108,78 +108,39 @@ class Reservation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false
+      isLogin: false,
+      stepperActiveStep: 0,
+      stepperSelectLogin: false
     };
   }
-  VerticalLinearStepper = ({ selectedService }) => {
-    const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [selectLogin, setSelectLogin] = React.useState(false);
-    const steps = getSteps();
 
-    const handleNext = () => {
-      setActiveStep(prevActiveStep => prevActiveStep + 1);
-    };
+  setActiveStep = step => {
+    this.setState({
+      stepperActiveStep: step
+    });
+  };
+  setSelectLogin = () => {
+    this.setState({
+      stepperSelectLogin: !this.state.stepperSelectLogin
+    });
+  };
 
-    const handleBack = () => {
-      setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
+  handleNext = () => {
+    this.setActiveStep(this.state.stepperActiveStep + 1);
+  };
 
-    const handleReset = () => {
-      setActiveStep(0);
-    };
+  handleBack = () => {
+    this.setActiveStep(this.state.stepperActiveStep - 1);
+  };
 
-    return (
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical">
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-              <StepContent>
-                <Typography>
-                  {getStepContent(
-                    index,
-                    selectedService,
-                    setSelectLogin,
-                    selectLogin
-                  )}
-                </Typography>
-                <div className={classes.actionsContainer}>
-                  <div>
-                    <Button
-                      disabled={activeStep === 0}
-                      onClick={handleBack}
-                      className={classes.button}
-                    >
-                      Back
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                    </Button>
-                  </div>
-                </div>
-              </StepContent>
-            </Step>
-          ))}
-        </Stepper>
-        {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </Paper>
-        )}
-      </div>
-    );
+  handleReset = () => {
+    this.setActiveStep(0);
   };
 
   render() {
+    const steps = getSteps();
+    const activeStep = this.state.stepperActiveStep;
+    const setSelectLogin = this.state.stepperSelectLogin;
     console.log("props", this.props.location.state);
     const selectedService = this.props.location.state;
     return (
@@ -207,9 +168,52 @@ class Reservation extends Component {
             alignItems: "flex-start"
           }}
         >
-          <this.VerticalLinearStepper
-            selectedService={selectedService}
-          ></this.VerticalLinearStepper>
+          <Stepper
+            activeStep={activeStep}
+            orientation="vertical"
+            style={{ width: "100%" }}
+          >
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+                <StepContent>
+                  <Typography>
+                    {getStepContent(
+                      index,
+                      selectedService,
+                      this.setSelectLogin,
+                      this.state.stepperSelectLogin
+                    )}
+                  </Typography>
+                  <div>
+                    <div>
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={this.handleBack}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleNext}
+                      >
+                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                      </Button>
+                    </div>
+                  </div>
+                </StepContent>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length && (
+            <Paper square elevation={0}>
+              <Typography>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Button onClick={this.handleReset}>Reset</Button>
+            </Paper>
+          )}
         </Grid>
       </Grid>
     );
