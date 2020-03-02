@@ -145,12 +145,8 @@ const DefaultLayout = props => {
         </AppBar>
         <div
           style={{
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center"
+            height: "100vh",
+            width: "100vw"
           }}
         >
           {props.children}

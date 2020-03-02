@@ -9,36 +9,48 @@ import CardContent from "@material-ui/core/CardContent";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
+
+import InputLabel from "@material-ui/core/InputLabel";
 
 import ServicesListModal from "./ServicesListModal";
 
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  }
+}));
+
+const worker = [
+  { id: 1, name: "Ahmet", surname: "Ağa" },
+  { id: 2, name: "Mehmet", surname: "Usta" },
+  { id: 3, name: "Zeki", surname: "Altınparmak" }
+];
 const ServiceSection = ({ selectedService }) => {
-  const [state, setState] = React.useState({
-    age: "",
-    name: "hai"
-  });
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value
-    });
+  const classes = useStyles();
+  const [workerId, setWorkerId] = React.useState();
+  const handleChange = event => {
+    setWorkerId(event.target.value);
   };
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const inputLabel = React.useRef(null);
   return (
-    <div>
+    <>
       <Card>
         <CardContent
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            paddingTop: "24px"
+            alignItems: "center"
+            //paddingTop: "24px"
           }}
         >
           <div>
@@ -49,25 +61,33 @@ const ServiceSection = ({ selectedService }) => {
 
           <div
             style={{
+              width: "30%",
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            <FormControl
-              className={"classes.formControl"}
-              style={{ width: "12em", marginRight: ".5em" }}
-            >
-              <Select
-                value={state.age}
-                onChange={handleChange}
-                className={"classes.selectEmpty"}
-                variant="outlined"
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel
+                ref={inputLabel}
+                id="demo-simple-select-outlined-label"
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                Çalışan
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={workerId}
+                onChange={handleChange}
+                labelWidth={labelWidth}
+              >
+                <MenuItem value="">
+                  <em>-</em>
+                </MenuItem>
+                {worker.map(w => (
+                  <MenuItem value={w.id}>{w.name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
             <Button variant="outlined" color="primary">
@@ -77,7 +97,7 @@ const ServiceSection = ({ selectedService }) => {
         </CardContent>
       </Card>
       <ServicesListModal></ServicesListModal>
-    </div>
+    </>
   );
 };
 export default ServiceSection;

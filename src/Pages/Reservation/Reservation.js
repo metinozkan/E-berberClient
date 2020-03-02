@@ -97,8 +97,12 @@ const getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
 const CalenderOrDetail = ({}) => {
   return <HourCalender></HourCalender>;
 };
-const ServiceSectionOrDetail = ({ selectedService }) => {
-  return <ServiceSection selectedService={selectedService}></ServiceSection>;
+const ServiceSectionOrDetail = ({ selectedService, switchSelect }) => {
+  return switchSelect == 1 ? (
+    <ServiceSection selectedService={selectedService}></ServiceSection>
+  ) : (
+    <ReservationDetailCard></ReservationDetailCard>
+  );
 };
 class Reservation extends Component {
   constructor(props) {
@@ -186,14 +190,16 @@ class Reservation extends Component {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "flex-start",
           width: "100%",
           height: "100%"
         }}
       >
         <Grid
           item
-          xs={8}
+          md={8}
+          sm={10}
+          xs={12}
           style={{
             display: "flex",
             flexDirection: "row",
