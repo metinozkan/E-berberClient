@@ -93,7 +93,11 @@ for (let i = 0; i < sample.length; i += 1) {
   const randomSelection = sample[i];
   rows.push(createData(i, ...randomSelection));
 }
-export const ServicesList = ({ updateSelectedServices, handleCloseModal }) => {
+export const ServicesList = ({
+  updateSelectedServices,
+  handleCloseModal,
+  handleNextStepper
+}) => {
   const classes = useStyles();
 
   return (
@@ -125,6 +129,7 @@ export const ServicesList = ({ updateSelectedServices, handleCloseModal }) => {
                     price: row.price
                   });
                   handleCloseModal();
+                  handleNextStepper();
                 }}
               >
                 {row.button}

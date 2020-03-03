@@ -20,7 +20,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ServicesListModal = ({ updateState, state, updateSelectedServices }) => {
+const ServicesListModal = ({
+  updateState,
+  state,
+  updateSelectedServices,
+  handleNextStepper
+}) => {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -68,6 +73,7 @@ const ServicesListModal = ({ updateState, state, updateSelectedServices }) => {
           <ServicesList
             updateSelectedServices={updateSelectedServices}
             handleCloseModal={handleClose}
+            handleNextStepper={handleNextStepper}
           ></ServicesList>
         </DialogContent>
         <DialogActions>

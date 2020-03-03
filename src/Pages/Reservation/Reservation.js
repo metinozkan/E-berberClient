@@ -106,6 +106,7 @@ class Reservation extends Component {
               updateState={this._updateState}
               updateSelectedServices={this._updateSelectedServices}
               state={this.state}
+              handleNextStepper={this.handleNext}
             ></ServicesListModal>
           </>
         );
@@ -167,6 +168,7 @@ class Reservation extends Component {
     const activeStep = this.state.stepperActiveStep;
     const setSelectLogin = this.state.stepperSelectLogin;
     console.log("propstan gelen state :(", this.props.location);
+    const open = true;
     return (
       <Grid
         container
@@ -197,13 +199,25 @@ class Reservation extends Component {
             orientation="vertical"
             style={{ width: "100%" }}
           >
+            {/* <Step key={1} active={true}>
+              <StepLabel>Hizmet</StepLabel>
+              <StepContent>
+                <ServiceSectionOrDetail
+                  selectedService={this.state.selectedServices}
+                ></ServiceSectionOrDetail>
+              </StepContent>
+            </Step>
+
+            <Step key={2} active={true}>
+              <StepLabel>Hizmet</StepLabel>
+              <StepContent>
+                <ServiceSectionOrDetail
+                  selectedService={this.state.selectedServices}
+                ></ServiceSectionOrDetail>
+              </StepContent>
+            </Step> */}
             {steps.map((label, index) => (
-              <Step
-                key={label}
-                onClick={() => {
-                  console.log("selam cukoos");
-                }}
-              >
+              <Step key={label} onClick={() => {}}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
                   <Typography>

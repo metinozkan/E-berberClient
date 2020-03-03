@@ -112,7 +112,8 @@ function SimpleTable({ updateState }) {
                           id: row.id,
                           name: row.name,
                           time: row.time,
-                          price: row.price
+                          price: row.price,
+                          workerId: null
                         }
                       ]
                     }
