@@ -58,9 +58,8 @@ const ServiceSection = ({ selectedService }) => {
           }}
         >
           <div>
-            {selectedService.selectedServiceName} -
-            {selectedService.selectedServiceTime}-
-            {selectedService.selectedServicePrice}
+            {selectedService.name} -{selectedService.time}-
+            {selectedService.price}
           </div>
 
           <div

@@ -11,6 +11,8 @@ import HourCalender from "../../Components/HourCalender";
 import TextField from "@material-ui/core/TextField";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 import { ServicesList } from "../../Components/ServicesList";
 
@@ -18,9 +20,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ServicesListModal = ({ updateState, state }) => {
+const ServicesListModal = ({ updateState, state, updateSelectedServices }) => {
   const [open, setOpen] = React.useState(false);
-
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -49,6 +52,7 @@ const ServicesListModal = ({ updateState, state }) => {
         Babacıımmmmmmmm hizmet eklee
       </Button>
       <Dialog
+        fullScreen={fullScreen}
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -56,15 +60,15 @@ const ServicesListModal = ({ updateState, state }) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">Hizmet ekle</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            Eklemek istediğiniz hizmeti seçin
           </DialogContentText>
-          <ServicesList></ServicesList>
+          <ServicesList
+            updateSelectedServices={updateSelectedServices}
+            handleCloseModal={handleClose}
+          ></ServicesList>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

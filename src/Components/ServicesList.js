@@ -59,6 +59,30 @@ const sample = [
     <Button variant="outlined" color="secondary" size="small">
       Seç
     </Button>
+  ],
+  [
+    "Çocuk traş",
+    "20min",
+    "20tl",
+    <Button variant="outlined" color="secondary" size="small">
+      Seç
+    </Button>
+  ],
+  [
+    "Damat tıraşı",
+    "20min",
+    "500tl",
+    <Button variant="outlined" color="secondary" size="small">
+      Seç
+    </Button>
+  ],
+  [
+    "Ense kılı",
+    "5min",
+    "3tl",
+    <Button variant="outlined" color="secondary" size="small">
+      Seç
+    </Button>
   ]
   // ["Cupcake", 305, 3.7, 67, 4.3],
   // ["Gingerbread", 356, 16.0, 49, 3.9]
@@ -69,11 +93,11 @@ for (let i = 0; i < sample.length; i += 1) {
   const randomSelection = sample[i];
   rows.push(createData(i, ...randomSelection));
 }
-export const ServicesList = () => {
+export const ServicesList = ({ updateSelectedServices, handleCloseModal }) => {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} variant="outlined">
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -94,7 +118,13 @@ export const ServicesList = () => {
               <TableCell
                 align="right"
                 onClick={() => {
-                  console.log("asdasd");
+                  updateSelectedServices({
+                    id: row.id,
+                    name: row.name,
+                    time: row.time,
+                    price: row.price
+                  });
+                  handleCloseModal();
                 }}
               >
                 {row.button}

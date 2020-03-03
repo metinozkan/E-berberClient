@@ -50,12 +50,19 @@ class Reservation extends Component {
       isLogin: false,
       stepperActiveStep: 0,
       stepperSelectLogin: false,
-      services: [{ name: "sac" }, { name: "sakals" }]
+      selectedServices: props.location.state.services
     };
   }
 
   _updateState = state => {
     this.setState(state);
+  };
+  _updateSelectedServices = service => {
+    let array = this.state.selectedServices;
+    array.push(service);
+    this.setState({
+      selectedServices: array
+    });
   };
 
   setActiveStep = step => {
@@ -84,19 +91,20 @@ class Reservation extends Component {
     return ["Hizmet ", "Tarih ", "Randevu al"];
   };
 
-  getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
+  getStepContent = (step, selectedServices, setSelectLogin, selectLogin) => {
     switch (step) {
       case 0:
         return (
           <>
-            {this.state.services.map(s => (
-              <ServiceSectionOrDetail
-                selectedService={selectedService}
-                serviceName={s.name}
-              ></ServiceSectionOrDetail>
-            ))}
+            {this.state.selectedServices &&
+              this.state.selectedServices.map(service => (
+                <ServiceSectionOrDetail
+                  selectedService={service}
+                ></ServiceSectionOrDetail>
+              ))}
             <ServicesListModal
               updateState={this._updateState}
+              updateSelectedServices={this._updateSelectedServices}
               state={this.state}
             ></ServicesListModal>
           </>
@@ -154,11 +162,11 @@ class Reservation extends Component {
   };
 
   render() {
+    console.log("services;", this.state.selectedServices);
     const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     const setSelectLogin = this.state.stepperSelectLogin;
-    console.log("props", this.props.location.state);
-    const selectedService = this.props.location.state;
+    console.log("propstan gelen state :(", this.props.location);
     return (
       <Grid
         container
@@ -201,7 +209,7 @@ class Reservation extends Component {
                   <Typography>
                     {this.getStepContent(
                       index,
-                      selectedService,
+                      this.state.selectedServices,
                       this.setSelectLogin,
                       this.state.stepperSelectLogin
                     )}

@@ -100,17 +100,21 @@ function SimpleTable({ updateState }) {
                 align="right"
                 onClick={() => {
                   console.log(row.name, row.id);
-                  updateState({ selectedService: row.id });
+                  //updateState({ selectedService: row.id });
                 }}
               >
                 <Link
                   to={{
                     pathname: "/reservation",
                     state: {
-                      selectedServiceId: row.id,
-                      selectedServiceName: row.name,
-                      selectedServicePrice: row.price,
-                      selectedServiceTime: row.time
+                      services: [
+                        {
+                          id: row.id,
+                          name: row.name,
+                          time: row.time,
+                          price: row.price
+                        }
+                      ]
                     }
                   }}
                 >
