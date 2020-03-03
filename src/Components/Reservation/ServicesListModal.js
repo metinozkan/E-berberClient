@@ -18,7 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ServicesListModal = () => {
+const ServicesListModal = ({ updateState, state }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

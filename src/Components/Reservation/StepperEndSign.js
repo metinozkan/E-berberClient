@@ -24,14 +24,14 @@ const StepperEndSign = () => {
               placeholder="İsim"
               variant="outlined"
               fullWidth
-              style={{ marginBottom: "1em" }}
+              style={{ margin: "1em" }}
             ></TextField>
             <TextField
               id="standard-basic"
               placeholder="Soyisim"
               variant="outlined"
               fullWidth
-              style={{ marginBottom: "1em" }}
+              style={{ margin: "1em" }}
             ></TextField>
           </Grid>
           <Grid item xs={6}>
@@ -40,14 +40,14 @@ const StepperEndSign = () => {
               placeholder="E-posta"
               variant="outlined"
               fullWidth
-              style={{ marginBottom: "1em" }}
+              style={{ margin: "1em" }}
             ></TextField>
             <TextField
               id="standard-basic"
               placeholder="Şifre"
               variant="outlined"
               fullWidth
-              style={{ marginBottom: "1em" }}
+              style={{ margin: "1em" }}
             ></TextField>
           </Grid>
           <Grid

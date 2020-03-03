@@ -12,8 +12,6 @@ import Select from "@material-ui/core/Select";
 
 import InputLabel from "@material-ui/core/InputLabel";
 
-import ServicesListModal from "./ServicesListModal";
-
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -21,6 +19,12 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
+  },
+  cardPadding: {
+    padding: "8px",
+    "&:last-child": {
+      paddingBottom: "8px"
+    }
   }
 }));
 
@@ -43,14 +47,14 @@ const ServiceSection = ({ selectedService }) => {
   const inputLabel = React.useRef(null);
   return (
     <>
-      <Card>
+      <Card style={{ marginBottom: "1em" }}>
         <CardContent
+          className={classes.cardPadding}
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center"
-            //paddingTop: "24px"
           }}
         >
           <div>
@@ -96,7 +100,6 @@ const ServiceSection = ({ selectedService }) => {
           </div>
         </CardContent>
       </Card>
-      <ServicesListModal></ServicesListModal>
     </>
   );
 };

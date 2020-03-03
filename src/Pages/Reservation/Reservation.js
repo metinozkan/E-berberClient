@@ -20,6 +20,7 @@ import ReservationDetailCard from "../../Components/Reservation/ReservationDetai
 
 //serviceSectiın
 import ServiceSection from "../../Components/Reservation/ServiceSection";
+import ServicesListModal from "../../Components/Reservation/ServicesListModal";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -31,69 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const isLogin = false;
-function getSteps() {
-  return ["Hizmet ", "Tarih ", "Randevu al"];
-}
 
-const getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
-  switch (step) {
-    case 0:
-      return (
-        <ServiceSectionOrDetail
-          selectedService={selectedService}
-        ></ServiceSectionOrDetail>
-      );
-    case 1:
-      return <CalenderOrDetail />;
-    case 2:
-      return isLogin == true ? (
-        <div>Randevu bilgileri</div>
-      ) : selectLogin == false ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-          }}
-        >
-          <div>
-            Üye girişi yapmak için{" "}
-            <u
-              onClick={() => {
-                setSelectLogin(true);
-              }}
-            >
-              Tıklayınız
-            </u>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center"
-            }}
-          >
-            <StepperEndSign></StepperEndSign>
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%"
-          }}
-        >
-          <StepperEndLogin></StepperEndLogin>
-          <ReservationDetailCard />
-        </div>
-      );
-    default:
-      return "Unknown step";
-  }
-};
 const CalenderOrDetail = ({}) => {
   return <HourCalender></HourCalender>;
 };
@@ -110,9 +49,14 @@ class Reservation extends Component {
     this.state = {
       isLogin: false,
       stepperActiveStep: 0,
-      stepperSelectLogin: false
+      stepperSelectLogin: false,
+      services: [{ name: "sac" }, { name: "sakals" }]
     };
   }
+
+  _updateState = state => {
+    this.setState(state);
+  };
 
   setActiveStep = step => {
     this.setState({
@@ -136,9 +80,81 @@ class Reservation extends Component {
   handleReset = () => {
     this.setActiveStep(0);
   };
+  getSteps = () => {
+    return ["Hizmet ", "Tarih ", "Randevu al"];
+  };
+
+  getStepContent = (step, selectedService, setSelectLogin, selectLogin) => {
+    switch (step) {
+      case 0:
+        return (
+          <>
+            {this.state.services.map(s => (
+              <ServiceSectionOrDetail
+                selectedService={selectedService}
+                serviceName={s.name}
+              ></ServiceSectionOrDetail>
+            ))}
+            <ServicesListModal
+              updateState={this._updateState}
+              state={this.state}
+            ></ServicesListModal>
+          </>
+        );
+      case 1:
+        return <CalenderOrDetail />;
+      case 2:
+        return isLogin == true ? (
+          <div>Randevu bilgileri</div>
+        ) : selectLogin == false ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center"
+            }}
+          >
+            <div>
+              Üye girişi yapmak için{" "}
+              <u
+                onClick={() => {
+                  setSelectLogin(true);
+                }}
+              >
+                Tıklayınız
+              </u>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center"
+              }}
+            >
+              <StepperEndSign></StepperEndSign>
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%"
+            }}
+          >
+            <StepperEndLogin></StepperEndLogin>
+            <ReservationDetailCard />
+          </div>
+        );
+      default:
+        return "Unknown step";
+    }
+  };
 
   render() {
-    const steps = getSteps();
+    const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     const setSelectLogin = this.state.stepperSelectLogin;
     console.log("props", this.props.location.state);
@@ -174,11 +190,16 @@ class Reservation extends Component {
             style={{ width: "100%" }}
           >
             {steps.map((label, index) => (
-              <Step key={label}>
+              <Step
+                key={label}
+                onClick={() => {
+                  console.log("selam cukoos");
+                }}
+              >
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
                   <Typography>
-                    {getStepContent(
+                    {this.getStepContent(
                       index,
                       selectedService,
                       this.setSelectLogin,
