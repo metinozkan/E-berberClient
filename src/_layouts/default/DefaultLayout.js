@@ -146,7 +146,8 @@ const DefaultLayout = props => {
         <div
           style={{
             height: "100vh",
-            width: "100vw"
+            width: "100vw",
+            alignItems: "flex-start"
           }}
         >
           {props.children}

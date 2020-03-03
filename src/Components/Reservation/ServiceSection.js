@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-
+import Grid from "@material-ui/core/Grid";
 import CardContent from "@material-ui/core/CardContent";
 
 import MenuItem from "@material-ui/core/MenuItem";
@@ -57,46 +57,54 @@ const ServiceSection = ({ selectedService }) => {
             alignItems: "center"
           }}
         >
-          <div>
-            {selectedService.name} -{selectedService.time}-
-            {selectedService.price}
-          </div>
-
-          <div
-            style={{
-              width: "30%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
           >
-            <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel
-                ref={inputLabel}
-                id="demo-simple-select-outlined-label"
-              >
-                Çalışan
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={workerId}
-                onChange={handleChange}
-                labelWidth={labelWidth}
-              >
-                <MenuItem value="">
-                  <em>-</em>
-                </MenuItem>
-                {worker.map(w => (
-                  <MenuItem value={w.id}>{w.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Button variant="outlined" color="primary">
-              Kaldır
-            </Button>
-          </div>
+            <Grid item>
+              <div>
+                {selectedService.name} -{selectedService.time}-
+                {selectedService.price}
+              </div>
+            </Grid>
+            <Grid
+              item
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel
+                  ref={inputLabel}
+                  id="demo-simple-select-outlined-label"
+                >
+                  Çalışan
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={workerId}
+                  onChange={handleChange}
+                  labelWidth={labelWidth}
+                >
+                  <MenuItem value="">
+                    <em>-</em>
+                  </MenuItem>
+                  {worker.map(w => (
+                    <MenuItem value={w.id}>{w.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button variant="outlined" color="primary">
+                Kaldır
+              </Button>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
     </>

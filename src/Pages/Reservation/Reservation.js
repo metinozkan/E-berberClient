@@ -182,8 +182,8 @@ class Reservation extends Component {
       >
         <Grid
           item
-          md={8}
-          sm={10}
+          md={6}
+          sm={8}
           xs={12}
           style={{
             display: "flex",
