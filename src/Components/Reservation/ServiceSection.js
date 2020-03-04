@@ -33,10 +33,16 @@ const worker = [
   { id: 2, name: "Mehmet", surname: "Usta" },
   { id: 3, name: "Zeki", surname: "Altınparmak" }
 ];
-const ServiceSection = ({ selectedService }) => {
+const ServiceSection = ({ selectedService, updateState, state }) => {
   const classes = useStyles();
-  const [workerId, setWorkerId] = React.useState();
+  const [workerId, setWorkerId] = React.useState(
+    state.selectedWorker && state.selectedWorker.id
+  );
   const handleChange = event => {
+    updateState({
+      selectedWorker: worker.find(w => w.id == event.target.value)
+    });
+
     setWorkerId(event.target.value);
   };
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -78,7 +84,11 @@ const ServiceSection = ({ selectedService }) => {
                 alignItems: "center"
               }}
             >
-              <FormControl variant="outlined" className={classes.formControl}>
+              <FormControl
+                variant="outlined"
+                className={classes.formControl}
+                disabled={state.selectedServices.length > 1 ? true : false}
+              >
                 <InputLabel
                   ref={inputLabel}
                   id="demo-simple-select-outlined-label"

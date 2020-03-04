@@ -15,6 +15,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 
 import { ServicesList } from "../../Components/ServicesList";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +28,7 @@ const ServicesListModal = ({
   handleNextStepper
 }) => {
   const [open, setOpen] = React.useState(false);
+  const [openConfirm, setOpenConfirm] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClickOpen = () => {
@@ -39,6 +41,14 @@ const ServicesListModal = ({
 
   return (
     <div>
+      {openConfirm && (
+        <ConfirmModal
+          title={"Çalışan seçmelisiniz"}
+          confirmMesage={"Tamam"}
+          openModal={true}
+          setOpenConfirm={setOpenConfirm}
+        ></ConfirmModal>
+      )}
       <Button
         variant="outlined"
         color="primary"
@@ -49,7 +59,9 @@ const ServicesListModal = ({
           justifyContent: "center",
           alignItems: "center"
         }}
-        onClick={handleClickOpen}
+        onClick={() => {
+          state.selectedWorker ? handleClickOpen() : setOpenConfirm(true);
+        }}
       >
         <Icon fontSize="small" style={{ marginRight: ".5em" }}>
           add_circle

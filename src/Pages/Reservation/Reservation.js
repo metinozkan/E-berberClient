@@ -36,9 +36,18 @@ const isLogin = false;
 const CalenderOrDetail = ({}) => {
   return <HourCalender></HourCalender>;
 };
-const ServiceSectionOrDetail = ({ selectedService, switchSelect = 1 }) => {
+const ServiceSectionOrDetail = ({
+  selectedService,
+  switchSelect = 1,
+  updateState,
+  state
+}) => {
   return switchSelect == 1 ? (
-    <ServiceSection selectedService={selectedService}></ServiceSection>
+    <ServiceSection
+      selectedService={selectedService}
+      updateState={updateState}
+      state={state}
+    ></ServiceSection>
   ) : (
     <ReservationDetailCard></ReservationDetailCard>
   );
@@ -50,7 +59,8 @@ class Reservation extends Component {
       isLogin: false,
       stepperActiveStep: 0,
       stepperSelectLogin: false,
-      selectedServices: props.location.state.services
+      selectedServices: props.location.state.services,
+      selectedWorker: false
     };
   }
 
@@ -100,6 +110,8 @@ class Reservation extends Component {
               this.state.selectedServices.map(service => (
                 <ServiceSectionOrDetail
                   selectedService={service}
+                  updateState={this._updateState}
+                  state={this.state}
                 ></ServiceSectionOrDetail>
               ))}
             <ServicesListModal
@@ -163,12 +175,11 @@ class Reservation extends Component {
   };
 
   render() {
-    console.log("services;", this.state.selectedServices);
     const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     const setSelectLogin = this.state.stepperSelectLogin;
-    console.log("propstan gelen state :(", this.props.location);
     const open = true;
+    console.log("secilen calisan", this.state.selectedServices.length);
     return (
       <Grid
         container
