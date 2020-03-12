@@ -60,7 +60,8 @@ const ServicesListModal = ({
           alignItems: "center"
         }}
         onClick={() => {
-          state.selectedWorker ? handleClickOpen() : setOpenConfirm(true);
+          // state.selectedWorker ? handleClickOpen() : setOpenConfirm(true);
+          handleClickOpen();
         }}
       >
         <Icon fontSize="small" style={{ marginRight: ".5em" }}>

@@ -60,7 +60,13 @@ class Reservation extends Component {
       stepperActiveStep: 0,
       stepperSelectLogin: false,
       selectedServices: props.location.state.services,
-      selectedWorker: false
+      selectedWorker: false,
+      selectedDate: false,
+      reservationObject: { serviceName: "", workerName: "", time: "" },
+      stepTwoActive: true,
+      stepThreeActive: false,
+      showServiceDetailCard: true,
+      showDateDetailCard: false
     };
   }
 
@@ -97,85 +103,86 @@ class Reservation extends Component {
   handleReset = () => {
     this.setActiveStep(0);
   };
-  getSteps = () => {
-    return ["Hizmet ", "Tarih ", "Randevu al"];
-  };
+  // getSteps = () => {
+  //   return ["Hizmet ", "Tarih ", "Randevu al"];
+  // };
 
-  getStepContent = (step, selectedServices, setSelectLogin, selectLogin) => {
-    switch (step) {
-      case 0:
-        return (
-          <>
-            {this.state.selectedServices &&
-              this.state.selectedServices.map(service => (
-                <ServiceSectionOrDetail
-                  selectedService={service}
-                  updateState={this._updateState}
-                  state={this.state}
-                ></ServiceSectionOrDetail>
-              ))}
-            <ServicesListModal
-              updateState={this._updateState}
-              updateSelectedServices={this._updateSelectedServices}
-              state={this.state}
-              handleNextStepper={this.handleNext}
-            ></ServicesListModal>
-          </>
-        );
-      case 1:
-        return <CalenderOrDetail />;
-      case 2:
-        return isLogin == true ? (
-          <div>Randevu bilgileri</div>
-        ) : selectLogin == false ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center"
-            }}
-          >
-            <div>
-              Üye girişi yapmak için{" "}
-              <u
-                onClick={() => {
-                  setSelectLogin(true);
-                }}
-              >
-                Tıklayınız
-              </u>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center"
-              }}
-            >
-              <StepperEndSign></StepperEndSign>
-            </div>
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%"
-            }}
-          >
-            <StepperEndLogin></StepperEndLogin>
-            <ReservationDetailCard />
-          </div>
-        );
-      default:
-        return "Unknown step";
-    }
-  };
+  // getStepContent = (step, selectedServices, setSelectLogin, selectLogin) => {
+  //   switch (step) {
+  //     case 0:
+  //       return (
+  //         <>
+  //           {this.state.selectedServices &&
+  //             this.state.selectedServices.map(service => (
+  //               <ServiceSectionOrDetail
+  //                 selectedService={service}
+  //                 updateState={this._updateState}
+  //                 state={this.state}
+  //               ></ServiceSectionOrDetail>
+  //             ))}
+  //           <ServicesListModal
+  //             updateState={this._updateState}
+  //             updateSelectedServices={this._updateSelectedServices}
+  //             state={this.state}
+  //             handleNextStepper={this.handleNext}
+  //           ></ServicesListModal>
+  //         </>
+  //       );
+  //     case 1:
+  //       return <CalenderOrDetail />;
+  //     case 2:
+  //       return isLogin == true ? (
+  //         <div>Randevu bilgileri</div>
+  //       ) : selectLogin == false ? (
+  //         <div
+  //           style={{
+  //             display: "flex",
+  //             flexDirection: "column",
+  //             justifyContent: "center"
+  //           }}
+  //         >
+  //           <div>
+  //             Üye girişi yapmak için{" "}
+  //             <u
+  //               onClick={() => {
+  //                 setSelectLogin(true);
+  //               }}
+  //             >
+  //               Tıklayınız
+  //             </u>
+  //           </div>
+  //           <div
+  //             style={{
+  //               display: "flex",
+  //               flexDirection: "row",
+  //               justifyContent: "center"
+  //             }}
+  //           >
+  //             <StepperEndSign></StepperEndSign>
+  //           </div>
+  //         </div>
+  //       ) : (
+  //         <div
+  //           style={{
+  //             display: "flex",
+  //             flexDirection: "row",
+  //             justifyContent: "center",
+  //             alignItems: "center",
+  //             width: "100%"
+  //           }}
+  //         >
+  //           <StepperEndLogin></StepperEndLogin>
+  //           <ReservationDetailCard />
+  //         </div>
+  //       );
+  //     default:
+  //       return "Unknown step";
+  //   }
+  // };
 
   render() {
-    const steps = this.getSteps();
+    console.log("ne var abi state de ", this.state);
+    //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     const setSelectLogin = this.state.stepperSelectLogin;
     const open = true;
@@ -210,24 +217,104 @@ class Reservation extends Component {
             orientation="vertical"
             style={{ width: "100%" }}
           >
-            {/* <Step key={1} active={true}>
+            <Step key={1} active={true}>
               <StepLabel>Hizmet</StepLabel>
               <StepContent>
-                <ServiceSectionOrDetail
-                  selectedService={this.state.selectedServices}
-                ></ServiceSectionOrDetail>
+                <Typography>
+                  {this.state.showServiceDetailCard == false
+                    ? this.state.selectedServices &&
+                      this.state.selectedServices.map(service => (
+                        <ServiceSection
+                          selectedService={service}
+                          updateState={this._updateState}
+                          state={this.state}
+                        ></ServiceSection>
+                      ))
+                    : this.state.selectedServices &&
+                      this.state.selectedServices.map(service => (
+                        <ReservationDetailCard
+                          name={service.name}
+                          price={service.price}
+                          time={service.time}
+                        ></ReservationDetailCard>
+                      ))}
+                  <ServicesListModal
+                    updateState={this._updateState}
+                    updateSelectedServices={this._updateSelectedServices}
+                    state={this.state}
+                    handleNextStepper={this.handleNext}
+                  ></ServicesListModal>
+                </Typography>
+              </StepContent>
+            </Step>
+            <Step key={2} active={this.state.stepTwoActive}>
+              <StepLabel>Tarih</StepLabel>
+              <StepContent>
+                <Typography>
+                  {this.state.showDateDetailCard == false ? (
+                    <HourCalender
+                      updateState={this._updateState}
+                      state={this.states}
+                    />
+                  ) : (
+                    <HourCalender name="10 ekim 23:00" />
+                  )}
+                </Typography>
+              </StepContent>
+            </Step>
+            <Step key={1} active={this.state.stepThreeActive}>
+              <StepLabel>Randevu Al</StepLabel>
+              <StepContent>
+                <Typography>
+                  {isLogin == true ? (
+                    <div>Randevu bilgileri</div>
+                  ) : this.selectLogin == false ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <div>
+                        Üye girişi yapmak için{" "}
+                        <u
+                          onClick={() => {
+                            setSelectLogin(true);
+                          }}
+                        >
+                          Tıklayınız
+                        </u>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <StepperEndSign></StepperEndSign>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%"
+                      }}
+                    >
+                      <StepperEndLogin></StepperEndLogin>
+                      <ReservationDetailCard />
+                    </div>
+                  )}
+                </Typography>
               </StepContent>
             </Step>
 
-            <Step key={2} active={true}>
-              <StepLabel>Hizmet</StepLabel>
-              <StepContent>
-                <ServiceSectionOrDetail
-                  selectedService={this.state.selectedServices}
-                ></ServiceSectionOrDetail>
-              </StepContent>
-            </Step> */}
-            {steps.map((label, index) => (
+            {/* {steps.map((label, index) => (
               <Step key={label} onClick={() => {}}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
@@ -258,16 +345,16 @@ class Reservation extends Component {
                   </div>
                 </StepContent>
               </Step>
-            ))}
+            ))} */}
           </Stepper>
-          {activeStep === steps.length && (
+          {/* {activeStep === steps.length && (
             <Paper square elevation={0}>
               <Typography>
                 All steps completed - you&apos;re finished
               </Typography>
               <Button onClick={this.handleReset}>Reset</Button>
             </Paper>
-          )}
+          )} */}
         </Grid>
       </Grid>
     );

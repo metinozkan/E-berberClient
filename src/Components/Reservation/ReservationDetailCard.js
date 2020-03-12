@@ -40,11 +40,11 @@ const CardItem = ({}) => {
     </Grid>
   );
 };
-const ReservationDetailCard = () => {
+const ReservationDetailCard = ({ name, time, price, onClick }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ width: "100%" }}>
+    <Card style={{ width: "100%", marginBottom: ".5em" }}>
       <Grid
         container
         direction="row"
@@ -68,10 +68,12 @@ const ReservationDetailCard = () => {
             alignItems: "center"
           }}
         >
-          bilgiler bu bilgilerasdasdasda
+          <span style={{ marginRight: ".5em" }}>{name}</span>
+          <span style={{ marginRight: ".5em" }}>{time}</span>
+          <span style={{ marginRight: ".5em" }}>{price}</span>
         </Grid>
         <Grid item xs={2}>
-          <Button>sasa</Button>
+          <Button onClick={onClick}>Düzenle</Button>
         </Grid>
       </Grid>
     </Card>
