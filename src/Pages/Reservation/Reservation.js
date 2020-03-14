@@ -112,6 +112,14 @@ class Reservation extends Component {
       selectedServices: tempSelectedServices
     });
   };
+
+  deleteDate = () => {
+    console.log(this.state.selectedDate);
+    this.setState({
+      selectedDate: false,
+      stepTwoActive: true
+    });
+  };
   // getSteps = () => {
   //   return ["Hizmet ", "Tarih ", "Randevu al"];
   // };
@@ -267,6 +275,7 @@ class Reservation extends Component {
                       />
                     ) : (
                       <ReservationDetailCard
+                        onPress={this.deleteDate}
                         date={
                           this.state.selectedDate.day +
                           this.state.selectedDate.hour

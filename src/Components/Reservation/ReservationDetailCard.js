@@ -82,7 +82,7 @@ const ReservationDetailCard = ({ service, date, onPress }) => {
             )}
           </Grid>
           <Grid item xs={2}>
-            <Button onClick={() => onPress(service.id)}>
+            <Button onClick={() => (date ? onPress() : onPress(service.id))}>
               {date ? "Düzenle" : "Kaldır"}
             </Button>
           </Grid>
