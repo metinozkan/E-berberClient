@@ -103,6 +103,15 @@ class Reservation extends Component {
   handleReset = () => {
     this.setActiveStep(0);
   };
+
+  deleteSelectedService = id => {
+    let tempSelectedServices = this.state.selectedServices.filter(
+      service => service.id != id && service
+    );
+    this.setState({
+      selectedServices: tempSelectedServices
+    });
+  };
   // getSteps = () => {
   //   return ["Hizmet ", "Tarih ", "Randevu al"];
   // };
@@ -184,128 +193,133 @@ class Reservation extends Component {
     console.log("ne var abi state de ", this.state);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
-    const open = true;
     console.log("secilen calisan", this.state.selectedServices.length);
     return (
-      <Grid
-        container
-        style={{
-          flexGrow: 1,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          width: "100%",
-          height: "100%"
-        }}
-      >
+      <div>
         <Grid
-          item
-          md={6}
-          sm={8}
-          xs={12}
+          container
           style={{
+            flexGrow: 1,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            alignItems: "flex-start"
+            alignItems: "flex-start",
+            width: "100%",
+            height: "100%"
           }}
         >
-          <Stepper
-            activeStep={activeStep}
-            orientation="vertical"
-            style={{ width: "100%" }}
+          <Grid
+            item
+            md={6}
+            sm={8}
+            xs={12}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "flex-start"
+            }}
           >
-            <Step key={1} active={true}>
-              <StepLabel>Hizmet</StepLabel>
-              <StepContent>
-                <Typography>
-                  {this.state.showServiceDetailCard == false
-                    ? this.state.selectedServices &&
-                      this.state.selectedServices.map(service => (
-                        <ServiceSection
-                          selectedService={service}
-                          updateState={this._updateState}
-                          state={this.state}
-                        ></ServiceSection>
-                      ))
-                    : this.state.selectedServices &&
-                      this.state.selectedServices.map(service => (
-                        <ReservationDetailCard
-                          name={service.name}
-                          price={service.price}
-                          time={service.time}
-                        ></ReservationDetailCard>
-                      ))}
-                  <ServicesListModal
-                    updateState={this._updateState}
-                    updateSelectedServices={this._updateSelectedServices}
-                    state={this.state}
-                    handleNextStepper={this.handleNext}
-                  ></ServicesListModal>
-                </Typography>
-              </StepContent>
-            </Step>
-            <Step key={2} active={this.state.stepTwoActive}>
-              <StepLabel>Tarih</StepLabel>
-              <StepContent>
-                <Typography>
-                  {this.state.selectedDate == false ? (
-                    <HourCalender
+            <Stepper
+              activeStep={activeStep}
+              orientation="vertical"
+              style={{ width: "100%" }}
+            >
+              <Step key={1} active={true}>
+                <StepLabel>Hizmet</StepLabel>
+                <StepContent>
+                  <Typography>
+                    {this.state.showServiceDetailCard == false
+                      ? this.state.selectedServices &&
+                        this.state.selectedServices.map(service => (
+                          <ServiceSection
+                            selectedService={service}
+                            updateState={this._updateState}
+                            state={this.state}
+                          ></ServiceSection>
+                        ))
+                      : this.state.selectedServices &&
+                        this.state.selectedServices.map((service, index) => (
+                          <ReservationDetailCard
+                            onPress={this.deleteSelectedService}
+                            key={index}
+                            service={service}
+                          ></ReservationDetailCard>
+                        ))}
+                    <ServicesListModal
+                      openModal={this.state.selectedServices.length == 0}
                       updateState={this._updateState}
-                      state={this.states}
-                    />
-                  ) : (
-                    <ReservationDetailCard
-                      name={
-                        this.state.selectedDate.day +
-                        this.state.selectedDate.hour
-                      }
-                    />
-                  )}
-                </Typography>
-              </StepContent>
-            </Step>
-            <Step key={1} active={this.state.stepThreeActive}>
-              <StepLabel>Randevu Al</StepLabel>
-              <StepContent>
-                <Typography>
-                  {isLogin == false ? (
-                    this.state.stepperLoginOrSignUp == false ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center"
-                        }}
-                      >
-                        <StepperEndSign
-                          setStepperLoginOrSignUp={this.setStepperLoginOrSignUp}
-                        ></StepperEndSign>
-                      </div>
+                      updateSelectedServices={this._updateSelectedServices}
+                      state={this.state}
+                      handleNextStepper={this.handleNext}
+                    ></ServicesListModal>
+                  </Typography>
+                </StepContent>
+              </Step>
+              <Step key={2} active={this.state.stepTwoActive}>
+                <StepLabel>Tarih</StepLabel>
+                <StepContent>
+                  <Typography>
+                    {this.state.selectedDate == false ? (
+                      <HourCalender
+                        updateState={this._updateState}
+                        state={this.states}
+                      />
                     ) : (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "100%"
-                        }}
-                      >
-                        <StepperEndLogin
-                          setStepperLoginOrSignUp={this.setStepperLoginOrSignUp}
-                        ></StepperEndLogin>
-                      </div>
-                    )
-                  ) : (
-                    <div>Randevunuz</div>
-                  )}
-                </Typography>
-              </StepContent>
-            </Step>
+                      <ReservationDetailCard
+                        date={
+                          this.state.selectedDate.day +
+                          this.state.selectedDate.hour
+                        }
+                      />
+                    )}
+                  </Typography>
+                </StepContent>
+              </Step>
+              <Step key={1} active={this.state.stepThreeActive}>
+                <StepLabel>Randevu Al</StepLabel>
+                <StepContent>
+                  <Typography>
+                    {isLogin == false ? (
+                      this.state.stepperLoginOrSignUp == false ? (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <StepperEndSign
+                            setStepperLoginOrSignUp={
+                              this.setStepperLoginOrSignUp
+                            }
+                          ></StepperEndSign>
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "100%"
+                          }}
+                        >
+                          <StepperEndLogin
+                            setStepperLoginOrSignUp={
+                              this.setStepperLoginOrSignUp
+                            }
+                          ></StepperEndLogin>
+                        </div>
+                      )
+                    ) : (
+                      <div>Randevunuz</div>
+                    )}
+                  </Typography>
+                </StepContent>
+              </Step>
 
-            {/* {steps.map((label, index) => (
+              {/* {steps.map((label, index) => (
               <Step key={label} onClick={() => {}}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
@@ -337,8 +351,8 @@ class Reservation extends Component {
                 </StepContent>
               </Step>
             ))} */}
-          </Stepper>
-          {/* {activeStep === steps.length && (
+            </Stepper>
+            {/* {activeStep === steps.length && (
             <Paper square elevation={0}>
               <Typography>
                 All steps completed - you&apos;re finished
@@ -346,8 +360,9 @@ class Reservation extends Component {
               <Button onClick={this.handleReset}>Reset</Button>
             </Paper>
           )} */}
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }

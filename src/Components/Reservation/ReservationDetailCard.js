@@ -26,56 +26,68 @@ const useStyles = makeStyles(theme => ({
 
 const CardItem = ({}) => {
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs={6}>
-        <Typography variant="subtitle1" color="textSecondary" component="p">
-          Hizmet
-        </Typography>
+    <div>
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item xs={6}>
+          <Typography variant="subtitle1" color="textSecondary" component="p">
+            Hizmet
+          </Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography variant="button" display="block" gutterBottom>
+            Mehmet Kesici
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <Typography variant="button" display="block" gutterBottom>
-          Mehmet Kesici
-        </Typography>
-      </Grid>
-    </Grid>
+    </div>
   );
 };
-const ReservationDetailCard = ({ name, time, price, onClick }) => {
+const ReservationDetailCard = ({ service, date, onPress }) => {
   const classes = useStyles();
 
   return (
     <Card style={{ width: "100%", marginBottom: ".5em" }}>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-        style={{
-          background: "white",
-          padding: "1em",
-          borderRadius: ".2em"
-          //   boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
-        }}
-      >
+      <div>
         <Grid
-          item
-          xs={10}
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
           style={{
             background: "white",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center"
+            padding: "1em",
+            borderRadius: ".2em"
+            //   boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
           }}
         >
-          <span style={{ marginRight: ".5em" }}>{name}</span>
-          <span style={{ marginRight: ".5em" }}>{time}</span>
-          <span style={{ marginRight: ".5em" }}>{price}</span>
+          <Grid
+            item
+            xs={10}
+            style={{
+              background: "white",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center"
+            }}
+          >
+            {date ? (
+              <span style={{ marginRight: ".5em" }}>{date}</span>
+            ) : (
+              <>
+                <span style={{ marginRight: ".5em" }}>{service.name}</span>
+                <span style={{ marginRight: ".5em" }}>{service.time}</span>
+                <span style={{ marginRight: ".5em" }}>{service.price}</span>
+              </>
+            )}
+          </Grid>
+          <Grid item xs={2}>
+            <Button onClick={() => onPress(service.id)}>
+              {date ? "Düzenle" : "Kaldır"}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={2}>
-          <Button onClick={onClick}>Düzenle</Button>
-        </Grid>
-      </Grid>
+      </div>
     </Card>
   );
 };

@@ -233,7 +233,7 @@ class BarberDetail extends Component {
                 overflow: "hidden"
               }}
             >
-              <Grid imte x={12}>
+              <Grid item x={12}>
                 <div style={{ padding: "1em" }}>
                   <Card
                     style={{

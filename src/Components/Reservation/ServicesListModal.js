@@ -22,6 +22,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ServicesListModal = ({
+  openModal,
   updateState,
   state,
   updateSelectedServices,
@@ -36,9 +37,11 @@ const ServicesListModal = ({
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (openModal == false) {
+      setOpen(false);
+    }
   };
-
+  console.log("hic hizmet klama,", openModal);
   return (
     <div>
       {openConfirm && (
@@ -71,7 +74,7 @@ const ServicesListModal = ({
       </Button>
       <Dialog
         fullScreen={fullScreen}
-        open={open}
+        open={open || openModal}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
