@@ -58,7 +58,7 @@ class Reservation extends Component {
     this.state = {
       isLogin: false,
       stepperActiveStep: 0,
-      stepperSelectLogin: false,
+      stepperLoginOrSignUp: true,
       selectedServices: props.location.state.services,
       selectedWorker: false,
       selectedDate: false,
@@ -86,9 +86,9 @@ class Reservation extends Component {
       stepperActiveStep: step
     });
   };
-  setSelectLogin = () => {
+  setStepperLoginOrSignUp = () => {
     this.setState({
-      stepperSelectLogin: !this.state.stepperSelectLogin
+      stepperLoginOrSignUp: !this.state.stepperLoginOrSignUp
     });
   };
 
@@ -107,7 +107,7 @@ class Reservation extends Component {
   //   return ["Hizmet ", "Tarih ", "Randevu al"];
   // };
 
-  // getStepContent = (step, selectedServices, setSelectLogin, selectLogin) => {
+  // getStepContent = (step, selectedServices, setStepperLoginOrSignUp, selectLogin) => {
   //   switch (step) {
   //     case 0:
   //       return (
@@ -145,7 +145,7 @@ class Reservation extends Component {
   //             Üye girişi yapmak için{" "}
   //             <u
   //               onClick={() => {
-  //                 setSelectLogin(true);
+  //                 setStepperLoginOrSignUp(true);
   //               }}
   //             >
   //               Tıklayınız
@@ -184,7 +184,6 @@ class Reservation extends Component {
     console.log("ne var abi state de ", this.state);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
-    const setSelectLogin = this.state.stepperSelectLogin;
     const open = true;
     console.log("secilen calisan", this.state.selectedServices.length);
     return (
@@ -271,26 +270,8 @@ class Reservation extends Component {
               <StepLabel>Randevu Al</StepLabel>
               <StepContent>
                 <Typography>
-                  {isLogin == true ? (
-                    <div>Randevu bilgileri</div>
-                  ) : this.selectLogin == false ? (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <div>
-                        Üye girişi yapmak için{" "}
-                        <u
-                          onClick={() => {
-                            setSelectLogin(true);
-                          }}
-                        >
-                          Tıklayınız
-                        </u>
-                      </div>
+                  {isLogin == false ? (
+                    this.state.stepperLoginOrSignUp == false ? (
                       <div
                         style={{
                           display: "flex",
@@ -298,21 +279,27 @@ class Reservation extends Component {
                           justifyContent: "center"
                         }}
                       >
-                        <StepperEndSign></StepperEndSign>
+                        <StepperEndSign
+                          setStepperLoginOrSignUp={this.setStepperLoginOrSignUp}
+                        ></StepperEndSign>
                       </div>
-                    </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%"
+                        }}
+                      >
+                        <StepperEndLogin
+                          setStepperLoginOrSignUp={this.setStepperLoginOrSignUp}
+                        ></StepperEndLogin>
+                      </div>
+                    )
                   ) : (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "100%"
-                      }}
-                    >
-                      <StepperEndLogin></StepperEndLogin>
-                    </div>
+                    <div>Randevunuz</div>
                   )}
                 </Typography>
               </StepContent>
@@ -326,8 +313,8 @@ class Reservation extends Component {
                     {this.getStepContent(
                       index,
                       this.state.selectedServices,
-                      this.setSelectLogin,
-                      this.state.stepperSelectLogin
+                      this.setStepperLoginOrSignUp,
+                      this.state.stepperLoginOrSignUp
                     )}
                   </Typography>
                   <div>

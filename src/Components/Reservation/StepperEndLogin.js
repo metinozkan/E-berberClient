@@ -1,72 +1,99 @@
-import React, { Component, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+const useStyles = makeStyles(theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
 
-const StepperEndLogin = () => {
+const StepperEndLogin = ({ setStepperLoginOrSignUp }) => {
+  const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="flex-start"
-    >
-      <Grid item xs={10}>
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Grid item xs={12}>
-            <Typography
-              variant="h5"
-              component="h4"
-              style={{ marginBottom: ".2em" }}
-            >
-              Giriş Yap
-            </Typography>
-            <TextField
-              id="standard-basic"
-              placeholder="E-Posta"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-            <TextField
-              id="standard-basic"
-              placeholder="Şifre"
-              variant="outlined"
-              fullWidth
-              style={{ marginBottom: "1em" }}
-            ></TextField>
-          </Grid>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="flex-end"
+    <form className={classes.form} noValidate>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="E-posta"
+        name="email"
+        autoComplete="email"
+        autoFocus
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Şifre"
+        type="password"
+        id="password"
+        autoComplete="current-password"
+      />
+      <FormControlLabel
+        control={<Checkbox value="remember" color="primary" />}
+        label="Beni hatırla"
+      />
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
+        Giriş Yap
+      </Button>
+      <Grid container>
+        <Grid item xs>
+          <Link
+            //href="#"
+            variant="body2"
           >
-            <Button
-              color="secondary"
-              // endIcon={<Icon>send</Icon>}
-            >
-              şifremi unuttum
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              // endIcon={<Icon>send</Icon>}
-            >
-              Giriş Yap
-            </Button>
-          </Grid>
+            Şifremi unuttum
+          </Link>
+        </Grid>
+        <Grid item>
+          <Link
+            // href="#"
+            variant="body2"
+            onClick={() => {
+              setStepperLoginOrSignUp();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {"Üye Ol"}
+          </Link>
         </Grid>
       </Grid>
-    </Grid>
+    </form>
   );
 };
 export default StepperEndLogin;
