@@ -192,6 +192,7 @@ class BarberDetail extends Component {
           justify="center"
           alignItems="center"
           spacing={0}
+          style={{}}
         >
           <Grid item container xs={9}>
             <Grid

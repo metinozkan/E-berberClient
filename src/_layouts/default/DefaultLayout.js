@@ -29,7 +29,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Footer = () => {
-  return <Paper style={{ height: "150px" }}></Paper>;
+  return (
+    <Paper
+      style={{
+        height: "150px",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
+      FOOOTER
+    </Paper>
+  );
 };
 
 const DefaultLayout = props => {
@@ -52,8 +64,8 @@ const DefaultLayout = props => {
 
   return (
     <>
-      <div className={classes.root} style={{}}>
-        <AppBar position="static" style={{}}>
+      <div className={classes.root} style={{ height: "100%", width: "100%" }}>
+        <AppBar position="static" style={{ width: "100%" }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -145,8 +157,7 @@ const DefaultLayout = props => {
         </AppBar>
         <div
           style={{
-            height: "100vh",
-            width: "100vw",
+            width: "100%",
             alignItems: "flex-start"
           }}
         >
