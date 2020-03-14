@@ -33,6 +33,7 @@ class HourCalender extends Component {
       selectedDate: null
     };
   }
+  //state,updateState
   render() {
     console.log(this.state.selectedDate);
     return (
@@ -105,6 +106,10 @@ class HourCalender extends Component {
                       onClick={() => {
                         this.setState({
                           selectedDate: { day: x.day, hour: h }
+                        });
+                        this.props.updateState({
+                          selectedDate: { day: x.day, hour: h },
+                          stepThreeActive: true
                         });
                       }}
                     >

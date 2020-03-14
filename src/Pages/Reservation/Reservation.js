@@ -251,13 +251,18 @@ class Reservation extends Component {
               <StepLabel>Tarih</StepLabel>
               <StepContent>
                 <Typography>
-                  {this.state.showDateDetailCard == false ? (
+                  {this.state.selectedDate == false ? (
                     <HourCalender
                       updateState={this._updateState}
                       state={this.states}
                     />
                   ) : (
-                    <HourCalender name="10 ekim 23:00" />
+                    <ReservationDetailCard
+                      name={
+                        this.state.selectedDate.day +
+                        this.state.selectedDate.hour
+                      }
+                    />
                   )}
                 </Typography>
               </StepContent>
@@ -307,7 +312,6 @@ class Reservation extends Component {
                       }}
                     >
                       <StepperEndLogin></StepperEndLogin>
-                      <ReservationDetailCard />
                     </div>
                   )}
                 </Typography>
