@@ -63,49 +63,55 @@ const Home = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Paper
-            component="form"
-            style={{
-              padding: "2px 4px",
-              display: "flex",
-              alignItems: "center"
-            }}
-          >
-            <TextField
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              label="Dükkan ara"
-              style={{ flex: 1 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <StoreMallDirectory />
-                  </InputAdornment>
-                )
+          <Grid item xs={12}>
+            <Paper
+              component="form"
+              style={{
+                padding: "2px 4px",
+                display: "flex",
+                alignItems: "center"
               }}
-            />
-
-            <TextField
-              className={classes.margin}
-              id="input-with-icon-textfield"
-              label="Konuma Göre"
-              style={{ flex: 1 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Navigation />
-                  </InputAdornment>
-                )
-              }}
-            />
-            <IconButton
-              type="submit"
-              className={classes.iconButton}
-              aria-label="search"
             >
-              <Search />
-            </IconButton>
-          </Paper>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  className={classes.margin}
+                  id="input-with-icon-textfield"
+                  label="Dükkan ara"
+                  style={{ flex: 1 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <StoreMallDirectory />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  className={classes.margin}
+                  id="input-with-icon-textfield"
+                  label="Konuma Göre"
+                  style={{ flex: 1 }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Navigation />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Grid>
+              <IconButton
+                type="submit"
+                className={classes.iconButton}
+                aria-label="search"
+              >
+                <Search />
+              </IconButton>
+            </Paper>
+          </Grid>
         </Grid>
         <Grid item xs={12}></Grid>
         {/* <Grid item xs={6}>

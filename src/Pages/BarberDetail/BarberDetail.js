@@ -194,7 +194,7 @@ class BarberDetail extends Component {
           spacing={0}
           style={{}}
         >
-          <Grid item container xs={9}>
+          <Grid item container xs={12} sm={10} md={9}>
             <Grid
               item
               xs={12}
@@ -212,6 +212,7 @@ class BarberDetail extends Component {
             <Grid
               item
               xs={12}
+              sm={11}
               md={7}
               style={{
                 height: "auto",
