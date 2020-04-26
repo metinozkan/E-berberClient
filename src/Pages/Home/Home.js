@@ -11,13 +11,13 @@ import IconButton from "@material-ui/core/IconButton";
 //import Background from "../public/berber.jpg";
 import Typography from "@material-ui/core/Typography";
 import { StoreMallDirectory, Navigation, Search } from "@material-ui/icons";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   extendedIcon: {
-    marginRight: theme.spacing(1)
-  }
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const Home = () => {
@@ -35,7 +35,8 @@ const Home = () => {
           height: "100vh",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          zIndex: "1"
+          zIndex: "1",
+          width: "100%",
         }}
       >
         <div
@@ -44,11 +45,11 @@ const Home = () => {
             width: "100%",
             height: "100vh",
             backgroundColor: "#e2e2e2",
-            opacity: "0.7"
+            opacity: "0.7",
           }}
         ></div>
         <Grid item xs={2}></Grid>
-        <Grid item xs={4} style={{ zIndex: "1" }}>
+        <Grid item xs={12} md={6} style={{ zIndex: "1" }}>
           <Grid container>
             <Grid item xs={12} style={{ marginBottom: "1em" }}>
               <Typography
@@ -69,10 +70,11 @@ const Home = () => {
               style={{
                 padding: "2px 4px",
                 display: "flex",
-                alignItems: "center"
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Grid item xs={12} md={6}>
+              <Grid item xs={6}>
                 <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
@@ -83,12 +85,12 @@ const Home = () => {
                       <InputAdornment position="start">
                         <StoreMallDirectory />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              <Grid item xs={6}>
                 <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
@@ -99,17 +101,19 @@ const Home = () => {
                       <InputAdornment position="start">
                         <Navigation />
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
               </Grid>
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-                aria-label="search"
-              >
-                <Search />
-              </IconButton>
+              <Grid item>
+                <IconButton
+                  type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                >
+                  <Search />
+                </IconButton>
+              </Grid>
             </Paper>
           </Grid>
         </Grid>

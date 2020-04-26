@@ -21,19 +21,19 @@ import DirectionsIcon from "@material-ui/icons/Directions";
 import { LocationCity } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 600
+    maxWidth: 600,
   },
   image: {
     width: 180,
     height: 180,
-    marginRight: "1em"
+    marginRight: "1em",
   },
   img: {
     margin: "auto",
@@ -41,25 +41,25 @@ const useStyles = makeStyles(theme => ({
     width: 250,
     height: 180,
     maxWidth: "100%",
-    maxHeight: "100%"
+    maxHeight: "100%",
   },
   rootSearch: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   inputSearch: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButtonSearch: {
-    padding: 10
+    padding: 10,
   },
   dividerSearch: {
     height: 28,
     margin: 4,
-    color: "black"
-  }
+    color: "black",
+  },
 }));
 
 const BarberCard = () => {
@@ -124,7 +124,7 @@ const BarberCard = () => {
 const SearchInput = () => {
   const classes = useStyles();
   return (
-    <div style={{ width: "50%" }}>
+    <Grid item xs={12} md={6}>
       <Paper component="form" className={classes.rootSearch}>
         <SearchIcon style={{ marginRight: "1em" }} />
         <InputBase
@@ -146,14 +146,14 @@ const SearchInput = () => {
           <SearchIcon />
         </Button>
       </Paper>
-    </div>
+    </Grid>
   );
 };
 const Barbers = () => {
   const classes = useStyles();
   return (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs={8}>
+      <Grid item xs={12} sm={8}>
         <Typography gutterBottom variant="h4" component="h2">
           Sakarya Berber
         </Typography>
