@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 export const SearchInput = () => {
   const classes = useStyles();
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} sm={10} md={8}>
       <Paper component="form" className={classes.rootSearch}>
         <SearchIcon style={{ marginRight: "1em" }} />
         <InputBase
