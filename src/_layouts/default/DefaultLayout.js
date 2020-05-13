@@ -16,16 +16,17 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    background: "#f5f5f5",
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 const Footer = () => {
@@ -36,7 +37,7 @@ const Footer = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       FOOOTER
@@ -44,17 +45,17 @@ const Footer = () => {
   );
 };
 
-const DefaultLayout = props => {
+const DefaultLayout = (props) => {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setAuth(event.target.checked);
   };
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -112,12 +113,12 @@ const DefaultLayout = props => {
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: "top",
-                    horizontal: "right"
+                    horizontal: "right",
                   }}
                   keepMounted
                   transformOrigin={{
                     vertical: "top",
-                    horizontal: "right"
+                    horizontal: "right",
                   }}
                   open={open}
                   onClose={handleClose}
@@ -158,7 +159,7 @@ const DefaultLayout = props => {
         <div
           style={{
             width: "100%",
-            alignItems: "flex-start"
+            alignItems: "flex-start",
           }}
         >
           {props.children}
