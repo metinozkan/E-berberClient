@@ -57,10 +57,10 @@ const Home = () => {
                 component="h3"
                 style={{ marginBottom: ".3em" }}
               >
-                Hoşgeldin Çağla bugün nasılsın ?
+                Aradığın Hizmet Burada
               </Typography>
               <Typography variant="h5" component="h3">
-                buradan güzel görünüyorsun :)
+                Sade - Kolay -Hızlı randevu
               </Typography>
             </Grid>
           </Grid>

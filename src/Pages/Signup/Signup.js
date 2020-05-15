@@ -1,113 +1,19 @@
-// import React from "react";
-// import Grid from "@material-ui/core/Grid";
-// import Button from "@material-ui/core/Button";
-// import TextField from "@material-ui/core/TextField";
-// import { makeStyles } from "@material-ui/core/styles";
-// import Typography from "@material-ui/core/Typography";
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     "& > *": {
-//       margin: theme.spacing(1),
-//       width: 200
-//     }
-//   }
-// }));
-
-// const SignUp = () => {
-//   const classes = useStyles();
-//   return (
-//     <Grid
-//       container
-//       direction="row"
-//       justify="center"
-//       alignItems="center"
-//       style={{ marginTop: "10em" }}
-//     >
-//       <Grid item xs={12} sm={6} md={4}>
-//         <Grid
-//           container
-//           direction="row"
-//           justify="flex-end"
-//           alignItems="flex-end"
-//         >
-//           <Grid item xs={12}>
-//             <Typography
-//               variant="h2"
-//               component="h3"
-//               style={{ marginBottom: ".3em" }}
-//             >
-//               Üye Ol
-//             </Typography>
-//             <TextField
-//               id="standard-basic"
-//               placeholder="İsim"
-//               variant="outlined"
-//               fullWidth
-//               style={{ marginBottom: "1em" }}
-//             ></TextField>
-//             <TextField
-//               id="standard-basic"
-//               placeholder="Soyisim"
-//               variant="outlined"
-//               fullWidth
-//               style={{ marginBottom: "1em" }}
-//             ></TextField>
-//             <TextField
-//               id="standard-basic"
-//               placeholder="E-posta"
-//               variant="outlined"
-//               fullWidth
-//               style={{ marginBottom: "1em" }}
-//             ></TextField>
-//             <TextField
-//               id="standard-basic"
-//               placeholder="Şifre"
-//               variant="outlined"
-//               fullWidth
-//               style={{ marginBottom: "1em" }}
-//             ></TextField>
-//           </Grid>
-//           <Grid
-//             container
-//             direction="row"
-//             justify="space-between"
-//             alignItems="flex-end"
-//           >
-//             <Button
-//               variant="contained"
-//               color="secondary"
-//               className={classes.button}
-//               // endIcon={<Icon>send</Icon>}
-//             >
-//               Kaydol
-//             </Button>
-//           </Grid>
-//         </Grid>
-//       </Grid>
-//     </Grid>
-//   );
-// };
-// export default SignUp;
-// //Ana iskeleti projeye dahil ettin layoutun bir kısmını yaptın
-// //stillendirme işliyor
-// //document js i incele
-// //server.js ve route.js eklemen lazım
-
-import React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import React, { useHistory } from "react";
+import { Agent } from "../../Utils/importFiles";
+import {
+  Avatar,
+  Button,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 function Copyright() {
   return (
@@ -122,28 +28,34 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const SignUp = () => {
   const classes = useStyles();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+
+  const [eMail, seteMail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -160,6 +72,10 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
                 name="firstName"
                 variant="outlined"
                 required
@@ -172,6 +88,10 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
+                value={lastName}
+                onChange={(e) => {
+                  setlastName(e.target.value);
+                }}
                 required
                 fullWidth
                 id="lastName"
@@ -183,6 +103,10 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                value={eMail}
+                onChange={(e) => {
+                  seteMail(e.target.value);
+                }}
                 required
                 fullWidth
                 id="email"
@@ -194,6 +118,10 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 required
                 fullWidth
                 name="password"
@@ -211,11 +139,24 @@ const SignUp = () => {
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            // Agent.Customers.addBarbers()
+            //   .send({
+            //     barberName: barberName,
+            //     eMail: eMail,
+            //     password: password,
+            //   })
+            //   .then((res) => {
+            //     if (res.ok) {
+            //       console.log("signUp succesfuly");
+            //       Storage.SetItem("barber", res.body);
+            //       history.push("/");
+            //     }
+            //   });
           >
             Sign Up
           </Button>

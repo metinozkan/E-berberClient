@@ -159,12 +159,14 @@ const DefaultLayout = (props) => {
         <div
           style={{
             width: "100%",
+            height: "calc(100vh - 65px)",
+            overflow: "auto",
             alignItems: "flex-start",
           }}
         >
           {props.children}
+          <Footer />
         </div>
-        <Footer />
       </div>
     </>
   );
