@@ -18,9 +18,12 @@ export default function Routes() {
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={SignUp} />
       <Route path="/barbers" exact component={Barbers} />
-      <Route path="/barberdetail/:barberId" component={BarberDetail} />
+      <Route path="/barberdetail/:barberId" exact component={BarberDetail} />
       <Route path="/citys" component={Citys} isPrivate />
-      <Route path="/reservation" component={Reservation} />
+      <Route
+        path="/barberdetail/:barberId/reservation"
+        component={Reservation}
+      />
       <Route path="/profile" component={"Profile"} isPrivate />
 
       {/* redirect user to SignIn page if route does not exist and user is not authenticated */}

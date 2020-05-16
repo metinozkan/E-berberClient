@@ -26,7 +26,8 @@ const ServicesListModal = ({
   updateState,
   state,
   updateSelectedServices,
-  handleNextStepper
+  handleNextStepper,
+  barberId,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
@@ -41,7 +42,7 @@ const ServicesListModal = ({
       setOpen(false);
     }
   };
-  console.log("hic hizmet klama,", openModal);
+
   return (
     <div>
       {openConfirm && (
@@ -60,7 +61,7 @@ const ServicesListModal = ({
           marginBottom: "2em",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
         onClick={() => {
           // state.selectedWorker ? handleClickOpen() : setOpenConfirm(true);
@@ -90,6 +91,7 @@ const ServicesListModal = ({
             updateSelectedServices={updateSelectedServices}
             handleCloseModal={handleClose}
             handleNextStepper={handleNextStepper}
+            barberId={barberId}
           ></ServicesList>
         </DialogContent>
         <DialogActions>

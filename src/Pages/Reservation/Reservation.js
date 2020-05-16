@@ -1,4 +1,7 @@
 import React, { Component, useState } from "react";
+import { Storage } from "../../Utils/importFiles";
+import { useParams } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -21,15 +24,15 @@ import ReservationDetailCard from "../../Components/Reservation/ReservationDetai
 //serviceSectiın
 import ServiceSection from "../../Components/Reservation/ServiceSection";
 import ServicesListModal from "../../Components/Reservation/ServicesListModal";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary
-  }
+    color: theme.palette.text.secondary,
+  },
 }));
 const isLogin = false;
 
@@ -40,7 +43,7 @@ const ServiceSectionOrDetail = ({
   selectedService,
   switchSelect = 1,
   updateState,
-  state
+  state,
 }) => {
   return switchSelect == 1 ? (
     <ServiceSection
@@ -59,36 +62,38 @@ class Reservation extends Component {
       isLogin: false,
       stepperActiveStep: 0,
       stepperLoginOrSignUp: true,
-      selectedServices: props.location.state.services,
+      selectedServices: Storage.GetItem("services")
+        ? Storage.GetItem("services")
+        : [],
       selectedWorker: false,
       selectedDate: false,
       reservationObject: { serviceName: "", workerName: "", time: "" },
       stepTwoActive: true,
       stepThreeActive: false,
       showServiceDetailCard: true,
-      showDateDetailCard: false
+      showDateDetailCard: false,
     };
   }
 
-  _updateState = state => {
+  _updateState = (state) => {
     this.setState(state);
   };
-  _updateSelectedServices = service => {
+  _updateSelectedServices = (service) => {
     let array = this.state.selectedServices;
     array.push(service);
     this.setState({
-      selectedServices: array
+      selectedServices: array,
     });
   };
 
-  setActiveStep = step => {
+  setActiveStep = (step) => {
     this.setState({
-      stepperActiveStep: step
+      stepperActiveStep: step,
     });
   };
   setStepperLoginOrSignUp = () => {
     this.setState({
-      stepperLoginOrSignUp: !this.state.stepperLoginOrSignUp
+      stepperLoginOrSignUp: !this.state.stepperLoginOrSignUp,
     });
   };
 
@@ -104,12 +109,12 @@ class Reservation extends Component {
     this.setActiveStep(0);
   };
 
-  deleteSelectedService = id => {
+  deleteSelectedService = (id) => {
     let tempSelectedServices = this.state.selectedServices.filter(
-      service => service.id != id && service
+      (service) => service.id != id && service
     );
     this.setState({
-      selectedServices: tempSelectedServices
+      selectedServices: tempSelectedServices,
     });
   };
 
@@ -117,91 +122,15 @@ class Reservation extends Component {
     console.log(this.state.selectedDate);
     this.setState({
       selectedDate: false,
-      stepTwoActive: true
+      stepTwoActive: true,
     });
   };
-  // getSteps = () => {
-  //   return ["Hizmet ", "Tarih ", "Randevu al"];
-  // };
-
-  // getStepContent = (step, selectedServices, setStepperLoginOrSignUp, selectLogin) => {
-  //   switch (step) {
-  //     case 0:
-  //       return (
-  //         <>
-  //           {this.state.selectedServices &&
-  //             this.state.selectedServices.map(service => (
-  //               <ServiceSectionOrDetail
-  //                 selectedService={service}
-  //                 updateState={this._updateState}
-  //                 state={this.state}
-  //               ></ServiceSectionOrDetail>
-  //             ))}
-  //           <ServicesListModal
-  //             updateState={this._updateState}
-  //             updateSelectedServices={this._updateSelectedServices}
-  //             state={this.state}
-  //             handleNextStepper={this.handleNext}
-  //           ></ServicesListModal>
-  //         </>
-  //       );
-  //     case 1:
-  //       return <CalenderOrDetail />;
-  //     case 2:
-  //       return isLogin == true ? (
-  //         <div>Randevu bilgileri</div>
-  //       ) : selectLogin == false ? (
-  //         <div
-  //           style={{
-  //             display: "flex",
-  //             flexDirection: "column",
-  //             justifyContent: "center"
-  //           }}
-  //         >
-  //           <div>
-  //             Üye girişi yapmak için{" "}
-  //             <u
-  //               onClick={() => {
-  //                 setStepperLoginOrSignUp(true);
-  //               }}
-  //             >
-  //               Tıklayınız
-  //             </u>
-  //           </div>
-  //           <div
-  //             style={{
-  //               display: "flex",
-  //               flexDirection: "row",
-  //               justifyContent: "center"
-  //             }}
-  //           >
-  //             <StepperEndSign></StepperEndSign>
-  //           </div>
-  //         </div>
-  //       ) : (
-  //         <div
-  //           style={{
-  //             display: "flex",
-  //             flexDirection: "row",
-  //             justifyContent: "center",
-  //             alignItems: "center",
-  //             width: "100%"
-  //           }}
-  //         >
-  //           <StepperEndLogin></StepperEndLogin>
-  //           <ReservationDetailCard />
-  //         </div>
-  //       );
-  //     default:
-  //       return "Unknown step";
-  //   }
-  // };
 
   render() {
-    console.log("ne var abi state de ", this.state);
+    const barberId = this.props.match.params.barberId;
+
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
-    console.log("secilen calisan", this.state.selectedServices.length);
     return (
       <div>
         <Grid
@@ -213,7 +142,7 @@ class Reservation extends Component {
             justifyContent: "center",
             alignItems: "flex-start",
             width: "100%",
-            height: "100%"
+            height: "100%",
           }}
         >
           <Grid
@@ -225,7 +154,7 @@ class Reservation extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
-              alignItems: "flex-start"
+              alignItems: "flex-start",
             }}
           >
             <Stepper
@@ -239,7 +168,7 @@ class Reservation extends Component {
                   <Typography>
                     {this.state.showServiceDetailCard == false
                       ? this.state.selectedServices &&
-                        this.state.selectedServices.map(service => (
+                        this.state.selectedServices.map((service) => (
                           <ServiceSection
                             selectedService={service}
                             updateState={this._updateState}
@@ -254,13 +183,17 @@ class Reservation extends Component {
                             service={service}
                           ></ReservationDetailCard>
                         ))}
-                    <ServicesListModal
-                      openModal={this.state.selectedServices.length == 0}
-                      updateState={this._updateState}
-                      updateSelectedServices={this._updateSelectedServices}
-                      state={this.state}
-                      handleNextStepper={this.handleNext}
-                    ></ServicesListModal>
+
+                    {!this.state.selectedDate && (
+                      <ServicesListModal
+                        openModal={this.state.selectedServices.length == 0}
+                        updateState={this._updateState}
+                        updateSelectedServices={this._updateSelectedServices}
+                        state={this.state}
+                        handleNextStepper={this.handleNext}
+                        barberId={barberId}
+                      ></ServicesListModal>
+                    )}
                   </Typography>
                 </StepContent>
               </Step>
@@ -295,7 +228,7 @@ class Reservation extends Component {
                           style={{
                             display: "flex",
                             flexDirection: "row",
-                            justifyContent: "center"
+                            justifyContent: "center",
                           }}
                         >
                           <StepperEndSign
@@ -311,7 +244,7 @@ class Reservation extends Component {
                             flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center",
-                            width: "100%"
+                            width: "100%",
                           }}
                         >
                           <StepperEndLogin

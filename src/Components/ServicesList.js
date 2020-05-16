@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Agent } from "../Utils/importFiles";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,8 +12,8 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 const useStyles = makeStyles({
   table: {
-    minWidth: 300
-  }
+    minWidth: 300,
+  },
 });
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -42,7 +43,7 @@ const sample = [
       onClick={() => {}}
     >
       Seç
-    </Button>
+    </Button>,
   ],
   [
     "Sakal",
@@ -50,7 +51,7 @@ const sample = [
     "10tl",
     <Button variant="outlined" color="secondary" size="small">
       Seç
-    </Button>
+    </Button>,
   ],
   [
     "Yıkama",
@@ -58,7 +59,7 @@ const sample = [
     "115tl",
     <Button variant="outlined" color="secondary" size="small">
       Seç
-    </Button>
+    </Button>,
   ],
   [
     "Çocuk traş",
@@ -66,7 +67,7 @@ const sample = [
     "20tl",
     <Button variant="outlined" color="secondary" size="small">
       Seç
-    </Button>
+    </Button>,
   ],
   [
     "Damat tıraşı",
@@ -74,7 +75,7 @@ const sample = [
     "500tl",
     <Button variant="outlined" color="secondary" size="small">
       Seç
-    </Button>
+    </Button>,
   ],
   [
     "Ense kılı",
@@ -82,8 +83,8 @@ const sample = [
     "3tl",
     <Button variant="outlined" color="secondary" size="small">
       Seç
-    </Button>
-  ]
+    </Button>,
+  ],
   // ["Cupcake", 305, 3.7, 67, 4.3],
   // ["Gingerbread", 356, 16.0, 49, 3.9]
 ]; // const rows = [];
@@ -96,48 +97,69 @@ for (let i = 0; i < sample.length; i += 1) {
 export const ServicesList = ({
   updateSelectedServices,
   handleCloseModal,
-  handleNextStepper
+  handleNextStepper,
+  barberId,
 }) => {
   const classes = useStyles();
+  const [services, setServices] = useState([]);
 
+  const _getServices = () => {
+    Agent.ServiceBarber.getServices(barberId).then((res) => {
+      if (res.ok) {
+        setServices(res.body);
+      }
+    });
+  };
+  useEffect(() => {
+    _getServices();
+  }, [barberId]);
   return (
     <TableContainer component={Paper} variant="outlined">
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Hizmetler</TableCell>
-            <TableCell align="right">Süre</TableCell>
-            <TableCell align="right">Ücret</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
-              <TableCell
-                align="right"
-                onClick={() => {
-                  updateSelectedServices({
-                    id: row.id,
-                    name: row.name,
-                    time: row.time,
-                    price: row.price
-                  });
-                  handleCloseModal();
-                  handleNextStepper();
-                }}
-              >
-                {row.button}
-              </TableCell>
+      {services.length > 0 ? (
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Hizmetler</TableCell>
+              <TableCell align="right">Süre</TableCell>
+              <TableCell align="right">Ücret</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {services.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.time}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    onClick={() => {
+                      updateSelectedServices({
+                        id: row.id,
+                        name: row.name,
+                        time: row.time,
+                        price: row.price,
+                      });
+                      handleCloseModal();
+                      handleNextStepper();
+                    }}
+                  >
+                    Seç
+                  </Button>
+                  ,
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div> loading</div>
+      )}
     </TableContainer>
   );
 };

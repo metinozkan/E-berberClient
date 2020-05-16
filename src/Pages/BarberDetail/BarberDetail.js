@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Agent } from "../../Utils/importFiles";
+import { Agent, Storage } from "../../Utils/importFiles";
 import { Grid, CardContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -83,7 +83,7 @@ for (let i = 0; i < sample.length; i += 1) {
 //   createData("Gingerbread", 356, 16.0, 49, 3.9)
 // ];
 
-function SimpleTable({ services }) {
+function SimpleTable({ services, barberId }) {
   const classes = useStyles();
 
   return (
@@ -114,7 +114,7 @@ function SimpleTable({ services }) {
               >
                 <Link
                   to={{
-                    pathname: "/reservation",
+                    pathname: `/barberdetail/${barberId}/reservation`,
                     state: {
                       services: [
                         {
@@ -126,6 +126,17 @@ function SimpleTable({ services }) {
                         },
                       ],
                     },
+                  }}
+                  onClick={() => {
+                    Storage.SetItem("services", [
+                      {
+                        id: row.id,
+                        name: row.name,
+                        time: row.time,
+                        price: row.price,
+                        workerId: null,
+                      },
+                    ]);
                   }}
                 >
                   <Button variant="outlined" color="secondary" size="small">
@@ -183,12 +194,10 @@ const Gmap = "";
 const BarberDetail = () => {
   const [services, setServices] = useState([]);
   const params = useParams();
-  console.log(params);
 
   const _getBarberService = () => {
     Agent.ServiceBarber.getServices(params.barberId).then((res) => {
       if (res.ok) {
-        console.log(res.body);
         setServices(res.body);
       }
     });
@@ -196,7 +205,7 @@ const BarberDetail = () => {
 
   useEffect(() => {
     _getBarberService();
-  });
+  }, []);
   return (
     <Grid
       container
@@ -233,7 +242,10 @@ const BarberDetail = () => {
               paddingTop: "1em",
             }}
           >
-            <SimpleTable services={services}></SimpleTable>
+            <SimpleTable
+              services={services}
+              barberId={params.barberId}
+            ></SimpleTable>
           </Grid>
           <Grid
             item
