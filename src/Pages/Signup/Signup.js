@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch, useParams } from "react-router-dom";
 import { Agent } from "../../Utils/importFiles";
 import {
   Avatar,

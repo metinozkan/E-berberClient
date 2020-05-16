@@ -69,8 +69,9 @@ const Staffs = {
 };
 
 const ServiceBarber = {
-  getServiceBarber: () => requests.get("/ServiceBarber"),
-  addServiceBarber: () => requests.post("/ServiceBarber/add"),
+  getServices: (barberId) => requests.get(`/ServiceBarber/Barber/${barberId}`),
+  addService: () => requests.post("/ServiceBarber/add"),
+  updateService: (barberId) => requests.put(`/ServiceBarber/put/${barberId}`),
 };
 
 export default {

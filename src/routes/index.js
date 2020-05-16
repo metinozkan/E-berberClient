@@ -18,7 +18,7 @@ export default function Routes() {
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={SignUp} />
       <Route path="/barbers" exact component={Barbers} />
-      <Route path="/barberdetail" component={BarberDetail} />
+      <Route path="/barberdetail/:barberId" component={BarberDetail} />
       <Route path="/citys" component={Citys} isPrivate />
       <Route path="/reservation" component={Reservation} />
       <Route path="/profile" component={"Profile"} isPrivate />
