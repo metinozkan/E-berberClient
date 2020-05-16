@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BarberCard = () => {
+export const BarberCard = ({ barber }) => {
   const classes = useStyles();
   const imageMahmut = "";
   return (
@@ -51,13 +51,13 @@ export const BarberCard = () => {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  Kuaför Mahmut
+                  {barber.barberName}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Sakaryanın yerliisii
+                  {barber.district}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  no:208 çark cad.
+                  {barber.adress}
                 </Typography>
               </Grid>
               <Grid item style={{ textAlign: "right" }}>
@@ -71,7 +71,10 @@ export const BarberCard = () => {
                     //  Router.push("/barberdetail");
                   }}
                 >
-                  <Link to="/barberdetail" style={{ color: "black" }}>
+                  <Link
+                    to={`/barberdetail/${barber.id}`}
+                    style={{ color: "black" }}
+                  >
                     Randevu Al
                   </Link>
                 </Button>

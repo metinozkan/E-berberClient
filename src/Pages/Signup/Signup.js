@@ -1,4 +1,5 @@
-import React, { useHistory } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Agent } from "../../Utils/importFiles";
 import {
   Avatar,
@@ -59,7 +60,7 @@ const SignUp = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
