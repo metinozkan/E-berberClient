@@ -1,4 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Agent } from "../../Utils/importFiles";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
@@ -12,44 +14,35 @@ import Select from "@material-ui/core/Select";
 
 import InputLabel from "@material-ui/core/InputLabel";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   cardPadding: {
     padding: "8px",
     "&:last-child": {
-      paddingBottom: "8px"
-    }
-  }
+      paddingBottom: "8px",
+    },
+  },
 }));
 
-const worker = [
-  { id: 1, name: "Ahmet", surname: "Ağa" },
-  { id: 2, name: "Mehmet", surname: "Usta" },
-  { id: 3, name: "Zeki", surname: "Altınparmak" }
-];
-const ServiceSection = ({ selectedService, updateState, state }) => {
+const ServiceSection = ({
+  selectedService,
+  updateState,
+  state,
+  personnels,
+}) => {
   const classes = useStyles();
-  const [workerId, setWorkerId] = React.useState(
-    state.selectedWorker && state.selectedWorker.id
-  );
-  const handleChange = event => {
-    updateState({
-      selectedWorker: worker.find(w => w.id == event.target.value)
-    });
 
-    setWorkerId(event.target.value);
-  };
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-
+  console.log("ServiceSection", state.selectedPersonnel.staffName);
   const inputLabel = React.useRef(null);
   return (
     <>
@@ -60,7 +53,7 @@ const ServiceSection = ({ selectedService, updateState, state }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Grid
@@ -81,7 +74,7 @@ const ServiceSection = ({ selectedService, updateState, state }) => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <FormControl
@@ -98,15 +91,20 @@ const ServiceSection = ({ selectedService, updateState, state }) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={workerId}
-                  onChange={handleChange}
+                  defaultValue={state.selectedPersonnel.id}
+                  onChange={(event) => {
+                    updateState({
+                      selectedPersonnel: personnels.find(
+                        (w) => w.id == event.target.value
+                      ),
+                    });
+                  }}
                   labelWidth={labelWidth}
                 >
-                  <MenuItem value="">
-                    <em>-</em>
-                  </MenuItem>
-                  {worker.map(w => (
-                    <MenuItem value={w.id}>{w.name}</MenuItem>
+                  {personnels.map((personnel) => (
+                    <MenuItem value={personnel.id}>
+                      {personnel.staffName}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>

@@ -1,6 +1,5 @@
 import React, { Component, useState } from "react";
-import { Storage } from "../../Utils/importFiles";
-import { useParams } from "react-router-dom";
+import { Storage, Agent } from "../../Utils/importFiles";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -65,13 +64,14 @@ class Reservation extends Component {
       selectedServices: Storage.GetItem("services")
         ? Storage.GetItem("services")
         : [],
-      selectedWorker: false,
       selectedDate: false,
       reservationObject: { serviceName: "", workerName: "", time: "" },
       stepTwoActive: true,
       stepThreeActive: false,
-      showServiceDetailCard: true,
+      showServiceDetailCard: false,
       showDateDetailCard: false,
+      personnels: [],
+      selectedPersonnel: false,
     };
   }
 
@@ -125,8 +125,30 @@ class Reservation extends Component {
       stepTwoActive: true,
     });
   };
+  _getPersonnel = () => {
+    Agent.Staffs.getStaffBarber(this.props.match.params.barberId).then(
+      (res) => {
+        if (res.ok) {
+          console.log("aeras", res.body[0]);
+          this.setState({
+            personnels: res.body,
+            selectedPersonnel: res.body[0],
+          });
+        }
+      }
+    );
+  };
 
+  componentDidMount() {
+    this._getPersonnel();
+  }
   render() {
+    console.log(
+      this.state.personnels,
+      "--------------",
+      this.state.selectedPersonnel
+    );
+
     const barberId = this.props.match.params.barberId;
 
     //const steps = this.getSteps();
@@ -166,23 +188,25 @@ class Reservation extends Component {
                 <StepLabel>Hizmet</StepLabel>
                 <StepContent>
                   <Typography>
-                    {this.state.showServiceDetailCard == false
-                      ? this.state.selectedServices &&
-                        this.state.selectedServices.map((service) => (
-                          <ServiceSection
-                            selectedService={service}
-                            updateState={this._updateState}
-                            state={this.state}
-                          ></ServiceSection>
-                        ))
-                      : this.state.selectedServices &&
-                        this.state.selectedServices.map((service, index) => (
+                    {this.state.selectedServices &&
+                      this.state.selectedServices.map((service, index) =>
+                        index === 0 ? (
+                          this.state.personnels.length > 0 && (
+                            <ServiceSection
+                              selectedService={service}
+                              updateState={this._updateState}
+                              state={this.state}
+                              personnels={this.state.personnels}
+                            ></ServiceSection>
+                          )
+                        ) : (
                           <ReservationDetailCard
                             onPress={this.deleteSelectedService}
                             key={index}
                             service={service}
                           ></ReservationDetailCard>
-                        ))}
+                        )
+                      )}
 
                     {!this.state.selectedDate && (
                       <ServicesListModal
@@ -260,48 +284,7 @@ class Reservation extends Component {
                   </Typography>
                 </StepContent>
               </Step>
-
-              {/* {steps.map((label, index) => (
-              <Step key={label} onClick={() => {}}>
-                <StepLabel>{label}</StepLabel>
-                <StepContent>
-                  <Typography>
-                    {this.getStepContent(
-                      index,
-                      this.state.selectedServices,
-                      this.setStepperLoginOrSignUp,
-                      this.state.stepperLoginOrSignUp
-                    )}
-                  </Typography>
-                  <div>
-                    <div>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                      >
-                        Back
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleNext}
-                      >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Button>
-                    </div>
-                  </div>
-                </StepContent>
-              </Step>
-            ))} */}
             </Stepper>
-            {/* {activeStep === steps.length && (
-            <Paper square elevation={0}>
-              <Typography>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={this.handleReset}>Reset</Button>
-            </Paper>
-          )} */}
           </Grid>
         </Grid>
       </div>
