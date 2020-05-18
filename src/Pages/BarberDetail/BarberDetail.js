@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Agent, Storage } from "../../Utils/importFiles";
+import { Agent, Storage, Loading } from "../../Utils/importFiles";
 import { Grid, CardContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -193,12 +193,14 @@ const BerberMahmut = "";
 const Gmap = "";
 const BarberDetail = () => {
   const [services, setServices] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
 
   const _getBarberService = () => {
     Agent.ServiceBarber.getServices(params.barberId).then((res) => {
       if (res.ok) {
         setServices(res.body);
+        setIsLoading(false);
       }
     });
   };
@@ -215,7 +217,7 @@ const BarberDetail = () => {
       spacing={0}
       style={{}}
     >
-      {services.length > 0 ? (
+      {!isLoading ? (
         <Grid item container xs={12} sm={10} md={9}>
           <Grid
             item
@@ -328,7 +330,7 @@ const BarberDetail = () => {
           </Grid>
         </Grid>
       ) : (
-        <div>Loading</div>
+        <Loading />
       )}
     </Grid>
   );

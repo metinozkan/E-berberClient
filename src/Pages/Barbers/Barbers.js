@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Agent } from "../../Utils/importFiles";
+import { Agent, Loading } from "../../Utils/importFiles";
 import { makeStyles } from "@material-ui/core/styles";
 import { SearchInput } from "./components/SearchInput";
 import { BarberCard } from "./components/BarberCard";
@@ -10,11 +10,12 @@ import { Typography, Grid } from "@material-ui/core";
 
 const Barbers = () => {
   const [barbers, setBarbers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const _getBarbers = () => {
     Agent.Barbers.getBarbers().then((res) => {
       if (res.ok) {
-        console.log(res.body);
         setBarbers(res.body);
+        setLoading(false);
       }
     });
   };
@@ -27,7 +28,7 @@ const Barbers = () => {
       <Grid item xs={12} sm={8} style={{ padding: "1em 0px" }}>
         <SearchInput />
       </Grid>
-      {barbers.length > 0 ? (
+      {!loading ? (
         <Grid
           container
           direction="row"
@@ -48,17 +49,7 @@ const Barbers = () => {
           </Grid>
         </Grid>
       ) : (
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          loading
-        </div>
+        <Loading />
       )}
     </Grid>
   );

@@ -129,7 +129,6 @@ class Reservation extends Component {
     Agent.Staffs.getStaffBarber(this.props.match.params.barberId).then(
       (res) => {
         if (res.ok) {
-          console.log("aeras", res.body[0]);
           this.setState({
             personnels: res.body,
             selectedPersonnel: res.body[0],
@@ -143,12 +142,6 @@ class Reservation extends Component {
     this._getPersonnel();
   }
   render() {
-    console.log(
-      this.state.personnels,
-      "--------------",
-      this.state.selectedPersonnel
-    );
-
     const barberId = this.props.match.params.barberId;
 
     //const steps = this.getSteps();

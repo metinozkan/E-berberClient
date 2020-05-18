@@ -42,7 +42,6 @@ const ServiceSection = ({
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  console.log("ServiceSection", state.selectedPersonnel.staffName);
   const inputLabel = React.useRef(null);
   return (
     <>
