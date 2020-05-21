@@ -64,7 +64,6 @@ const DefaultLayout = (props) => {
     setAnchorEl(null);
   };
 
-  console.log("path", path);
   return (
     <>
       <div className={classes.root} style={{ height: "100%", width: "100%" }}>

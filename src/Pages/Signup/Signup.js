@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useHistory, useRouteMatch, useParams } from "react-router-dom";
-import { Agent } from "../../Utils/importFiles";
+import { useHistory, Redirect } from "react-router-dom";
+import { Agent, Storage } from "../../Utils/importFiles";
 import {
   Avatar,
   Button,
@@ -58,7 +58,9 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  return (
+  const customer = Storage.GetItem("customer");
+  console.log("gelmedi", customer);
+  return !customer ? (
     <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}
       <div className={classes.paper}>
@@ -145,19 +147,27 @@ const SignUp = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            // Agent.Customers.addBarbers()
-            //   .send({
-            //     barberName: barberName,
-            //     eMail: eMail,
-            //     password: password,
-            //   })
-            //   .then((res) => {
-            //     if (res.ok) {
-            //       console.log("signUp succesfuly");
-            //       Storage.SetItem("barber", res.body);
-            //       history.push("/");
-            //     }
-            //   });
+            onClick={() => {
+              Agent.Customers.addCustomer()
+                .send({
+                  name: firstName,
+                  lastName: lastName,
+                  eMail: eMail,
+                  password: password,
+                })
+                .then((res) => {
+                  if (res.ok) {
+                    console.log("signUp succesfuly");
+                    Storage.SetItem("customer", {
+                      id: res.body.id,
+                      name: res.body.name,
+                      lastName: res.body.lastName,
+                      eMail: res.body.eMail,
+                    });
+                    history.push("/");
+                  }
+                });
+            }}
           >
             Sign Up
           </Button>
@@ -174,6 +184,8 @@ const SignUp = () => {
         <Copyright />
       </Box>
     </Container>
+  ) : (
+    <Redirect to="/" />
   );
 };
 export default SignUp;

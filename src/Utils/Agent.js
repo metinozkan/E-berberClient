@@ -22,7 +22,7 @@ const Barbers = {
 
 const Login = {
   loginBarber: () => requests.post("/barbers/login"),
-  loginCustomer: () => request.post("/customers/login"),
+  loginCustomer: () => requests.post("/Customers/login"),
 };
 
 const Appointments = {
@@ -73,6 +73,16 @@ const ServiceBarber = {
   updateService: (barberId) => requests.put(`/ServiceBarber/put/${barberId}`),
 };
 
+const Customers = {
+  getCustomers: (barberId) => requests.get(`/Customer/Barber/${barberId}`),
+  addCustomer: () => requests.post("/Customers/add"),
+  updateCustomer: (customerId) => requests.put(`/Customers/edit/${customerId}`),
+  login: () => requests.post("/Customers/login"),
+
+  getCustomer: (customerId) =>
+    requests.get(`/Customers/getCustomer/${customerId}`),
+};
+
 export default {
   Barbers,
   ServiceBarber,
@@ -80,6 +90,7 @@ export default {
   Login,
   Appointments,
   WorkHours,
+  Customers,
   //   setToken: (_token) => {
   //     token = _token;
   //   },

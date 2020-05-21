@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Agent } from "../../Utils/importFiles";
+import { useHistory, Redirect } from "react-router-dom";
+import { Agent, Storage } from "../../Utils/importFiles";
 import {
   Avatar,
   Button,
@@ -54,7 +54,10 @@ const Login = () => {
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
-  return (
+
+  const customer = Storage.GetItem("customer");
+
+  return !customer ? (
     <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}
       <div className={classes.paper}>
@@ -106,7 +109,7 @@ const Login = () => {
             color="primary"
             className={classes.submit}
             onClick={() => {
-              Agent.Login.loginCustomer()
+              Agent.Customers.login()
                 .send({
                   eMail: eMail,
                   password: password,
@@ -139,6 +142,8 @@ const Login = () => {
         <Copyright />
       </Box>
     </Container>
+  ) : (
+    <Redirect to="/" />
   );
 };
 export default Login;
