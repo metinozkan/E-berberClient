@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouteMatch } from "react-router-dom";
+import { Storage } from "../../Utils/Storage";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -51,6 +52,7 @@ const DefaultLayout = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  const customer = Storage.GetItem("customer");
   const { path } = useRouteMatch();
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -130,29 +132,36 @@ const DefaultLayout = (props) => {
               </div>
             ) : (
               <div>
-                <Button
-                  variant="outlined"
-                  style={{ marginRight: ".5em" }}
-                  onClick={() => {
-                    //     Router.push("/signup");
-                  }}
-                >
-                  <Link to="/signup" style={{ color: "black" }}>
-                    Üye ol
-                  </Link>
-                </Button>
-
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  // endIcon={<Icon>send</Icon>}
-                  onClick={() => {
-                    //            Router.push("/login");
-                  }}
-                >
-                  <Link to="/login">Giriş Yap</Link>
-                </Button>
+                {customer ? (
+                  <div style={{ color: "white" }}>
+                    {customer.name} {customer.lastName}
+                  </div>
+                ) : (
+                  <>
+                    <Button
+                      variant="outlined"
+                      style={{ marginRight: ".5em" }}
+                      onClick={() => {
+                        //     Router.push("/signup");
+                      }}
+                    >
+                      <Link to="/signup" style={{ color: "black" }}>
+                        Üye ol
+                      </Link>
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                      // endIcon={<Icon>send</Icon>}
+                      onClick={() => {
+                        //            Router.push("/login");
+                      }}
+                    >
+                      <Link to="/login">Giriş Yap</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             )}
           </Toolbar>
@@ -160,16 +169,14 @@ const DefaultLayout = (props) => {
         <div
           style={{
             width: "100%",
-            height: "calc(100vh - 65px)",
+            height: "100vh",
             overflow: "auto",
             alignItems: "flex-start",
           }}
         >
           {props.children}
-          {path.includes("login") || path.includes("signup") ? null : (
-            <Footer />
-          )}
         </div>
+        {path.includes("login") || path.includes("signup") ? null : <Footer />}
       </div>
     </>
   );

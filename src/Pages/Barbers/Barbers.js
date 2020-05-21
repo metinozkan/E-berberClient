@@ -25,9 +25,9 @@ const Barbers = () => {
   }, []);
   return (
     <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs={12} sm={8} style={{ padding: "1em 0px" }}>
+      {/* <Grid item xs={12} sm={8} style={{ padding: "1em 0px" }}>
         <SearchInput />
-      </Grid>
+      </Grid> */}
       {!loading ? (
         <Grid
           container

@@ -116,6 +116,10 @@ const Login = () => {
                 })
                 .then((res) => {
                   if (res.ok) {
+                    Storage.SetItem("customer", {
+                      ...res.body,
+                      password: "****",
+                    });
                     console.log("login", res.body);
                     history.push("/");
                   }

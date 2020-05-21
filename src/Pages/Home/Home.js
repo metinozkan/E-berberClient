@@ -31,8 +31,7 @@ const Home = () => {
         justify="flex-start"
         alignItems="center"
         style={{
-          backgroundImage: `url(${Background} )`,
-          height: "100vh",
+          height: "100%",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: "1",
@@ -43,8 +42,8 @@ const Home = () => {
           style={{
             position: "absolute",
             width: "100%",
-            height: "100vh",
-            backgroundColor: "#e2e2e2",
+            height: "100%",
+            backgroundImage: `url(${Background} )`,
             opacity: "0.5",
           }}
         ></div>
@@ -117,7 +116,6 @@ const Home = () => {
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={12}></Grid>
         {/* <Grid item xs={6}>
           <img src={require("../public/berber.jpg")}></img>
         </Grid> */}
