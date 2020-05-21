@@ -61,9 +61,10 @@ class Reservation extends Component {
       isLogin: false,
       stepperActiveStep: 0,
       stepperLoginOrSignUp: true,
-      selectedServices: Storage.GetItem("services")
-        ? Storage.GetItem("services")
-        : [],
+      selectedServices: this.props.match.params.services
+        ? this.props.match.params.services
+        : Storage.GetItem("services"),
+
       selectedDate: false,
       reservationObject: { serviceName: "", workerName: "", time: "" },
       stepTwoActive: true,
@@ -141,9 +142,10 @@ class Reservation extends Component {
   componentDidMount() {
     this._getPersonnel();
   }
+
   render() {
     const barberId = this.props.match.params.barberId;
-
+    console.log("ne imis", this.state.selectedServices);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     return (
@@ -183,15 +185,13 @@ class Reservation extends Component {
                   <Typography>
                     {this.state.selectedServices &&
                       this.state.selectedServices.map((service, index) =>
-                        index === 0 ? (
-                          this.state.personnels.length > 0 && (
-                            <ServiceSection
-                              selectedService={service}
-                              updateState={this._updateState}
-                              state={this.state}
-                              personnels={this.state.personnels}
-                            ></ServiceSection>
-                          )
+                        index === 0 && this.state.personnels.length > 0 ? (
+                          <ServiceSection
+                            selectedService={service}
+                            updateState={this._updateState}
+                            state={this.state}
+                            personnels={this.state.personnels}
+                          ></ServiceSection>
                         ) : (
                           <ReservationDetailCard
                             onPress={this.deleteSelectedService}

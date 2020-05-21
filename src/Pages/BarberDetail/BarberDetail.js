@@ -212,7 +212,6 @@ const BarberDetail = () => {
   const _getBarberWorkHours = () => {
     Agent.WorkHours.getWorkHoursBarber(params.barberId).then((res) => {
       if (res.ok) {
-        console.log(res.body);
         setWorkHours(res.body);
       }
     });
@@ -222,7 +221,6 @@ const BarberDetail = () => {
     Agent.Barbers.getBarber(params.barberId).then((res) => {
       if (res.ok) {
         setBarber(res.body);
-        console.log("res.;", res.body);
       }
     });
   };
