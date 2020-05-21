@@ -8,7 +8,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-//import Background from "../public/berber.jpg";
+import Background from "../../Resources/Images/bgberber.jpg";
 import Typography from "@material-ui/core/Typography";
 import { StoreMallDirectory, Navigation, Search } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const Home = () => {
         justify="flex-start"
         alignItems="center"
         style={{
-          /// backgroundImage: `url(${Background} )`,
+          backgroundImage: `url(${Background} )`,
           height: "100vh",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -45,7 +45,7 @@ const Home = () => {
             width: "100%",
             height: "100vh",
             backgroundColor: "#e2e2e2",
-            opacity: "0.7",
+            opacity: "0.5",
           }}
         ></div>
         <Grid item xs={2}></Grid>

@@ -6,7 +6,7 @@ const protocol = "https:";
 //   ? "167.71.69.250"
 //   : `${window.location.host}`;
 
-export const API_ROOT = "spring-boot-jpa-hibernate-pgsq.herokuapp.com";
+export const API_ROOT = "eberber.herokuapp.com";
 const requests = {
   del: (url) => request.del(`${protocol}//${API_ROOT}${url}`),
   get: (url) => request.get(`${protocol}//${API_ROOT}${url}`),

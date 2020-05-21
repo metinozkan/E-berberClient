@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Redirect } from "react-router-dom";
 import Route from "./Route";
 
 import Login from "../Pages/Login/Login";
@@ -12,11 +12,16 @@ import Reservation from "../Pages/Reservation/Reservation";
 //import Dashboard from "../pages/Dashboard";
 //import Profile from "../pages/Profile";
 
+const NotFound = () => {
+  return <Redirect to="/" />;
+};
 export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/login" component={Login} />
+
       <Route path="/barbers" exact component={Barbers} />
       <Route path="/barberdetail/:barberId" exact component={BarberDetail} />
       <Route path="/citys" component={Citys} isPrivate />
@@ -27,7 +32,7 @@ export default function Routes() {
       <Route path="/profile" component={"Profile"} isPrivate />
 
       {/* redirect user to SignIn page if route does not exist and user is not authenticated */}
-      <Route component={Login} />
+      <Route component={Home} />
     </Switch>
   );
 }

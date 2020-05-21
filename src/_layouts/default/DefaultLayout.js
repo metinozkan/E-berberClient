@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useRouteMatch } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -51,6 +51,7 @@ const DefaultLayout = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+  const { path } = useRouteMatch();
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
@@ -63,6 +64,7 @@ const DefaultLayout = (props) => {
     setAnchorEl(null);
   };
 
+  console.log("path", path);
   return (
     <>
       <div className={classes.root} style={{ height: "100%", width: "100%" }}>
@@ -165,7 +167,9 @@ const DefaultLayout = (props) => {
           }}
         >
           {props.children}
-          <Footer />
+          {path.includes("login") || path.includes("signup") ? null : (
+            <Footer />
+          )}
         </div>
       </div>
     </>
