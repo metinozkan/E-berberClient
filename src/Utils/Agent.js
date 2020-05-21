@@ -18,6 +18,7 @@ const requests = {
 const Barbers = {
   getBarbers: () => requests.get("/barbers"),
   addBarbers: () => requests.post("/barbers/add"),
+  getBarber: (barberId) => requests.get(`/barbers/${barberId}`),
 };
 
 const Login = {
@@ -43,7 +44,7 @@ const Appointments = {
   customerFilter: () => requests.post("/Appointments/customerFilter"),
 
   getStaff: (staffId) => requests.get(`/Appointments/staff/${staffId}`),
-  getBarber: (barberId) => requests.get(`/Appointments/barber/${barberId}`),
+  getBarber: (barberId) => requests.get(`/Appointments/barbers/${barberId}`),
   getCustomer: (customerId) =>
     requests.get(`/Appointments/customer/${customerId}`),
 };
@@ -54,6 +55,8 @@ const WorkHours = {
   updateWorkHours: () => requests.get("/WorkHours/put"),
   addWorkHours: () => requests.get("/WorkHours/add"),
 
+  getWorkHoursBarber: (barberId) =>
+    requests.get(`/WorkHours/barber/${barberId}`),
   dayStaff: () => requests.post("/WorkHours/staff/day"),
   getStaffWorkHours: (staffId) => requests.get(`/WorkHours/staff/${staffId}`),
 };

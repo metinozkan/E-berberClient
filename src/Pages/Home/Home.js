@@ -19,7 +19,21 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
 }));
-
+const Footer = () => {
+  return (
+    <Paper
+      style={{
+        height: "150px",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      FOOOTER
+    </Paper>
+  );
+};
 const Home = () => {
   const classes = useStyles();
 
@@ -36,6 +50,7 @@ const Home = () => {
           backgroundRepeat: "no-repeat",
           zIndex: "1",
           width: "100%",
+          position: "relative",
         }}
       >
         <div
@@ -120,6 +135,7 @@ const Home = () => {
           <img src={require("../public/berber.jpg")}></img>
         </Grid> */}
       </Grid>
+      <Footer />
     </>
   );
 };

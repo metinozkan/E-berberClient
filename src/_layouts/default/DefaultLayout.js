@@ -66,6 +66,7 @@ const DefaultLayout = (props) => {
     setAnchorEl(null);
   };
 
+  console.log("path ne ", path);
   return (
     <>
       <div className={classes.root} style={{ height: "100%", width: "100%" }}>
@@ -169,14 +170,14 @@ const DefaultLayout = (props) => {
         <div
           style={{
             width: "100%",
-            height: "100vh",
+            height: "calc(100vh - 65px)",
             overflow: "auto",
             alignItems: "flex-start",
           }}
         >
           {props.children}
         </div>
-        {path.includes("login") || path.includes("signup") ? null : <Footer />}
+        {/* {path.includes("login") || path.includes("signup") ? null : <Footer />} */}
       </div>
     </>
   );

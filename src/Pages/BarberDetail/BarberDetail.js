@@ -151,7 +151,7 @@ function SimpleTable({ services, barberId }) {
     </Paper>
   );
 }
-const ClocksTable = () => {
+const ClocksTable = ({ workHours }) => {
   const dsays = [
     ["Pazartesi", "08:00-24:00"],
     ["Salı", "08:00-22:00"],
@@ -175,12 +175,14 @@ const ClocksTable = () => {
           </TableRow>
         </TableHead> */}
         <TableBody>
-          {days.map((day) => (
+          {workHours.map((day) => (
             <TableRow key={day.name}>
               <TableCell component="th" scope="row">
-                {day.name}
+                {day.day}
               </TableCell>
-              <TableCell align="right">{day.time}</TableCell>
+              <TableCell align="right">
+                {day.startHour}-{day.endHour}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -194,6 +196,9 @@ const Gmap = "";
 const BarberDetail = () => {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [workHours, setWorkHours] = useState(false);
+  const [barber, setBarber] = useState(false);
+
   const params = useParams();
 
   const _getBarberService = () => {
@@ -204,9 +209,28 @@ const BarberDetail = () => {
       }
     });
   };
+  const _getBarberWorkHours = () => {
+    Agent.WorkHours.getWorkHoursBarber(params.barberId).then((res) => {
+      if (res.ok) {
+        console.log(res.body);
+        setWorkHours(res.body);
+      }
+    });
+  };
+
+  const _getBarber = () => {
+    Agent.Barbers.getBarber(params.barberId).then((res) => {
+      if (res.ok) {
+        setBarber(res.body);
+        console.log("res.;", res.body);
+      }
+    });
+  };
 
   useEffect(() => {
     _getBarberService();
+    _getBarberWorkHours();
+    _getBarber();
   }, []);
   return (
     <Grid
@@ -218,7 +242,18 @@ const BarberDetail = () => {
       style={{}}
     >
       {!isLoading ? (
-        <Grid item container xs={12} sm={10} md={9}>
+        <Grid
+          item
+          container
+          xs={12}
+          sm={11}
+          md={10}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
           <Grid
             item
             xs={12}
@@ -252,13 +287,14 @@ const BarberDetail = () => {
           <Grid
             item
             xs={12}
+            sm={11}
             md={5}
             style={{
               height: "auto",
               overflow: "hidden",
             }}
           >
-            <Grid item x={12}>
+            <Grid item xs={12}>
               <div style={{ padding: "1em" }}>
                 <Card
                   style={{
@@ -268,7 +304,7 @@ const BarberDetail = () => {
                 >
                   <CardContent>
                     <Grid container>
-                      <Grid
+                      {/* <Grid
                         item
                         container
                         xs={12}
@@ -285,7 +321,7 @@ const BarberDetail = () => {
                           acıklamaasd asd asşldk asd as ubrap rakip olarak bul
                           sdfas
                         </Grid>
-                      </Grid>
+                      </Grid> */}
 
                       <Grid
                         item
@@ -301,23 +337,27 @@ const BarberDetail = () => {
                           Çalışma Saatleri:
                         </Grid>
                         <Grid item xs={8} style={{}}>
-                          <ClocksTable></ClocksTable>
+                          {workHours && (
+                            <ClocksTable workHours={workHours}></ClocksTable>
+                          )}
                         </Grid>
                       </Grid>
 
-                      <Grid
-                        item
-                        container
-                        xs={12}
-                        style={{ marginBottom: "1em" }}
-                      >
-                        <Grid item xs={4} style={{}}>
-                          Adres Tarifi:
+                      {barber && (
+                        <Grid
+                          item
+                          container
+                          xs={12}
+                          style={{ marginBottom: "1em" }}
+                        >
+                          <Grid item xs={4} style={{}}>
+                            Adres Tarifi:
+                          </Grid>
+                          <Grid item xs={8} style={{}}>
+                            {barber.adress}
+                          </Grid>
                         </Grid>
-                        <Grid item xs={8} style={{}}>
-                          Serdivan Vatan Bilgisayar yanı
-                        </Grid>
-                      </Grid>
+                      )}
                     </Grid>
                   </CardContent>
                 </Card>
