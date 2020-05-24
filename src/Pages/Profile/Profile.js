@@ -16,13 +16,14 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   Container,
+  Divider,
 } from "@material-ui/core";
 
 const TopNavBar = styled.div`
   width: 100%;
   height: 35px;
   padding: 0.5em;
-  margin-top: 1em;
+  margin: 1em 0px;
   border-bottom: 1px solid darkGray;
   display: flex;
   flex-direction: row;
@@ -49,10 +50,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DetailCardRow = ({ title, value }) => {
+const DetailCardRow = ({ title, value, bg }) => {
   return (
-    <div style={{ position: "relative", width: "100%", padding: ".5em" }}>
-      <span style={{ textTransform: "uppercase", fontWeight: "bold" }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        padding: ".5em",
+        background: bg && "#f8f8f8",
+        padding: ".5em 0px",
+      }}
+    >
+      <span style={{ textTransform: "uppercase", fontWeight: 450 }}>
         {title}
       </span>
       <span style={{ position: "absolute", left: "200px" }}>{value}</span>
@@ -60,9 +69,19 @@ const DetailCardRow = ({ title, value }) => {
   );
 };
 const DetailCard = ({}) => {
+  const classes = useStyles();
+
   return (
-    <div style={{ width: "60%" }}>
+    <div style={{ width: "100%", margin: "1em 0px" }}>
+      <Typography variant="h6" gutterBottom>
+        Profil Detay
+      </Typography>
       <DetailCardRow title={"Ad soyad"} value="Metin özkan" />
+      <DetailCardRow title={"Doğum Tarihi"} value="19/09/1997" bg />
+      <DetailCardRow title={"E posta"} value="metin.ozkn@hotmail.com" />
+      <DetailCardRow title={"Cep Telefonu"} value="+90 535 053 15 76" bg />
+
+      <Divider variant="middle" style={{ marginTop: "2em" }} />
     </div>
   );
 };
@@ -89,7 +108,11 @@ const Profile = ({}) => {
             <Button
               variant="outlined"
               color="primary"
-              style={{ marginRight: ".5em" }}
+              style={{
+                marginRight: ".5em",
+                background: pageNumber == 1 && "#3f51b5",
+                color: pageNumber == 1 && "white",
+              }}
               onClick={() => {
                 setPageNumber(1);
               }}
@@ -99,6 +122,11 @@ const Profile = ({}) => {
             <Button
               variant="outlined"
               color="primary"
+              style={{
+                marginRight: ".5em",
+                background: pageNumber == 2 && "#3f51b5",
+                color: pageNumber == 2 && "white",
+              }}
               onClick={() => {
                 setPageNumber(2);
               }}
@@ -109,13 +137,14 @@ const Profile = ({}) => {
         </Grid>
         <Grid
           item
-          xs={8}
+          xs={12}
           style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             background: "white",
+            height: "100%",
           }}
         >
           {pageNumber == 1 ? (
@@ -129,17 +158,19 @@ const Profile = ({}) => {
                 justifyContent: "center",
               }}
             >
-              <ExpansionPanelSummary
-                //expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
+              <ExpansionPanelDetails
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                }}
               >
-                <Typography className={classes.heading}>
+                <DetailCard />
+
+                <Typography variant="h6" gutterBottom>
                   Profili Düzenle
                 </Typography>
-                <Typography className={classes.secondaryHeading}></Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
                 <form
                   className={classes.root}
                   noValidate
@@ -148,12 +179,14 @@ const Profile = ({}) => {
                 >
                   <TextField
                     id="outlined-full-width"
-                    label="İşletme adı"
-                    value={"barberName"}
+                    label="Kullanıcı adı"
+                    value={"Metin Özkan"}
                     onChange={(e) => {
                       //setBarberName(e.target.value);
                     }}
-                    style={{}}
+                    style={{
+                      paddingBottom: ".5em",
+                    }}
                     //  placeholder="Placeholder"
                     // helperText="Full width!"
                     fullWidth
@@ -165,12 +198,14 @@ const Profile = ({}) => {
                   />
                   <TextField
                     id="outlined-full-width"
-                    label="Adres"
-                    value={"address"}
+                    label="Doğum Tarihi"
+                    value={"19/09/1997"}
                     onChange={(e) => {
                       // setAddress(e.target.value);
                     }}
-                    style={{}}
+                    style={{
+                      paddingBottom: ".5em",
+                    }}
                     placeholder="Placeholder"
                     // helperText="Full width!"
                     fullWidth
@@ -180,11 +215,13 @@ const Profile = ({}) => {
                   <TextField
                     id="outlined-full-width"
                     label="E posta adresi"
-                    value={"email"}
+                    value={"metin.ozkn@hotmail.com"}
                     onChange={(e) => {
                       //    setEmail(e.target.value);
                     }}
-                    style={{}}
+                    style={{
+                      paddingBottom: ".5em",
+                    }}
                     placeholder="Placeholder"
                     // helperText="Full width!"
                     fullWidth
@@ -199,11 +236,13 @@ const Profile = ({}) => {
                   <TextField
                     id="outlined-full-width"
                     label="Telefon Numarası"
-                    value={"telephoneNumber"}
+                    value={"+90 535 0535 176"}
                     onChange={(e) => {
                       //  setTelephoneNumber(e.target.value);
                     }}
-                    style={{}}
+                    style={{
+                      paddingBottom: "1em",
+                    }}
                     placeholder="Placeholder"
                     // helperText="Full width!"
                     fullWidth
