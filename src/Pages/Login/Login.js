@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, Redirect } from "react-router-dom";
-import { Agent, Storage } from "../../Utils/importFiles";
+import { Agent, Storage, Loading } from "../../Utils/importFiles";
 import {
   Avatar,
   Button,
@@ -53,12 +53,26 @@ const Login = () => {
   const classes = useStyles();
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const customer = Storage.GetItem("customer");
 
   return !customer ? (
     <Container component="main" maxWidth="xs">
+      {isLoading && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 5,
+          }}
+        >
+          <Loading></Loading>
+        </div>
+      )}
       {/* <CssBaseline /> */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -109,6 +123,7 @@ const Login = () => {
             color="primary"
             className={classes.submit}
             onClick={() => {
+              setIsLoading(true);
               Agent.Customers.login()
                 .send({
                   eMail: eMail,
@@ -116,6 +131,7 @@ const Login = () => {
                 })
                 .then((res) => {
                   if (res.ok) {
+                    setIsLoading(false);
                     Storage.SetItem("customer", {
                       ...res.body,
                       password: "****",

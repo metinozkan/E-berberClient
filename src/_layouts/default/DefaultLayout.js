@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 import { Storage } from "../../Utils/Storage";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -54,6 +54,7 @@ const DefaultLayout = (props) => {
   const open = Boolean(anchorEl);
 
   const customer = Storage.GetItem("customer");
+  const history = useHistory();
   const { path } = useRouteMatch();
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -102,9 +103,16 @@ const DefaultLayout = (props) => {
             </Typography>
             <div>
               {customer ? (
-                <>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <div style={{ color: "white" }}>
-                    {customer.name} {customer.lastName}
+                    {customer.name}-customerName {customer.lastName}
                   </div>
                   <IconButton
                     aria-label="account of current user"
@@ -136,12 +144,13 @@ const DefaultLayout = (props) => {
                       onClick={() => {
                         handleClose();
                         Storage.RemoveItem("customer");
+                        history.push("/login");
                       }}
                     >
                       Çıkış Yap
                     </MenuItem>
                   </Menu>
-                </>
+                </div>
               ) : (
                 <>
                   <Button
