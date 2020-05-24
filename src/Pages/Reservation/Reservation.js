@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
 }));
-const isLogin = false;
 
 const CalenderOrDetail = ({}) => {
   return <HourCalender></HourCalender>;
@@ -58,7 +57,7 @@ class Reservation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false,
+      isLogin: Storage.GetItem("customer") ? true : false,
       stepperActiveStep: 0,
       stepperLoginOrSignUp: true,
       selectedServices: this.props.match.params.services
@@ -143,8 +142,69 @@ class Reservation extends Component {
     this._getPersonnel();
   }
 
+  modifyStartDate = (dateDay, dateHour) => {
+    const stringdateDay = dateDay.split("/");
+    const day = stringdateDay[0];
+    const mountWithDay = stringdateDay[1].split(" ");
+    const mount = mountWithDay[0];
+    const stringDateHour = dateHour.split(".");
+    const hour = stringDateHour[0];
+    const minute = stringDateHour[1];
+    // const stringYear = year.split("-");
+    // const stringTimes = time.split(".");
+    // const stringTime = stringTimes[0].split(":");
+
+    // const numberYear = Number(stringYear[0]);
+    // const numberMonth = Number(stringYear[1] - 1);
+    // const numberDay = Number(stringYear[2]);
+
+    // const numberHour = Number(stringTime[0]);
+    // const numberMinute = Number(stringTime[1]);
+    // const numberSecond = Number(stringTime[2]);
+    return new Date(
+      Number(2020),
+      Number(mount) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+  };
+  modifyEndDate = (dateDay, dateHour, serviceDuration) => {
+    const stringdateDay = dateDay.split("/");
+    const day = stringdateDay[0];
+    const mountWithDay = stringdateDay[1].split(" ");
+    const mount = mountWithDay[0];
+    const stringDateHour = dateHour.split(".");
+    let hour = stringDateHour[0];
+    let minute = stringDateHour[1];
+    console.log("serviceDuratin,", Number(minute), serviceDuration);
+    let newMinute = Number(minute) + serviceDuration;
+    console.log("newMinute", newMinute);
+    if (newMinute > 60) {
+      const newHour = parseInt(newMinute / 60);
+      newMinute = newMinute % 60;
+      hour = Number(hour) + Number(newHour);
+      minute = Number(newMinute);
+      console.log("bitsi saat ve dakikası", hour, minute);
+    } else {
+      minute = newMinute;
+    }
+    // if (true) {
+    //   const newHour = newMinute % 60;
+    //   console.log("dakika saat", 50 % 60);
+    // }
+    // console.log("asd", day, mount);
+    return new Date(
+      2020,
+      Number(mount) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+  };
   render() {
     const barberId = this.props.match.params.barberId;
+    const customerId = Storage.GetItem("customer").id;
     console.log("ne imis", this.state.selectedServices);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
@@ -164,8 +224,8 @@ class Reservation extends Component {
         >
           <Grid
             item
-            md={6}
-            sm={8}
+            md={8}
+            sm={10}
             xs={12}
             style={{
               display: "flex",
@@ -239,7 +299,7 @@ class Reservation extends Component {
                 <StepLabel>Randevu Al</StepLabel>
                 <StepContent>
                   <Typography>
-                    {isLogin == false ? (
+                    {!this.state.isLogin ? (
                       this.state.stepperLoginOrSignUp == false ? (
                         <div
                           style={{
@@ -272,7 +332,83 @@ class Reservation extends Component {
                         </div>
                       )
                     ) : (
-                      <div>Randevunuz</div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "space-between",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {this.state.selectedServices.map((service) => {
+                          return (
+                            <span>
+                              {service.name} - {service.time}dk -{" "}
+                              {service.price}tl
+                            </span>
+                          );
+                        })}
+                        <span>
+                          {this.state.selectedDate.day +
+                            this.state.selectedDate.hour}
+                        </span>
+                        <span
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() => {
+                              // this.modifyStartDate(
+                              //   this.state.selectedDate.day,
+                              //   this.state.selectedDate.hour
+                              // );
+                              // this.modifyEndDate(
+                              //   this.state.selectedDate.day,
+                              //   this.state.selectedDate.hour,
+                              //   this.state.selectedServices[0].time
+                              // );
+                              // console.log(
+                              //   "elimizde ne var",
+                              //   this.state.selectedServices,
+                              //   "-------",
+                              //   this.state.selectedDate,
+                              //   this.state.selectedPersonnel
+                              // );
+                              const appointmentObject = {
+                                barberId: this.props.match.params.barberId,
+                                customerId: customerId,
+                                appointmentDate: this.modifyStartDate(
+                                  this.state.selectedDate.day,
+                                  this.state.selectedDate.hour
+                                ),
+                                appointmentEndDate: this.modifyEndDate(
+                                  this.state.selectedDate.day,
+                                  this.state.selectedDate.hour,
+                                  this.state.selectedServices[0].time
+                                ),
+                                serviceId: this.state.selectedServices[0].id,
+                                staffId: this.state.selectedPersonnel.id,
+                              };
+
+                              console.log("giden ınbej", appointmentObject);
+                              Agent.Appointments.addAppointments()
+                                .send(appointmentObject)
+                                .then((res) => {
+                                  if (res.ok) {
+                                    console.log("randevu basalı", res.body);
+                                  }
+                                });
+                            }}
+                          >
+                            Randevuyu Al
+                          </Button>
+                        </span>
+                      </div>
                     )}
                   </Typography>
                 </StepContent>

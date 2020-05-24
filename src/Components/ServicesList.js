@@ -151,7 +151,6 @@ export const ServicesList = ({
                   >
                     Seç
                   </Button>
-                  ,
                 </TableCell>
               </TableRow>
             ))}

@@ -7,6 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Settings from "@material-ui/icons/Settings";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -66,7 +67,6 @@ const DefaultLayout = (props) => {
     setAnchorEl(null);
   };
 
-  console.log("path ne ", path);
   return (
     <>
       <div className={classes.root} style={{ height: "100%", width: "100%" }}>
@@ -100,71 +100,75 @@ const DefaultLayout = (props) => {
                 </Link>
               </Button>
             </Typography>
-
-            {auth ? (
-              <div>
-                <IconButton
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                </Menu>
-              </div>
-            ) : (
-              <div>
-                {customer ? (
+            <div>
+              {customer ? (
+                <>
                   <div style={{ color: "white" }}>
                     {customer.name} {customer.lastName}
                   </div>
-                ) : (
-                  <>
-                    <Button
-                      variant="outlined"
-                      style={{ marginRight: ".5em" }}
+                  <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={open}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>Profil</MenuItem>
+                    <MenuItem onClick={handleClose}>Randevularım</MenuItem>
+                    <MenuItem
                       onClick={() => {
-                        //     Router.push("/signup");
+                        handleClose();
+                        Storage.RemoveItem("customer");
                       }}
                     >
-                      <Link to="/signup" style={{ color: "black" }}>
-                        Üye ol
-                      </Link>
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                      // endIcon={<Icon>send</Icon>}
-                      onClick={() => {
-                        //            Router.push("/login");
-                      }}
-                    >
-                      <Link to="/login">Giriş Yap</Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-            )}
+                      Çıkış Yap
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outlined"
+                    style={{ marginRight: ".5em" }}
+                    onClick={() => {
+                      //     Router.push("/signup");
+                    }}
+                  >
+                    <Link to="/signup" style={{ color: "black" }}>
+                      Üye ol
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    // endIcon={<Icon>send</Icon>}
+                    onClick={() => {
+                      //            Router.push("/login");
+                    }}
+                  >
+                    <Link to="/login">Giriş Yap</Link>
+                  </Button>
+                </>
+              )}
+            </div>
           </Toolbar>
         </AppBar>
         <div

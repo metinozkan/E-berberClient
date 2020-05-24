@@ -5,45 +5,44 @@ import { Paper, Card, Grid } from "@material-ui/core";
 import {
   KeyboardArrowRight,
   KeyboardArrowLeft,
-  KeyboardArrowDown
+  KeyboardArrowDown,
 } from "@material-ui/icons";
 
 const days = ["pzts", "salı", "cars", "pers", "cuma"];
 const dAys = [
-  { day: "18/02 pzts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 salı", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cars", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 pers", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cuma", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cmrts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 pzts 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 salı 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cars 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 pers 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cuma 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 cmrts", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
-  { day: "18/02 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] }
+  { day: "24/05 pzts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 salı", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cars", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 pers", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cuma", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cmrts", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 pzts 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 salı 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cars 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 pers 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cuma 2", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 cmrts", emptyHour: ["9.00", "10.30", "11.30", "13.00"] },
+  { day: "24/05 pzr", emptyHour: ["10.00", "10.30", "11.30", "13.00"] },
 ];
 class HourCalender extends Component {
   constructor(props) {
     super(props);
     this.state = {
       countShowDays: 0,
-      selectedDate: null
+      selectedDate: null,
     };
   }
   //state,updateState
   render() {
-    console.log(this.state.selectedDate);
     return (
       <Grid
         container
-        xs={10}
+        xs={12}
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <div
@@ -55,7 +54,7 @@ class HourCalender extends Component {
             justifyContent: "center",
             background: "white",
             boxShadow: "0px 0px 2px 0px rgba(0,0,0,0.75)",
-            borderRadius: ".5em"
+            borderRadius: ".5em",
           }}
         >
           <Grid
@@ -65,26 +64,26 @@ class HourCalender extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-end",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <KeyboardArrowLeft
               onClick={() => {
                 this.setState({
-                  countShowDays: this.state.countShowDays - 5
+                  countShowDays: this.state.countShowDays - 5,
                 });
               }}
             />
           </Grid>
           {dAys
             .slice(this.state.countShowDays, this.state.countShowDays + 6)
-            .map(x => (
+            .map((x) => (
               <Grid
                 item
                 xs={2}
                 style={{
                   textAlign: "center",
-                  margin: ".5em"
+                  margin: ".5em",
                 }}
               >
                 <div style={{ fontSize: "20px", fontWeight: "bold" }}>
@@ -97,19 +96,19 @@ class HourCalender extends Component {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
-                  {x.emptyHour.map(h => (
+                  {x.emptyHour.map((h) => (
                     <div
                       style={{ padding: ".5em", cursor: "pointer" }}
                       onClick={() => {
                         this.setState({
-                          selectedDate: { day: x.day, hour: h }
+                          selectedDate: { day: x.day, hour: h },
                         });
                         this.props.updateState({
                           selectedDate: { day: x.day, hour: h },
-                          stepThreeActive: true
+                          stepThreeActive: true,
                         });
                       }}
                     >
@@ -126,13 +125,13 @@ class HourCalender extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-end",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <KeyboardArrowRight
               onClick={() => {
                 this.setState({
-                  countShowDays: this.state.countShowDays + 5
+                  countShowDays: this.state.countShowDays + 5,
                 });
               }}
             ></KeyboardArrowRight>
