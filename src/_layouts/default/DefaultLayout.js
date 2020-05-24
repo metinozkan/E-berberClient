@@ -138,7 +138,14 @@ const DefaultLayout = (props) => {
                     open={open}
                     onClose={handleClose}
                   >
-                    <MenuItem onClick={handleClose}>Profil</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        history.push("/profile");
+                        handleClose();
+                      }}
+                    >
+                      Profil
+                    </MenuItem>
                     <MenuItem onClick={handleClose}>Randevularım</MenuItem>
                     <MenuItem
                       onClick={() => {
