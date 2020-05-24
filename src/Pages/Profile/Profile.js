@@ -15,6 +15,7 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  Container,
 } from "@material-ui/core";
 
 const TopNavBar = styled.div`
@@ -72,162 +73,168 @@ const Profile = ({}) => {
   console.log("paegnjber", pageNumber);
 
   return customer ? (
-    <Grid
-      container
-      direction="column"
-      justify="flex-start"
-      alignItems="flex-start"
-      style={{}}
+    <Container
+      fixed
+      maxWidth="md"
+      style={{ background: "white", height: "100vh" }}
     >
-      <Grid item xs={12} style={{ width: "100%" }}>
-        <TopNavBar>
-          <Button
-            variant="outlined"
-            color="primary"
-            style={{ marginRight: ".5em" }}
-            onClick={() => {
-              setPageNumber(1);
-            }}
-          >
-            Kişisel Bilgiler
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setPageNumber(2);
-            }}
-          >
-            Randevularım
-          </Button>
-        </TopNavBar>
-      </Grid>
       <Grid
-        item
-        xs={8}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
       >
-        {pageNumber == 1 ? (
-          <ExpansionPanel
-            expanded={true}
-            // onChange={"handleChange("panel1")"}
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <ExpansionPanelSummary
-              //expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
+        <Grid item xs={12} style={{ width: "100%" }}>
+          <TopNavBar>
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ marginRight: ".5em" }}
+              onClick={() => {
+                setPageNumber(1);
+              }}
             >
-              <Typography className={classes.heading}>
-                Profili Düzenle
-              </Typography>
-              <Typography className={classes.secondaryHeading}></Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <form
-                className={classes.root}
-                noValidate
-                autoComplete="off"
-                style={{}}
+              Kişisel Bilgiler
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setPageNumber(2);
+              }}
+            >
+              Randevularım
+            </Button>
+          </TopNavBar>
+        </Grid>
+        <Grid
+          item
+          xs={8}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "white",
+          }}
+        >
+          {pageNumber == 1 ? (
+            <ExpansionPanel
+              expanded={true}
+              // onChange={"handleChange("panel1")"}
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <ExpansionPanelSummary
+                //expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
               >
-                <TextField
-                  id="outlined-full-width"
-                  label="İşletme adı"
-                  value={"barberName"}
-                  onChange={(e) => {
-                    //setBarberName(e.target.value);
-                  }}
+                <Typography className={classes.heading}>
+                  Profili Düzenle
+                </Typography>
+                <Typography className={classes.secondaryHeading}></Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <form
+                  className={classes.root}
+                  noValidate
+                  autoComplete="off"
                   style={{}}
-                  //  placeholder="Placeholder"
-                  // helperText="Full width!"
-                  fullWidth
-                  margin="dense"
-                  // InputLabelProps={{
-                  //   shrink: true,
-                  // }}
-                  variant="outlined"
-                />
-                <TextField
-                  id="outlined-full-width"
-                  label="Adres"
-                  value={"address"}
-                  onChange={(e) => {
-                    // setAddress(e.target.value);
-                  }}
-                  style={{}}
-                  placeholder="Placeholder"
-                  // helperText="Full width!"
-                  fullWidth
-                  margin="dense"
-                  variant="outlined"
-                />
-                <TextField
-                  id="outlined-full-width"
-                  label="E posta adresi"
-                  value={"email"}
-                  onChange={(e) => {
-                    //    setEmail(e.target.value);
-                  }}
-                  style={{}}
-                  placeholder="Placeholder"
-                  // helperText="Full width!"
-                  fullWidth
-                  margin="dense"
-                  InputLabelProps={
-                    {
-                      // shrink: true,
-                    }
-                  }
-                  variant="outlined"
-                />
-                <TextField
-                  id="outlined-full-width"
-                  label="Telefon Numarası"
-                  value={"telephoneNumber"}
-                  onChange={(e) => {
-                    //  setTelephoneNumber(e.target.value);
-                  }}
-                  style={{}}
-                  placeholder="Placeholder"
-                  // helperText="Full width!"
-                  fullWidth
-                  margin="dense"
-                  InputLabelProps={
-                    {
-                      // shrink: true,
-                    }
-                  }
-                  variant="outlined"
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disableElevation
-                  fullWidth
-                  onClick={() => {
-                    // _updateGeneralSettings(barberObject);
-                  }}
                 >
-                  Kaydet
-                </Button>
-              </form>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        ) : (
-          <div>randevuler</div>
-        )}
+                  <TextField
+                    id="outlined-full-width"
+                    label="İşletme adı"
+                    value={"barberName"}
+                    onChange={(e) => {
+                      //setBarberName(e.target.value);
+                    }}
+                    style={{}}
+                    //  placeholder="Placeholder"
+                    // helperText="Full width!"
+                    fullWidth
+                    margin="dense"
+                    // InputLabelProps={{
+                    //   shrink: true,
+                    // }}
+                    variant="outlined"
+                  />
+                  <TextField
+                    id="outlined-full-width"
+                    label="Adres"
+                    value={"address"}
+                    onChange={(e) => {
+                      // setAddress(e.target.value);
+                    }}
+                    style={{}}
+                    placeholder="Placeholder"
+                    // helperText="Full width!"
+                    fullWidth
+                    margin="dense"
+                    variant="outlined"
+                  />
+                  <TextField
+                    id="outlined-full-width"
+                    label="E posta adresi"
+                    value={"email"}
+                    onChange={(e) => {
+                      //    setEmail(e.target.value);
+                    }}
+                    style={{}}
+                    placeholder="Placeholder"
+                    // helperText="Full width!"
+                    fullWidth
+                    margin="dense"
+                    InputLabelProps={
+                      {
+                        // shrink: true,
+                      }
+                    }
+                    variant="outlined"
+                  />
+                  <TextField
+                    id="outlined-full-width"
+                    label="Telefon Numarası"
+                    value={"telephoneNumber"}
+                    onChange={(e) => {
+                      //  setTelephoneNumber(e.target.value);
+                    }}
+                    style={{}}
+                    placeholder="Placeholder"
+                    // helperText="Full width!"
+                    fullWidth
+                    margin="dense"
+                    InputLabelProps={
+                      {
+                        // shrink: true,
+                      }
+                    }
+                    variant="outlined"
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    fullWidth
+                    onClick={() => {
+                      // _updateGeneralSettings(barberObject);
+                    }}
+                  >
+                    Kaydet
+                  </Button>
+                </form>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          ) : (
+            <div>randevuler</div>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </Container>
   ) : (
     <Redirect to="/login" />
   );
