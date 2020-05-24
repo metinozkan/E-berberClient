@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 500,
+    width: "100%",
   },
   image: {
     width: 128,
@@ -107,38 +107,61 @@ const AppointmentsComp = () => {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} style={{ width: "100%" }}>
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonBase className={classes.image}>
+          {/* <ButtonBase className={classes.image}>
             <img
               className={classes.img}
               alt="complex"
               src="/static/images/grid/complex.jpg"
             />
-          </ButtonBase>
+          </ButtonBase> */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+              borderRight: "1px solid darkGray",
+              padding: ".5em",
+              paddingRight: "1em",
+            }}
+          >
+            <span> 2 Haziran 2020</span>
+            <span>10:30</span>
+            <span>Cuma</span>
+          </div>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1">
-                Standard license
+                Saç kesim
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
+                Serdivan Berber(bilmem ne caddesi no:35)
               </Typography>
               <Typography variant="body2" color="textSecondary">
                 ID: 1030114
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid
+              item
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
               <Typography variant="body2" style={{ cursor: "pointer" }}>
-                Remove
+                İptal Et
               </Typography>
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle1">$19.00</Typography>
+            <Typography variant="subtitle1">25₺</Typography>
           </Grid>
         </Grid>
       </Grid>{" "}
@@ -148,7 +171,7 @@ const AppointmentsComp = () => {
 const Profile = ({}) => {
   const classes = useStyles();
   const customer = Storage.GetItem("customer");
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(2);
   console.log("paegnjber", pageNumber);
 
   return customer ? (
@@ -205,6 +228,7 @@ const Profile = ({}) => {
             alignItems: "center",
             background: "white",
             height: "100%",
+            width: "100%",
           }}
         >
           {pageNumber == 1 ? (
