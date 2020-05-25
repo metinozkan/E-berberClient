@@ -4,13 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { SearchInput } from "./components/SearchInput";
 import { BarberCard } from "./components/BarberCard";
 import MapComp from "./components/MapComp";
+import MapBoxComp from "./components/MapBoxComp";
 import { Typography, Grid } from "@material-ui/core";
 
 //import imageMahmut from "../../public/mahmut.jpg";
 
 const Barbers = () => {
   const [barbers, setBarbers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const _getBarbers = () => {
     Agent.Barbers.getBarbers().then((res) => {
       if (res.ok) {
@@ -21,7 +22,7 @@ const Barbers = () => {
   };
 
   useEffect(() => {
-    _getBarbers();
+    // _getBarbers();
   }, []);
   return (
     <Grid container direction="row" justify="center" alignItems="center">
@@ -45,7 +46,7 @@ const Barbers = () => {
             </Grid>
           </Grid>
           <Grid item xs={4} style={{ marginTop: "2em" }}>
-            <MapComp />
+            <MapBoxComp />
           </Grid>
         </Grid>
       ) : (

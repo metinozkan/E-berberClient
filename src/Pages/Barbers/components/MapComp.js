@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import { useState } from "react";
-import ReactMapGL from "react-map-gl";
-
+import ReactMapGL, { Marker } from "react-map-gl";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 // class MapComp extends Component {
@@ -32,11 +32,11 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const MapComp = () => {
   const [viewport, setViewport] = useState({
-    width: "100%",
-    height: "100vh",
+    width: 600,
+    height: 400,
     latitude: 37.7577,
     longitude: -122.4376,
-    zoom: 10,
+    zoom: 9,
   });
 
   const _onViewportChange = (viewport) => {
@@ -51,6 +51,7 @@ const MapComp = () => {
       ...viewport,
       longitude: newLongitude,
       latitude: newLatitude,
+      zoom: 15,
     };
     setViewport(newViewport);
   };
@@ -62,7 +63,23 @@ const MapComp = () => {
         }
         {...viewport}
         onViewportChange={_onViewportChange}
-      />
+      >
+        <Marker
+          latitude={37.7577}
+          longitude={-122.4376}
+          offsetLeft={-20}
+          offsetTop={-10}
+        >
+          <LocationOnIcon
+            size={25}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              _goToNYC({ newLongitude: -122.4376, newLatitude: 37.7577 });
+              console.log("click");
+            }}
+          />
+        </Marker>
+      </ReactMapGL>
       <button
         onClick={() => {
           _goToNYC({ newLongitude: -74.1, newLatitude: 40.7 });
