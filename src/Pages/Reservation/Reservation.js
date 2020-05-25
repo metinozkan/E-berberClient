@@ -23,6 +23,8 @@ import ReservationDetailCard from "../../Components/Reservation/ReservationDetai
 //serviceSectiın
 import ServiceSection from "../../Components/Reservation/ServiceSection";
 import ServicesListModal from "../../Components/Reservation/ServicesListModal";
+
+import ConfirmModal from "../../Components/ConfirmModal/ConfirmModal";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -72,6 +74,8 @@ class Reservation extends Component {
       showDateDetailCard: false,
       personnels: [],
       selectedPersonnel: false,
+      openModal: false,
+      modalContent: "",
     };
   }
 
@@ -205,11 +209,19 @@ class Reservation extends Component {
   render() {
     const barberId = this.props.match.params.barberId;
     const customerId = Storage.GetItem("customer").id;
-    console.log("ne imis", this.state.selectedServices);
+    console.log("ne imis", this.state.openModal);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
     return (
       <div>
+        <ConfirmModal
+          openModal={this.state.openModal}
+          setOpenConfirm={(value) => {
+            this.setState({ openModal: value });
+          }}
+          confirmMesage={"Tamam"}
+          modalContent={this.state.modalContent}
+        />
         <Grid
           container
           style={{
@@ -401,6 +413,37 @@ class Reservation extends Component {
                                 .then((res) => {
                                   if (res.ok) {
                                     console.log("randevu basalı", res.body);
+                                    this.setState({
+                                      openModal: true,
+                                      modalContent: (
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                          }}
+                                        >
+                                          Randevunuz Başarılı bir şekilde
+                                          alındı.
+                                          <span>
+                                            {
+                                              res.body.appointmentDate.split(
+                                                "T"
+                                              )[0]
+                                            }
+                                          </span>
+                                          <span>
+                                            {" "}
+                                            {
+                                              res.body.appointmentDate
+                                                .split("T")[1]
+                                                .split(".")[0]
+                                            }
+                                          </span>
+                                        </div>
+                                      ),
+                                    });
                                   }
                                 });
                             }}

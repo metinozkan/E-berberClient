@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -6,8 +6,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const ConfirmModal = ({ title, confirmMesage, openModal, setOpenConfirm }) => {
-  const [open, setOpen] = React.useState(openModal);
+const ConfirmModal = ({
+  title,
+  confirmMesage,
+  openModal,
+  setOpenConfirm,
+  modalContent,
+}) => {
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,6 +23,10 @@ const ConfirmModal = ({ title, confirmMesage, openModal, setOpenConfirm }) => {
     setOpen(false);
     setOpenConfirm(false);
   };
+
+  useEffect(() => {
+    setOpen(openModal);
+  });
 
   return (
     <Dialog
@@ -28,7 +38,7 @@ const ConfirmModal = ({ title, confirmMesage, openModal, setOpenConfirm }) => {
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {/* {title} */}
+          {modalContent}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
