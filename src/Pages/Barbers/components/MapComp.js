@@ -34,8 +34,8 @@ const MapComp = () => {
   const [viewport, setViewport] = useState({
     width: 600,
     height: 400,
-    latitude: 37.7577,
-    longitude: -122.4376,
+    latitude: 40.7417935,
+    longitude: 30.332368,
     zoom: 9,
   });
 
@@ -56,7 +56,7 @@ const MapComp = () => {
     setViewport(newViewport);
   };
   return (
-    <div>
+    <>
       <ReactMapGL
         mapboxApiAccessToken={
           "pk.eyJ1IjoibWV0aW5vemthbiIsImEiOiJja2FtNmo1bmMwaDJjMnhxd29hZWQ0amFmIn0.9i1hbpOYeCJzEsLEQUlbjA"
@@ -74,7 +74,7 @@ const MapComp = () => {
             size={25}
             style={{ cursor: "pointer" }}
             onClick={() => {
-              _goToNYC({ newLongitude: -122.4376, newLatitude: 37.7577 });
+              _goToNYC({ newLongitude: 30.332368, newLatitude: 40.7417935 });
               console.log("click");
             }}
           />
@@ -87,7 +87,7 @@ const MapComp = () => {
       >
         New York City
       </button>
-    </div>
+    </>
   );
 };
 export default MapComp;
