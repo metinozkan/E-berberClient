@@ -76,6 +76,7 @@ class Reservation extends Component {
       selectedPersonnel: false,
       openModal: false,
       modalContent: "",
+      staffFreeHoursWeekly: false,
     };
   }
 
@@ -123,7 +124,6 @@ class Reservation extends Component {
   };
 
   deleteDate = () => {
-    console.log(this.state.selectedDate);
     this.setState({
       selectedDate: false,
       stepTwoActive: true,
@@ -137,9 +137,21 @@ class Reservation extends Component {
             personnels: res.body,
             selectedPersonnel: res.body[0],
           });
+          //simdiki id 4
+          this._getStaffFreeHours(4);
         }
       }
     );
+  };
+
+  _getStaffFreeHours = (personnelId) => {
+    Agent.Staffs.getFreeHoursWeekly(personnelId).then((res) => {
+      if (res.ok) {
+        this.setState({
+          staffFreeHoursWeekly: res.body,
+        });
+      }
+    });
   };
 
   componentDidMount() {
@@ -181,15 +193,12 @@ class Reservation extends Component {
     const stringDateHour = dateHour.split(".");
     let hour = stringDateHour[0];
     let minute = stringDateHour[1];
-    console.log("totalDuration,", Number(minute), serviceTotalDuration);
     let newMinute = Number(minute) + serviceTotalDuration;
-    console.log("newMinute", newMinute);
     if (newMinute > 60) {
       const newHour = parseInt(newMinute / 60);
       newMinute = newMinute % 60;
       hour = Number(hour) + Number(newHour);
       minute = Number(newMinute);
-      console.log("saate dönüstürülmüs bitsi saat ve dakikası", hour, minute);
     } else {
       minute = newMinute;
     }
@@ -198,18 +207,7 @@ class Reservation extends Component {
     //   console.log("dakika saat", 50 % 60);
     // }
     // console.log("asd", day, mount);
-    console.log(
-      "new Date bitsi",
-      JSON.stringify(
-        new Date(
-          2020,
-          Number(mount) - 1,
-          Number(day),
-          Number(hour),
-          Number(minute)
-        )
-      )
-    );
+
     return new Date(
       2020,
       Number(mount) - 1,
@@ -313,10 +311,12 @@ class Reservation extends Component {
                 <StepContent>
                   <Typography>
                     {this.state.selectedDate == false ? (
-                      <HourCalender
-                        updateState={this._updateState}
-                        state={this.states}
-                      />
+                      this.state.staffFreeHoursWeekly && (
+                        <HourCalender
+                          updateState={this._updateState}
+                          staffFreeHoursWeekly={this.state.staffFreeHoursWeekly}
+                        />
+                      )
                     ) : (
                       <ReservationDetailCard
                         onPress={this.deleteDate}
@@ -437,15 +437,10 @@ class Reservation extends Component {
                                 staffId: this.state.selectedPersonnel.id,
                               };
 
-                              console.log(
-                                "giden randevu objesi",
-                                appointmentObject
-                              );
                               Agent.Appointments.addAppointments()
                                 .send(appointmentObject)
                                 .then((res) => {
                                   if (res.ok) {
-                                    console.log("randevu basalı", res.body);
                                     this.setState({
                                       openModal: true,
                                       modalContent: (

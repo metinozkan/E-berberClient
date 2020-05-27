@@ -281,6 +281,7 @@ const Profile = ({}) => {
       .then((res) => {
         if (res.ok) {
           console.log("update", res.body);
+          setCustomer(res.body);
         }
       });
   };
@@ -496,6 +497,7 @@ const Profile = ({}) => {
                       fullWidth
                       onClick={() => {
                         console.log("object", CustomerObject);
+                        _updateCustomer(CustomerObject);
                       }}
                     >
                       Kaydet

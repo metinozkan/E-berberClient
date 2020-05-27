@@ -31,10 +31,32 @@ class HourCalender extends Component {
     this.state = {
       countShowDays: 0,
       selectedDate: null,
+      staffFreeHoursWeekly: this.props.staffFreeHoursWeekly,
+      daysWithFreeHours: [],
     };
   }
   //state,updateState
+
+  createDays = () => {
+    const DaysWithFreeHours = this.state.daysWithFreeHours;
+
+    this.state.staffFreeHoursWeekly.Monday.map((free) =>
+      DaysWithFreeHours.push({ day: "Monday", emptyHour: free })
+    );
+    this.state.staffFreeHoursWeekly.Tuesday.map((free) =>
+      DaysWithFreeHours.push({ day: "Tuesday", emptyHour: free })
+    );
+    setTimeout(() => {
+      console.log("daetetaetaaeae", DaysWithFreeHours);
+    }, 300);
+  };
+
+  componentDidMount = () => {
+    console.log("caliss");
+    this.createDays();
+  };
   render() {
+    console.log("staffFreeHoursWeekly", this.props.staffFreeHoursWeekly);
     return (
       <Grid
         container
@@ -57,7 +79,7 @@ class HourCalender extends Component {
             borderRadius: ".5em",
           }}
         >
-          <Grid
+          {/* <Grid
             item
             xs={1}
             style={{
@@ -74,9 +96,9 @@ class HourCalender extends Component {
                 });
               }}
             />
-          </Grid>
+          </Grid> */}
           {dAys
-            .slice(this.state.countShowDays, this.state.countShowDays + 6)
+            // .slice(this.state.countShowDays, this.state.countShowDays + 6)
             .map((x) => (
               <Grid
                 item
@@ -118,7 +140,7 @@ class HourCalender extends Component {
                 </Grid>
               </Grid>
             ))}
-          <Grid
+          {/* <Grid
             item
             xs={1}
             style={{
@@ -135,7 +157,7 @@ class HourCalender extends Component {
                 });
               }}
             ></KeyboardArrowRight>
-          </Grid>
+          </Grid> */}
         </div>
       </Grid>
     );

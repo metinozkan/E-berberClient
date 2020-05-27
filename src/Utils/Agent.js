@@ -68,6 +68,9 @@ const Staffs = {
 
   deleteStaffAppointment: (id) =>
     requests.delete(`/Staffs/Appointments/delete/${id}`),
+
+  getFreeHoursWeekly: (staffId) =>
+    requests.get(`/Staffs/Weekly/FreeHours/${staffId}`),
 };
 
 const ServiceBarber = {
@@ -84,9 +87,6 @@ const Customers = {
 
   getCustomer: (customerId) =>
     requests.get(`/Customers/getCustomer/${customerId}`),
-
-  updateCustomer: (customerId) =>
-    requests.push(`/Customers/edit/${customerId}`),
 };
 
 export default {
