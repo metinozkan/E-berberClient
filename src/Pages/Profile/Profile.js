@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Storage } from "../../Utils/importFiles";
+import { Storage, Agent, Loading } from "../../Utils/importFiles";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -85,7 +85,7 @@ const DetailCardRow = ({ title, value, bg }) => {
     </div>
   );
 };
-const DetailCard = ({}) => {
+const DetailCard = ({ customer }) => {
   const classes = useStyles();
 
   return (
@@ -93,21 +93,78 @@ const DetailCard = ({}) => {
       <Typography variant="h6" gutterBottom>
         Profil Detay
       </Typography>
-      <DetailCardRow title={"Ad soyad"} value="Metin özkan" />
+      <DetailCardRow
+        title={"Ad soyad"}
+        value={customer.name + " " + customer.lastName}
+      />
       <DetailCardRow title={"Doğum Tarihi"} value="19/09/1997" bg />
-      <DetailCardRow title={"E posta"} value="metin.ozkn@hotmail.com" />
-      <DetailCardRow title={"Cep Telefonu"} value="+90 535 053 15 76" bg />
+      <DetailCardRow title={"E posta"} value={customer.eMail} />
+      <DetailCardRow
+        title={"Cep Telefonu"}
+        value={customer.phoneNo ? customer.phoneNo : "-"}
+        bg
+      />
 
       <Divider variant="middle" style={{ marginTop: "2em" }} />
     </div>
   );
 };
 
-const AppointmentsComp = () => {
+const AppointmentsComp = ({ appointment }) => {
   const classes = useStyles();
+  const date = appointment.appointmentDate.split("T");
+  const day = date[0];
+  const dateHour = date[1];
+  const hour = dateHour.split(".")[0];
 
+  const [barberAddress, setBarberAddress] = useState();
+  const [staffName, setStaffName] = useState();
+  const [services, setServices] = useState();
+
+  const _getServicesBarber = () => {
+    Agent.ServiceBarber.getServices(appointment.barberId).then((res) => {
+      if (res.ok) {
+        console.log("gelen service", res.body);
+        const appointmentServices = res.body.filter(
+          (service) => appointment.serviceId.indexOf(service.id) > -1 && service
+        );
+        console.log("harbiden buldu", appointmentServices);
+        setServices(appointmentServices);
+      }
+    });
+  };
+
+  const _getStaffsBarber = () => {
+    Agent.Staffs.getStaffBarber(appointment.barberId).then((res) => {
+      if (res.ok) {
+        console.log("gelen staff", res.body);
+        const appointmentStaff = res.body.find(
+          (staff) => staff.id == appointment.staffId
+        );
+        setStaffName(appointmentStaff.staffName);
+      }
+    });
+  };
+
+  const _getBarber = () => {
+    Agent.Barbers.getBarber(appointment.barberId).then((res) => {
+      if (res.ok) {
+        console.log("barber,", res.body);
+        setBarberAddress(res.body.adress);
+      }
+    });
+  };
+
+  useEffect(() => {
+    _getServicesBarber();
+    _getStaffsBarber();
+    _getBarber();
+  }, []);
   return (
-    <Paper className={classes.paper} style={{ width: "100%" }}>
+    <Paper
+      className={classes.paper}
+      style={{ width: "100%", margin: "1em 0px" }}
+    >
       <Grid container spacing={2}>
         <Grid item>
           {/* <ButtonBase className={classes.image}>
@@ -129,22 +186,28 @@ const AppointmentsComp = () => {
               paddingRight: "1em",
             }}
           >
-            <span> 2 Haziran 2020</span>
-            <span>10:30</span>
-            <span>Cuma</span>
+            {/* <span> 2 Haziran 2020</span> */}
+            <span> {day}</span>
+
+            <span>{hour}</span>
+            {/* <span>Cuma</span> */}
           </div>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <Typography gutterBottom variant="subtitle1">
-                Saç kesim
-              </Typography>
+              {services &&
+                services.map((service) => (
+                  <Typography variant="subtitle1">{service.name}</Typography>
+                ))}
+
               <Typography variant="body2" gutterBottom>
-                Serdivan Berber(bilmem ne caddesi no:35)
+                {/* Serdivan Berber(bilmem ne caddesi no:35) */}
+                {barberAddress}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                ID: 1030114
+                {/* Ahmet usta */}
+                {staffName}
               </Typography>
             </Grid>
             <Grid
@@ -161,7 +224,11 @@ const AppointmentsComp = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle1">25₺</Typography>
+            {services &&
+              services.map((service) => (
+                <Typography variant="subtitle1">{service.price}</Typography>
+              ))}
+            {/* <Typography variant="subtitle1">35₺</Typography> */}
           </Grid>
         </Grid>
       </Grid>{" "}
@@ -170,11 +237,68 @@ const AppointmentsComp = () => {
 };
 const Profile = ({}) => {
   const classes = useStyles();
-  const customer = Storage.GetItem("customer");
-  const [pageNumber, setPageNumber] = useState(2);
-  console.log("paegnjber", pageNumber);
+  const customerStorage = Storage.GetItem("customer");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [customer, setCustomer] = useState();
+  const [customerAppointments, setCustomerAppointments] = useState();
+  const [customerName, setCustomerName] = useState(" ");
+  const [customerLastName, setCustomerLastName] = useState("");
+  const [customerBirthDate, setCustomerBirthDate] = useState("");
+  const [customereMail, setCustomereMail] = useState("");
+  const [customerPhoneNo, setCustomerPhoneNo] = useState("");
 
-  return customer ? (
+  const [isLoading, setIsLoading] = useState(true);
+
+  const _getCustomer = (customerStorageId) => {
+    Agent.Customers.getCustomer(customerStorageId).then((res) => {
+      if (res.ok) {
+        console.log("get customer", res.body);
+        setCustomer(res.body);
+        setCustomerName(res.body.name);
+        setCustomerLastName(res.body.lastName);
+        setCustomerBirthDate(res.body.saveDate);
+        setCustomereMail(res.body.eMail);
+        setCustomerPhoneNo(res.body.phoneNo);
+      }
+    });
+  };
+
+  const _getCustomerAppointments = (customerStorageId) => {
+    Agent.Appointments.getCustomerAppointments(customerStorageId).then(
+      (res) => {
+        if (res.ok) {
+          console.log("randevular", res.body[0]);
+          setCustomerAppointments(res.body[0]);
+          setIsLoading(false);
+        }
+      }
+    );
+  };
+
+  const _updateCustomer = (customerObject) => {
+    Agent.Customers.updateCustomer(customerStorage.id)
+      .send(customerObject)
+      .then((res) => {
+        if (res.ok) {
+          console.log("update", res.body);
+        }
+      });
+  };
+  useEffect(() => {
+    if (customerStorage) {
+      _getCustomer(customerStorage.id);
+      _getCustomerAppointments(customerStorage.id);
+    }
+  }, []);
+
+  const CustomerObject = {
+    name: customerName,
+    lastName: customerLastName,
+    // saveDate: "20.05.2020",
+    eMail: customereMail,
+    phoneNo: customerPhoneNo,
+  };
+  return customerStorage ? (
     <Container
       fixed
       maxWidth="md"
@@ -218,144 +342,179 @@ const Profile = ({}) => {
             </Button>
           </TopNavBar>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            background: "white",
-            height: "100%",
-            width: "100%",
-          }}
-        >
-          {pageNumber == 1 ? (
-            <ExpansionPanel
-              expanded={true}
-              // onChange={"handleChange("panel1")"}
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <ExpansionPanelDetails
+
+        {!isLoading ? (
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              background: "white",
+              height: "100%",
+              width: "100%",
+            }}
+          >
+            {pageNumber == 1 ? (
+              <ExpansionPanel
+                expanded={true}
+                // onChange={"handleChange("panel1")"}
                 style={{
+                  width: "100%",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  alignItems: "flex-start",
                 }}
               >
-                <DetailCard />
-
-                <Typography variant="h6" gutterBottom>
-                  Profili Düzenle
-                </Typography>
-                <form
-                  className={classes.root}
-                  noValidate
-                  autoComplete="off"
-                  style={{}}
+                <ExpansionPanelDetails
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                  }}
                 >
-                  <TextField
-                    id="outlined-full-width"
-                    label="Kullanıcı adı"
-                    value={"Metin Özkan"}
-                    onChange={(e) => {
-                      //setBarberName(e.target.value);
-                    }}
-                    style={{
-                      paddingBottom: ".5em",
-                    }}
-                    //  placeholder="Placeholder"
-                    // helperText="Full width!"
-                    fullWidth
-                    margin="dense"
-                    // InputLabelProps={{
-                    //   shrink: true,
-                    // }}
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="outlined-full-width"
-                    label="Doğum Tarihi"
-                    value={"19/09/1997"}
-                    onChange={(e) => {
-                      // setAddress(e.target.value);
-                    }}
-                    style={{
-                      paddingBottom: ".5em",
-                    }}
-                    placeholder="Placeholder"
-                    // helperText="Full width!"
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="outlined-full-width"
-                    label="E posta adresi"
-                    value={"metin.ozkn@hotmail.com"}
-                    onChange={(e) => {
-                      //    setEmail(e.target.value);
-                    }}
-                    style={{
-                      paddingBottom: ".5em",
-                    }}
-                    placeholder="Placeholder"
-                    // helperText="Full width!"
-                    fullWidth
-                    margin="dense"
-                    InputLabelProps={
-                      {
-                        // shrink: true,
-                      }
-                    }
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="outlined-full-width"
-                    label="Telefon Numarası"
-                    value={"+90 535 0535 176"}
-                    onChange={(e) => {
-                      //  setTelephoneNumber(e.target.value);
-                    }}
-                    style={{
-                      paddingBottom: "1em",
-                    }}
-                    placeholder="Placeholder"
-                    // helperText="Full width!"
-                    fullWidth
-                    margin="dense"
-                    InputLabelProps={
-                      {
-                        // shrink: true,
-                      }
-                    }
-                    variant="outlined"
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disableElevation
-                    fullWidth
-                    onClick={() => {
-                      // _updateGeneralSettings(barberObject);
-                    }}
+                  {customer && <DetailCard customer={customer} />}
+
+                  <Typography variant="h6" gutterBottom>
+                    Profili Düzenle
+                  </Typography>
+                  <form
+                    className={classes.root}
+                    noValidate
+                    autoComplete="off"
+                    style={{}}
                   >
-                    Kaydet
-                  </Button>
-                </form>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          ) : (
-            <AppointmentsComp />
-          )}
-        </Grid>
+                    <TextField
+                      id="outlined-full-width"
+                      label="Kullanıcı adı"
+                      value={customerName}
+                      onChange={(e) => {
+                        setCustomerName(e.target.value);
+                      }}
+                      style={{
+                        paddingBottom: ".5em",
+                      }}
+                      //  placeholder="Placeholder"
+                      // helperText="Full width!"
+                      fullWidth
+                      margin="dense"
+                      // InputLabelProps={{
+                      //   shrink: true,
+                      // }}
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="outlined-full-width"
+                      label="Kullanıcı Soyadı"
+                      value={customerLastName}
+                      onChange={(e) => {
+                        setCustomerLastName(e.target.value);
+                      }}
+                      style={{
+                        paddingBottom: ".5em",
+                      }}
+                      //  placeholder="Placeholder"
+                      // helperText="Full width!"
+                      fullWidth
+                      margin="dense"
+                      // InputLabelProps={{
+                      //   shrink: true,
+                      // }}
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="date"
+                      type="date"
+                      defaultValue="2020-05-24"
+                      className={classes.textField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      label="Doğum Tarihi"
+                      value={customerBirthDate}
+                      onChange={(e) => {
+                        setCustomerBirthDate(e.target.value);
+                      }}
+                      style={{
+                        paddingBottom: ".5em",
+                      }}
+                      placeholder="Placeholder"
+                      // helperText="Full width!"
+                      fullWidth
+                      margin="dense"
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="outlined-full-width"
+                      label="E posta adresi"
+                      value={customereMail}
+                      onChange={(e) => {
+                        setCustomereMail(e.target.value);
+                      }}
+                      style={{
+                        paddingBottom: ".5em",
+                      }}
+                      placeholder="Placeholder"
+                      // helperText="Full width!"
+                      fullWidth
+                      margin="dense"
+                      InputLabelProps={
+                        {
+                          // shrink: true,
+                        }
+                      }
+                      variant="outlined"
+                    />
+                    <TextField
+                      id="outlined-full-width"
+                      label="Telefon Numarası"
+                      value={customerPhoneNo}
+                      onChange={(e) => {
+                        setCustomerPhoneNo(e.target.value);
+                      }}
+                      style={{
+                        paddingBottom: "1em",
+                      }}
+                      placeholder="Placeholder"
+                      // helperText="Full width!"
+                      fullWidth
+                      margin="dense"
+                      InputLabelProps={
+                        {
+                          // shrink: true,
+                        }
+                      }
+                      variant="outlined"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      fullWidth
+                      onClick={() => {
+                        console.log("object", CustomerObject);
+                      }}
+                    >
+                      Kaydet
+                    </Button>
+                  </form>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            ) : (
+              <>
+                {/* {customerAppointments &&
+                  customerAppointments.map((appointment) => ( */}
+                <AppointmentsComp appointment={customerAppointments} />
+                {/* ))} */}
+              </>
+            )}
+          </Grid>
+        ) : (
+          <Loading></Loading>
+        )}
       </Grid>
     </Container>
   ) : (

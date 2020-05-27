@@ -45,7 +45,7 @@ const Appointments = {
 
   getStaff: (staffId) => requests.get(`/Appointments/staff/${staffId}`),
   getBarber: (barberId) => requests.get(`/Appointments/barbers/${barberId}`),
-  getCustomer: (customerId) =>
+  getCustomerAppointments: (customerId) =>
     requests.get(`/Appointments/customer/${customerId}`),
 };
 
@@ -84,6 +84,9 @@ const Customers = {
 
   getCustomer: (customerId) =>
     requests.get(`/Customers/getCustomer/${customerId}`),
+
+  updateCustomer: (customerId) =>
+    requests.push(`/Customers/edit/${customerId}`),
 };
 
 export default {

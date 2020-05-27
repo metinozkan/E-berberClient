@@ -11,7 +11,7 @@ import { Typography, Grid } from "@material-ui/core";
 
 const Barbers = () => {
   const [barbers, setBarbers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const _getBarbers = () => {
     Agent.Barbers.getBarbers().then((res) => {
       if (res.ok) {
@@ -22,7 +22,7 @@ const Barbers = () => {
   };
 
   useEffect(() => {
-    // _getBarbers();
+    _getBarbers();
   }, []);
   return (
     <Grid container direction="row" justify="center" alignItems="center">

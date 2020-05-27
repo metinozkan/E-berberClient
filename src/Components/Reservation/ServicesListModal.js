@@ -71,7 +71,7 @@ const ServicesListModal = ({
         <Icon fontSize="small" style={{ marginRight: ".5em" }}>
           add_circle
         </Icon>
-        Babacıımmmmmmmm hizmet eklee
+        Hizmet Ekle
       </Button>
       <Dialog
         fullScreen={fullScreen}

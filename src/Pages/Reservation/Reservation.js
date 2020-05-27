@@ -173,7 +173,7 @@ class Reservation extends Component {
       Number(minute)
     );
   };
-  modifyEndDate = (dateDay, dateHour, serviceDuration) => {
+  modifyEndDate = (dateDay, dateHour, serviceTotalDuration) => {
     const stringdateDay = dateDay.split("/");
     const day = stringdateDay[0];
     const mountWithDay = stringdateDay[1].split(" ");
@@ -181,15 +181,15 @@ class Reservation extends Component {
     const stringDateHour = dateHour.split(".");
     let hour = stringDateHour[0];
     let minute = stringDateHour[1];
-    console.log("serviceDuratin,", Number(minute), serviceDuration);
-    let newMinute = Number(minute) + serviceDuration;
+    console.log("totalDuration,", Number(minute), serviceTotalDuration);
+    let newMinute = Number(minute) + serviceTotalDuration;
     console.log("newMinute", newMinute);
     if (newMinute > 60) {
       const newHour = parseInt(newMinute / 60);
       newMinute = newMinute % 60;
       hour = Number(hour) + Number(newHour);
       minute = Number(newMinute);
-      console.log("bitsi saat ve dakikası", hour, minute);
+      console.log("saate dönüstürülmüs bitsi saat ve dakikası", hour, minute);
     } else {
       minute = newMinute;
     }
@@ -198,6 +198,18 @@ class Reservation extends Component {
     //   console.log("dakika saat", 50 % 60);
     // }
     // console.log("asd", day, mount);
+    console.log(
+      "new Date bitsi",
+      JSON.stringify(
+        new Date(
+          2020,
+          Number(mount) - 1,
+          Number(day),
+          Number(hour),
+          Number(minute)
+        )
+      )
+    );
     return new Date(
       2020,
       Number(mount) - 1,
@@ -205,6 +217,16 @@ class Reservation extends Component {
       Number(hour),
       Number(minute)
     );
+  };
+
+  serviceTimesTotal = (serviceTimes) => {
+    var result = serviceTimes.reduce(function (tot, arr) {
+      // return the sum with previous value
+      return tot + arr;
+
+      // set initial value as 0
+    }, 0);
+    return result;
   };
   render() {
     const barberId = this.props.match.params.barberId;
@@ -392,7 +414,9 @@ class Reservation extends Component {
                               //   this.state.selectedPersonnel
                               // );
                               const appointmentObject = {
-                                barberId: this.props.match.params.barberId,
+                                barberId: Number(
+                                  this.props.match.params.barberId
+                                ),
                                 customerId: customerId,
                                 appointmentDate: this.modifyStartDate(
                                   this.state.selectedDate.day,
@@ -401,13 +425,22 @@ class Reservation extends Component {
                                 appointmentEndDate: this.modifyEndDate(
                                   this.state.selectedDate.day,
                                   this.state.selectedDate.hour,
-                                  this.state.selectedServices[0].time
+                                  this.serviceTimesTotal(
+                                    this.state.selectedServices.map(
+                                      (service) => service.time
+                                    )
+                                  )
                                 ),
-                                serviceId: this.state.selectedServices[0].id,
+                                serviceId: this.state.selectedServices.map(
+                                  (service) => service.id
+                                ),
                                 staffId: this.state.selectedPersonnel.id,
                               };
 
-                              console.log("giden ınbej", appointmentObject);
+                              console.log(
+                                "giden randevu objesi",
+                                appointmentObject
+                              );
                               Agent.Appointments.addAppointments()
                                 .send(appointmentObject)
                                 .then((res) => {
@@ -434,7 +467,6 @@ class Reservation extends Component {
                                             }
                                           </span>
                                           <span>
-                                            {" "}
                                             {
                                               res.body.appointmentDate
                                                 .split("T")[1]
