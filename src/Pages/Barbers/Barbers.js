@@ -9,7 +9,7 @@ import { Typography, Grid } from "@material-ui/core";
 
 //import imageMahmut from "../../public/mahmut.jpg";
 
-const Barbers = () => {
+const Barbers = (props) => {
   const [barbers, setBarbers] = useState([]);
   const [loading, setLoading] = useState(true);
   const _getBarbers = () => {
@@ -24,6 +24,7 @@ const Barbers = () => {
   useEffect(() => {
     _getBarbers();
   }, []);
+  console.log("query", props.location.search);
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       {/* <Grid item xs={12} sm={8} style={{ padding: "1em 0px" }}>

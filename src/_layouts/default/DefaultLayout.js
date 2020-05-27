@@ -97,7 +97,7 @@ const DefaultLayout = (props) => {
                 }}
               >
                 <Link to="/barbers" style={{ color: "black" }}>
-                  Barberler
+                  Berberler
                 </Link>
               </Button>
             </Typography>

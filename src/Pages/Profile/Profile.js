@@ -501,7 +501,11 @@ const Profile = ({}) => {
               <>
                 {/* {customerAppointments &&
                   customerAppointments.map((appointment) => ( */}
-                <AppointmentsComp appointment={customerAppointments} />
+                {customerAppointments ? (
+                  <AppointmentsComp appointment={customerAppointments} />
+                ) : (
+                  <div>Henüz hic randevu almadınız</div>
+                )}{" "}
                 {/* ))} */}
               </>
             )}
