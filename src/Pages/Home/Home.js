@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { districts } from "../../Utils/data";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -11,6 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Background from "../../Resources/Images/bgberber.jpg";
 import Typography from "@material-ui/core/Typography";
 import { StoreMallDirectory, Navigation, Search } from "@material-ui/icons";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
@@ -23,20 +25,26 @@ const Footer = () => {
   return (
     <Paper
       style={{
-        height: "150px",
+        height: "100px",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
+        background: " ",
       }}
+      color="primary"
     >
-      FOOOTER
+      Eberber | tüm hakları saklıdır
     </Paper>
   );
 };
 const Home = () => {
   const classes = useStyles();
+  const [district, setDistrict] = useState(" ");
 
+  useEffect(() => {
+    console.log("hadi be abim", district);
+  });
   return (
     <>
       <Grid
@@ -78,7 +86,7 @@ const Home = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <Paper
               component="form"
               style={{
@@ -88,7 +96,7 @@ const Home = () => {
                 justifyContent: "center",
               }}
             >
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
@@ -102,13 +110,22 @@ const Home = () => {
                     ),
                   }}
                 />
-              </Grid>
+              </Grid> */}
 
-              <Grid item xs={6}>
-                <TextField
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {/* <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
-                  label="Konuma Göre"
+                  label="İlçeye Göre Ara"
                   style={{ flex: 1 }}
                   InputProps={{
                     startAdornment: (
@@ -117,9 +134,44 @@ const Home = () => {
                       </InputAdornment>
                     ),
                   }}
-                />
+                /> */}
+                <Autocomplete
+                  freeSolo
+                  autoSelect={true}
+                  id="combo-box-demo"
+                  options={districts}
+                  getOptionLabel={(option) => option.title}
+                  style={{ width: "100%" }}
+                  // inputValue={district}
+                  // onInputChange={(event, newInputValue) => {
+                  //   setDistrict(newInputValue);
+                  // }}
+                  value={district}
+                  onChange={(e, values) => {
+                    console.log(values);
+                    setDistrict(values.title);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      id="outlined-full-width"
+                      label="İlçe seçin"
+                      fullWidth
+                      margin="dense"
+                      variant="outlined"
+                      value={district}
+                    />
+                  )}
+                ></Autocomplete>
+                <IconButton
+                  // type="submit"
+                  className={classes.iconButton}
+                  aria-label="search"
+                >
+                  <Search />
+                </IconButton>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton
                   type="submit"
                   className={classes.iconButton}
@@ -127,7 +179,7 @@ const Home = () => {
                 >
                   <Search />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Paper>
           </Grid>
         </Grid>

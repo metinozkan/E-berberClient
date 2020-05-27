@@ -46,17 +46,12 @@ class HourCalender extends Component {
     this.state.staffFreeHoursWeekly.Tuesday.map((free) =>
       DaysWithFreeHours.push({ day: "Tuesday", emptyHour: free })
     );
-    setTimeout(() => {
-      console.log("daetetaetaaeae", DaysWithFreeHours);
-    }, 300);
   };
 
   componentDidMount = () => {
-    console.log("caliss");
-    this.createDays();
+    // this.createDays();
   };
   render() {
-    console.log("staffFreeHoursWeekly", this.props.staffFreeHoursWeekly);
     return (
       <Grid
         container

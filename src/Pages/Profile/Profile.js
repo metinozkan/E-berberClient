@@ -124,11 +124,9 @@ const AppointmentsComp = ({ appointment }) => {
   const _getServicesBarber = () => {
     Agent.ServiceBarber.getServices(appointment.barberId).then((res) => {
       if (res.ok) {
-        console.log("gelen service", res.body);
         const appointmentServices = res.body.filter(
           (service) => appointment.serviceId.indexOf(service.id) > -1 && service
         );
-        console.log("harbiden buldu", appointmentServices);
         setServices(appointmentServices);
       }
     });
@@ -137,7 +135,6 @@ const AppointmentsComp = ({ appointment }) => {
   const _getStaffsBarber = () => {
     Agent.Staffs.getStaffBarber(appointment.barberId).then((res) => {
       if (res.ok) {
-        console.log("gelen staff", res.body);
         const appointmentStaff = res.body.find(
           (staff) => staff.id == appointment.staffId
         );
@@ -149,7 +146,6 @@ const AppointmentsComp = ({ appointment }) => {
   const _getBarber = () => {
     Agent.Barbers.getBarber(appointment.barberId).then((res) => {
       if (res.ok) {
-        console.log("barber,", res.body);
         setBarberAddress(res.body.adress);
       }
     });
@@ -252,7 +248,6 @@ const Profile = ({}) => {
   const _getCustomer = (customerStorageId) => {
     Agent.Customers.getCustomer(customerStorageId).then((res) => {
       if (res.ok) {
-        console.log("get customer", res.body);
         setCustomer(res.body);
         setCustomerName(res.body.name);
         setCustomerLastName(res.body.lastName);
@@ -267,7 +262,6 @@ const Profile = ({}) => {
     Agent.Appointments.getCustomerAppointments(customerStorageId).then(
       (res) => {
         if (res.ok) {
-          console.log("randevular", res.body[0]);
           setCustomerAppointments(res.body[0]);
           setIsLoading(false);
         }
@@ -280,7 +274,6 @@ const Profile = ({}) => {
       .send(customerObject)
       .then((res) => {
         if (res.ok) {
-          console.log("update", res.body);
           setCustomer(res.body);
         }
       });
@@ -496,7 +489,6 @@ const Profile = ({}) => {
                       disableElevation
                       fullWidth
                       onClick={() => {
-                        console.log("object", CustomerObject);
                         _updateCustomer(CustomerObject);
                       }}
                     >
