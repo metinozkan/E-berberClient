@@ -59,7 +59,6 @@ const SignUp = () => {
   const history = useHistory();
 
   const customer = Storage.GetItem("customer");
-  console.log("gelmedi", customer);
   return !customer ? (
     <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}

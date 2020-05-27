@@ -112,7 +112,7 @@ const DefaultLayout = (props) => {
                   }}
                 >
                   <div style={{ color: "white" }}>
-                    {customer.name}-customerName {customer.lastName}
+                    {customer.name} {customer.lastName}
                   </div>
                   <IconButton
                     aria-label="account of current user"

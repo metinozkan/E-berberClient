@@ -57,7 +57,6 @@ const Login = () => {
   const history = useHistory();
 
   const customer = Storage.GetItem("customer");
-
   return !customer ? (
     <Container component="main" maxWidth="xs">
       {isLoading && (
@@ -123,23 +122,25 @@ const Login = () => {
             color="primary"
             className={classes.submit}
             onClick={() => {
-              setIsLoading(true);
-              Agent.Customers.login()
-                .send({
-                  eMail: eMail,
-                  password: password,
-                })
-                .then((res) => {
-                  if (res.ok) {
-                    setIsLoading(false);
-                    Storage.SetItem("customer", {
-                      ...res.body,
-                      password: "****",
-                    });
-                    console.log("login", res.body);
-                    history.push("/");
-                  }
-                });
+              if (password && eMail) {
+                setIsLoading(true);
+                Agent.Customers.login()
+                  .send({
+                    eMail: eMail,
+                    password: password,
+                  })
+                  .then((res) => {
+                    if (res.ok) {
+                      setIsLoading(false);
+                      Storage.SetItem("customer", {
+                        ...res.body,
+                        password: "****",
+                      });
+                      console.log("login", res.body);
+                      history.push("/");
+                    }
+                  });
+              }
             }}
           >
             Sign In
