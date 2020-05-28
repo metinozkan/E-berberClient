@@ -120,7 +120,7 @@ const AppointmentsComp = ({ appointment }) => {
   const [barberAddress, setBarberAddress] = useState();
   const [staffName, setStaffName] = useState();
   const [services, setServices] = useState();
-
+  const [isLoading, setIsLoading] = useState(true);
   const _getServicesBarber = () => {
     Agent.ServiceBarber.getServices(appointment.barberId).then((res) => {
       if (res.ok) {
@@ -128,17 +128,8 @@ const AppointmentsComp = ({ appointment }) => {
           (service) => appointment.serviceId.indexOf(service.id) > -1 && service
         );
         setServices(appointmentServices);
-      }
-    });
-  };
 
-  const _getStaffsBarber = () => {
-    Agent.Staffs.getStaffBarber(appointment.barberId).then((res) => {
-      if (res.ok) {
-        const appointmentStaff = res.body.find(
-          (staff) => staff.id == appointment.staffId
-        );
-        setStaffName(appointmentStaff.staffName);
+        _getBarber();
       }
     });
   };
@@ -147,16 +138,25 @@ const AppointmentsComp = ({ appointment }) => {
     Agent.Barbers.getBarber(appointment.barberId).then((res) => {
       if (res.ok) {
         setBarberAddress(res.body.adress);
+        _getStaffsBarber();
       }
     });
   };
-
+  const _getStaffsBarber = () => {
+    Agent.Staffs.getStaffBarber(appointment.barberId).then((res) => {
+      if (res.ok) {
+        const appointmentStaff = res.body.find(
+          (staff) => staff.id == appointment.staffId
+        );
+        setStaffName(appointmentStaff.staffName);
+        setIsLoading(false);
+      }
+    });
+  };
   useEffect(() => {
     _getServicesBarber();
-    _getStaffsBarber();
-    _getBarber();
   }, []);
-  return (
+  return !isLoading ? (
     <Paper
       className={classes.paper}
       style={{ width: "100%", margin: "1em 0px" }}
@@ -229,6 +229,8 @@ const AppointmentsComp = ({ appointment }) => {
         </Grid>
       </Grid>{" "}
     </Paper>
+  ) : (
+    <Loading />
   );
 };
 const Profile = ({}) => {
