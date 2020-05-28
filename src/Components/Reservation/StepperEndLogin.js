@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Agent, Loading, Storage } from "../../Utils/importFiles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,32 +13,42 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-const StepperEndLogin = ({ setStepperLoginOrSignUp }) => {
+const StepperEndLogin = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
   const classes = useStyles();
+  const [eMail, seteMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <form className={classes.form} noValidate>
+      {isLoading && <Loading></Loading>}
+
       <TextField
         variant="outlined"
+        value={eMail}
+        onChange={(e) => {
+          seteMail(e.target.value);
+        }}
         margin="normal"
         required
         fullWidth
@@ -49,6 +60,9 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp }) => {
       />
       <TextField
         variant="outlined"
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
         margin="normal"
         required
         fullWidth
@@ -63,11 +77,31 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp }) => {
         label="Beni hatırla"
       />
       <Button
-        type="submit"
         fullWidth
         variant="contained"
         color="primary"
         className={classes.submit}
+        onClick={() => {
+          if (password && eMail) {
+            setIsLoading(true);
+            Agent.Customers.login()
+              .send({
+                eMail: eMail,
+                password: password,
+              })
+              .then((res) => {
+                if (res.ok) {
+                  setIsLoading(false);
+                  Storage.SetItem("customer", {
+                    ...res.body,
+                    password: "****",
+                  });
+                  console.log("login", res.body);
+                  setCustomerIsLogin({ ...res.body, password: "***" });
+                }
+              });
+          }
+        }}
       >
         Giriş Yap
       </Button>

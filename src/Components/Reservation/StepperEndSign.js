@@ -144,7 +144,7 @@ const StepperEndSign = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
                   lastName: res.body.lastName,
                   eMail: res.body.eMail,
                 });
-                setCustomerIsLogin(true);
+                setCustomerIsLogin({ ...res.body, password: "***" });
               }
             });
         }}

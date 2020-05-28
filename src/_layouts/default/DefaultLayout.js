@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { Storage } from "../../Utils/Storage";
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,7 +52,7 @@ const DefaultLayout = (props) => {
   const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [customer, setCustomer] = React.useState(Storage.GetItem("customer"));
+  // const [customer, setCustomer] = React.useState(Storage.GetItem("customer"));
   //const customer = Storage.GetItem("customer");
   const history = useHistory();
   const { path } = useRouteMatch();
@@ -102,7 +102,7 @@ const DefaultLayout = (props) => {
               </Button>
             </Typography>
             <div>
-              {customer ? (
+              {props.customer ? (
                 <div
                   style={{
                     display: "flex",
@@ -112,7 +112,7 @@ const DefaultLayout = (props) => {
                   }}
                 >
                   <div style={{ color: "white" }}>
-                    {customer.name} {customer.lastName}
+                    {props.customer.name} {props.customer.lastName}
                   </div>
                   <IconButton
                     aria-label="account of current user"
@@ -152,6 +152,7 @@ const DefaultLayout = (props) => {
                         handleClose();
                         Storage.RemoveItem("customer");
                         history.push("/login");
+                        props.setCustomer(false);
                       }}
                     >
                       Çıkış Yap

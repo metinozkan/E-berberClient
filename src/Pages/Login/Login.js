@@ -49,29 +49,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
-  const customer = Storage.GetItem("customer");
+  const customer = props.customer;
   return !customer ? (
     <Container component="main" maxWidth="xs">
-      {isLoading && (
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 5,
-          }}
-        >
-          <Loading></Loading>
-        </div>
-      )}
+      {isLoading && <Loading></Loading>}
       {/* <CssBaseline /> */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -138,6 +126,11 @@ const Login = () => {
                       });
                       console.log("login", res.body);
                       history.push("/");
+
+                      props.setCustomer({
+                        ...res.body,
+                        password: "****",
+                      });
                     }
                   });
               }

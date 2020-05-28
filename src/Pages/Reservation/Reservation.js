@@ -103,9 +103,10 @@ class Reservation extends Component {
     });
   };
 
-  setCustomerIsLogin = (boolean) => {
+  setCustomerIsLogin = (customer) => {
+    this.props.setCustomer(customer);
     this.setState({
-      isLogin: boolean,
+      isLogin: customer && true,
     });
   };
 

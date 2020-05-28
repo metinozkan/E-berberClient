@@ -39,7 +39,7 @@ const Footer = () => {
     </Paper>
   );
 };
-const Home = () => {
+const Home = (props) => {
   const classes = useStyles();
   const [district, setDistrict] = useState("Serdivan");
 

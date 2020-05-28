@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { Storage } from "../Utils/Storage";
+
 import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 
@@ -11,6 +13,9 @@ export default function RouteWrapper({
   ...rest
 }) {
   const signed = false;
+  const [customer, setCustomer] = useState(
+    Storage.GetItem("customer") ? Storage.GetItem("customer") : false
+  );
 
   /**
    * Redirect user to SignIn page if he tries to access a private route
@@ -37,8 +42,8 @@ export default function RouteWrapper({
     <Route
       {...rest}
       render={(props) => (
-        <Layout>
-          <Component {...props} />
+        <Layout customer={customer} setCustomer={setCustomer}>
+          <Component {...props} customer={customer} setCustomer={setCustomer} />
         </Layout>
       )}
     />
