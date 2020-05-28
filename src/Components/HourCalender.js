@@ -383,6 +383,27 @@ class HourCalender extends Component {
                           )
                         )
                       );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[4] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[4],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}

@@ -67,6 +67,7 @@ class Reservation extends Component {
         : Storage.GetItem("services"),
 
       selectedDate: false,
+      selectedDateString: false,
       reservationObject: { serviceName: "", workerName: "", time: "" },
       stepTwoActive: true,
       stepThreeActive: false,
@@ -159,11 +160,14 @@ class Reservation extends Component {
   }
 
   modifyStartDate = (dateDay, dateHour) => {
+    console.log("gelen date", dateDay, dateHour);
     const stringdateDay = dateDay.split("/");
     const day = stringdateDay[0];
-    const mountWithDay = stringdateDay[1].split(" ");
-    const mount = mountWithDay[0];
-    const stringDateHour = dateHour.split(".");
+    // const mountWithDay = stringdateDay[1].split(" ");
+    // const mount = mountWithDay[0];
+    const mount = stringdateDay[1];
+
+    const stringDateHour = dateHour.split(":");
     const hour = stringDateHour[0];
     const minute = stringDateHour[1];
     // const stringYear = year.split("-");
@@ -188,9 +192,10 @@ class Reservation extends Component {
   modifyEndDate = (dateDay, dateHour, serviceTotalDuration) => {
     const stringdateDay = dateDay.split("/");
     const day = stringdateDay[0];
-    const mountWithDay = stringdateDay[1].split(" ");
-    const mount = mountWithDay[0];
-    const stringDateHour = dateHour.split(".");
+    // const mountWithDay = stringdateDay[1].split(" ");
+    // const mount = mountWithDay[0];
+    const mount = stringdateDay[1];
+    const stringDateHour = dateHour.split(":");
     let hour = stringDateHour[0];
     let minute = stringDateHour[1];
     let newMinute = Number(minute) + serviceTotalDuration;
@@ -322,6 +327,8 @@ class Reservation extends Component {
                         onPress={this.deleteDate}
                         date={
                           this.state.selectedDate.day +
+                          "    " +
+                          "saat:" +
                           this.state.selectedDate.hour
                         }
                       />
@@ -384,6 +391,7 @@ class Reservation extends Component {
                         })}
                         <span>
                           {this.state.selectedDate.day +
+                            "    " +
                             this.state.selectedDate.hour}
                         </span>
                         <span
@@ -397,22 +405,6 @@ class Reservation extends Component {
                             color="primary"
                             variant="contained"
                             onClick={() => {
-                              // this.modifyStartDate(
-                              //   this.state.selectedDate.day,
-                              //   this.state.selectedDate.hour
-                              // );
-                              // this.modifyEndDate(
-                              //   this.state.selectedDate.day,
-                              //   this.state.selectedDate.hour,
-                              //   this.state.selectedServices[0].time
-                              // );
-                              // console.log(
-                              //   "elimizde ne var",
-                              //   this.state.selectedServices,
-                              //   "-------",
-                              //   this.state.selectedDate,
-                              //   this.state.selectedPersonnel
-                              // );
                               const appointmentObject = {
                                 barberId: Number(
                                   this.props.match.params.barberId
@@ -434,8 +426,11 @@ class Reservation extends Component {
                                 serviceId: this.state.selectedServices.map(
                                   (service) => service.id
                                 ),
-                                staffId: this.state.selectedPersonnel.id,
+                                // staffId: this.state.selectedPersonnel.id,
+                                staffId: 4,
                               };
+
+                              console.log("objecmiz", appointmentObject);
 
                               Agent.Appointments.addAppointments()
                                 .send(appointmentObject)

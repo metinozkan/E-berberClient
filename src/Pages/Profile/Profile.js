@@ -311,7 +311,7 @@ const Profile = ({}) => {
               color="primary"
               style={{
                 marginRight: ".5em",
-                background: pageNumber == 1 && "#3f51b5",
+                background: pageNumber == 1 && "#0277bd",
                 color: pageNumber == 1 && "white",
               }}
               onClick={() => {
@@ -325,7 +325,7 @@ const Profile = ({}) => {
               color="primary"
               style={{
                 marginRight: ".5em",
-                background: pageNumber == 2 && "#3f51b5",
+                background: pageNumber == 2 && "#0277bd",
                 color: pageNumber == 2 && "white",
               }}
               onClick={() => {
