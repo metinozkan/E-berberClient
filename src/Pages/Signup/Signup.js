@@ -147,6 +147,13 @@ const SignUp = () => {
             color="primary"
             className={classes.submit}
             onClick={() => {
+              console.log("signUp,", {
+                name: firstName,
+                lastName: lastName,
+                eMail: eMail,
+                password: password,
+              });
+
               Agent.Customers.addCustomer()
                 .send({
                   name: firstName,
@@ -155,6 +162,7 @@ const SignUp = () => {
                   password: password,
                 })
                 .then((res) => {
+                  console.log("rRESS", res);
                   if (res.ok) {
                     console.log("signUp succesfuly");
                     Storage.SetItem("customer", {

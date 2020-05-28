@@ -111,6 +111,7 @@ const Login = (props) => {
             className={classes.submit}
             onClick={() => {
               if (password && eMail) {
+                console.log("login,", password, eMail);
                 setIsLoading(true);
                 Agent.Customers.login()
                   .send({
@@ -119,6 +120,8 @@ const Login = (props) => {
                   })
                   .then((res) => {
                     if (res.ok) {
+                      console.log("rRESS", res);
+
                       setIsLoading(false);
                       Storage.SetItem("customer", {
                         ...res.body,
