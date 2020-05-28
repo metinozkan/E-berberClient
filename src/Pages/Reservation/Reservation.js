@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Storage, Agent } from "../../Utils/importFiles";
+import { Storage, Agent, Loading } from "../../Utils/importFiles";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -78,6 +78,8 @@ class Reservation extends Component {
       openModal: false,
       modalContent: "",
       staffFreeHoursWeekly: false,
+      isLoading: true,
+      isLoadingForAddAppointment: false,
     };
   }
 
@@ -157,6 +159,7 @@ class Reservation extends Component {
       if (res.ok) {
         this.setState({
           staffFreeHoursWeekly: res.body,
+          isLoading: false,
         });
       }
     });
@@ -243,15 +246,16 @@ class Reservation extends Component {
     const customerId = Storage.GetItem("customer")
       ? Storage.GetItem("customer").id
       : false;
-    console.log("ne imis", this.state.openModal);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
+    const { history } = this.props;
     return (
       <div>
         <ConfirmModal
           openModal={this.state.openModal}
           setOpenConfirm={(value) => {
             this.setState({ openModal: value });
+            history.push("/profile");
           }}
           confirmMesage={"Tamam"}
           modalContent={this.state.modalContent}
@@ -269,233 +273,243 @@ class Reservation extends Component {
             marginTop: "1em",
           }}
         >
-          <Grid
-            item
-            md={8}
-            sm={10}
-            xs={12}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Stepper
-              activeStep={activeStep}
-              orientation="vertical"
+          {!this.state.isLoading ? (
+            <Grid
+              item
+              md={8}
+              sm={10}
+              xs={12}
               style={{
-                width: "100%",
-
-                background: "#f5f5f5",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "flex-start",
               }}
             >
-              <Step key={1} active={true}>
-                <StepLabel>Hizmet</StepLabel>
-                <StepContent>
-                  <Typography>
-                    {this.state.selectedServices &&
-                      this.state.selectedServices.map((service, index) =>
-                        index === 0 && this.state.personnels.length > 0 ? (
-                          <ServiceSection
-                            selectedService={service}
-                            updateState={this._updateState}
-                            state={this.state}
-                            personnels={this.state.personnels}
-                          ></ServiceSection>
-                        ) : (
-                          <ReservationDetailCard
-                            onPress={this.deleteSelectedService}
-                            key={index}
-                            service={service}
-                          ></ReservationDetailCard>
-                        )
-                      )}
+              <Stepper
+                activeStep={activeStep}
+                orientation="vertical"
+                style={{
+                  width: "100%",
 
-                    {!this.state.selectedDate && (
-                      <ServicesListModal
-                        openModal={this.state.selectedServices.length == 0}
-                        updateState={this._updateState}
-                        updateSelectedServices={this._updateSelectedServices}
-                        state={this.state}
-                        handleNextStepper={this.handleNext}
-                        barberId={barberId}
-                      ></ServicesListModal>
-                    )}
-                  </Typography>
-                </StepContent>
-              </Step>
-              <Step key={2} active={this.state.stepTwoActive}>
-                <StepLabel>Tarih</StepLabel>
-                <StepContent>
-                  <Typography>
-                    {this.state.selectedDate == false ? (
-                      this.state.staffFreeHoursWeekly && (
-                        <HourCalender
+                  background: "#f5f5f5",
+                }}
+              >
+                <Step key={1} active={true}>
+                  <StepLabel>Hizmet</StepLabel>
+                  <StepContent>
+                    <Typography>
+                      {this.state.selectedServices &&
+                        this.state.selectedServices.map((service, index) =>
+                          index === 0 && this.state.personnels.length > 0 ? (
+                            <ServiceSection
+                              selectedService={service}
+                              updateState={this._updateState}
+                              state={this.state}
+                              personnels={this.state.personnels}
+                            ></ServiceSection>
+                          ) : (
+                            <ReservationDetailCard
+                              onPress={this.deleteSelectedService}
+                              key={index}
+                              service={service}
+                            ></ReservationDetailCard>
+                          )
+                        )}
+
+                      {!this.state.selectedDate && (
+                        <ServicesListModal
+                          openModal={this.state.selectedServices.length == 0}
                           updateState={this._updateState}
-                          staffFreeHoursWeekly={this.state.staffFreeHoursWeekly}
-                        />
-                      )
-                    ) : (
-                      <ReservationDetailCard
-                        onPress={this.deleteDate}
-                        date={
-                          this.state.selectedDate.day +
-                          "    " +
-                          "saat:" +
-                          this.state.selectedDate.hour
-                        }
-                      />
-                    )}
-                  </Typography>
-                </StepContent>
-              </Step>
-              <Step key={1} active={this.state.stepThreeActive}>
-                <StepLabel>Randevu Al</StepLabel>
-                <StepContent>
-                  <Typography>
-                    {!this.state.isLogin ? (
-                      this.state.stepperLoginOrSignUp == false ? (
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <StepperEndSign
-                            setStepperLoginOrSignUp={
-                              this.setStepperLoginOrSignUp
+                          updateSelectedServices={this._updateSelectedServices}
+                          state={this.state}
+                          handleNextStepper={this.handleNext}
+                          barberId={barberId}
+                        ></ServicesListModal>
+                      )}
+                    </Typography>
+                  </StepContent>
+                </Step>
+                <Step key={2} active={this.state.stepTwoActive}>
+                  <StepLabel>Tarih</StepLabel>
+                  <StepContent>
+                    <Typography>
+                      {this.state.selectedDate == false ? (
+                        this.state.staffFreeHoursWeekly && (
+                          <HourCalender
+                            updateState={this._updateState}
+                            staffFreeHoursWeekly={
+                              this.state.staffFreeHoursWeekly
                             }
-                            setCustomerIsLogin={this.setCustomerIsLogin}
-                          ></StepperEndSign>
-                        </div>
+                          />
+                        )
+                      ) : (
+                        <ReservationDetailCard
+                          onPress={this.deleteDate}
+                          date={
+                            this.state.selectedDate.day +
+                            "    " +
+                            "saat:" +
+                            this.state.selectedDate.hour
+                          }
+                        />
+                      )}
+                    </Typography>
+                  </StepContent>
+                </Step>
+                <Step key={1} active={this.state.stepThreeActive}>
+                  {this.state.isLoadingForAddAppointment && <Loading />}
+                  <StepLabel>Randevu Al</StepLabel>
+                  <StepContent>
+                    <Typography>
+                      {!this.state.isLogin ? (
+                        this.state.stepperLoginOrSignUp == false ? (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <StepperEndSign
+                              setStepperLoginOrSignUp={
+                                this.setStepperLoginOrSignUp
+                              }
+                              setCustomerIsLogin={this.setCustomerIsLogin}
+                            ></StepperEndSign>
+                          </div>
+                        ) : (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "100%",
+                            }}
+                          >
+                            <StepperEndLogin
+                              setStepperLoginOrSignUp={
+                                this.setStepperLoginOrSignUp
+                              }
+                              setCustomerIsLogin={this.setCustomerIsLogin}
+                            ></StepperEndLogin>
+                          </div>
+                        )
                       ) : (
                         <div
                           style={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
+                            alignItems: "space-between",
                             justifyContent: "center",
-                            alignItems: "center",
-                            width: "100%",
                           }}
                         >
-                          <StepperEndLogin
-                            setStepperLoginOrSignUp={
-                              this.setStepperLoginOrSignUp
-                            }
-                            setCustomerIsLogin={this.setCustomerIsLogin}
-                          ></StepperEndLogin>
-                        </div>
-                      )
-                    ) : (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "space-between",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {this.state.selectedServices.map((service) => {
-                          return (
-                            <span>
-                              {service.name} - {service.time}dk -{" "}
-                              {service.price}tl
-                            </span>
-                          );
-                        })}
-                        <span>
-                          {this.state.selectedDate.day +
-                            "    " +
-                            this.state.selectedDate.hour}
-                        </span>
-                        <span
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={() => {
-                              const appointmentObject = {
-                                barberId: Number(
-                                  this.props.match.params.barberId
-                                ),
-                                customerId: customerId,
-                                appointmentDate: this.modifyStartDate(
-                                  this.state.selectedDate.day,
-                                  this.state.selectedDate.hour
-                                ),
-                                appointmentEndDate: this.modifyEndDate(
-                                  this.state.selectedDate.day,
-                                  this.state.selectedDate.hour,
-                                  this.serviceTimesTotal(
-                                    this.state.selectedServices.map(
-                                      (service) => service.time
-                                    )
-                                  )
-                                ),
-                                serviceId: this.state.selectedServices.map(
-                                  (service) => service.id
-                                ),
-                                // staffId: this.state.selectedPersonnel.id,
-                                staffId: 4,
-                              };
-
-                              console.log("objecmiz", appointmentObject);
-
-                              Agent.Appointments.addAppointments()
-                                .send(appointmentObject)
-                                .then((res) => {
-                                  if (res.ok) {
-                                    this.setState({
-                                      openModal: true,
-                                      modalContent: (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                          }}
-                                        >
-                                          Randevunuz Başarılı bir şekilde
-                                          alındı.
-                                          <span>
-                                            {
-                                              res.body.appointmentDate.split(
-                                                "T"
-                                              )[0]
-                                            }
-                                          </span>
-                                          <span>
-                                            {
-                                              res.body.appointmentDate
-                                                .split("T")[1]
-                                                .split(".")[0]
-                                            }
-                                          </span>
-                                        </div>
-                                      ),
-                                    });
-                                  }
-                                });
+                          {this.state.selectedServices.map((service) => {
+                            return (
+                              <span>
+                                {service.name} - {service.time}dk -{" "}
+                                {service.price}tl
+                              </span>
+                            );
+                          })}
+                          <span>
+                            {this.state.selectedDate.day +
+                              "    " +
+                              this.state.selectedDate.hour}
+                          </span>
+                          <span
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "flex-end",
                             }}
                           >
-                            Randevuyu Al
-                          </Button>
-                        </span>
-                      </div>
-                    )}
-                  </Typography>
-                </StepContent>
-              </Step>
-            </Stepper>
-          </Grid>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              onClick={() => {
+                                const appointmentObject = {
+                                  barberId: Number(
+                                    this.props.match.params.barberId
+                                  ),
+                                  customerId: customerId,
+                                  appointmentDate: this.modifyStartDate(
+                                    this.state.selectedDate.day,
+                                    this.state.selectedDate.hour
+                                  ),
+                                  appointmentEndDate: this.modifyEndDate(
+                                    this.state.selectedDate.day,
+                                    this.state.selectedDate.hour,
+                                    this.serviceTimesTotal(
+                                      this.state.selectedServices.map(
+                                        (service) => service.time
+                                      )
+                                    )
+                                  ),
+                                  serviceId: this.state.selectedServices.map(
+                                    (service) => service.id
+                                  ),
+                                  // staffId: this.state.selectedPersonnel.id,
+                                  staffId: 4,
+                                };
+
+                                this.setState({
+                                  isLoadingForAddAppointment: true,
+                                });
+
+                                Agent.Appointments.addAppointments()
+                                  .send(appointmentObject)
+                                  .then((res) => {
+                                    if (res.ok) {
+                                      this.setState({
+                                        isLoadingForAddAppointment: false,
+                                        openModal: true,
+                                        modalContent: (
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "column",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            Randevunuz Başarılı bir şekilde
+                                            alındı.
+                                            <span>
+                                              {
+                                                res.body.appointmentDate.split(
+                                                  "T"
+                                                )[0]
+                                              }
+                                            </span>
+                                            <span>
+                                              {
+                                                res.body.appointmentDate
+                                                  .split("T")[1]
+                                                  .split(".")[0]
+                                              }
+                                            </span>
+                                          </div>
+                                        ),
+                                      });
+                                    }
+                                  });
+                              }}
+                            >
+                              Randevuyu Al
+                            </Button>
+                          </span>
+                        </div>
+                      )}
+                    </Typography>
+                  </StepContent>
+                </Step>
+              </Stepper>
+            </Grid>
+          ) : (
+            <Loading />
+          )}
         </Grid>
       </div>
     );

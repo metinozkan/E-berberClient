@@ -296,7 +296,7 @@ const Profile = ({}) => {
     <Container
       fixed
       maxWidth="md"
-      style={{ background: "white", height: "100vh" }}
+      style={{ background: "white", height: "100vh", marginTop: "1em" }}
     >
       <Grid
         container
