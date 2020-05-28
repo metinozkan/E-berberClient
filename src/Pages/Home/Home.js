@@ -26,7 +26,7 @@ const Footer = () => {
   return (
     <Paper
       style={{
-        height: "100px",
+        height: "50px",
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
