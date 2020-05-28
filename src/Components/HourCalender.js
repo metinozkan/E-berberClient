@@ -111,7 +111,7 @@ class HourCalender extends Component {
     //   "----",
     //   date.getMonth()
     // );
-    console.log(new Date(date.setDate(diffTuesday)));
+    // console.log(new Date(date.setDate(diffTuesday)));
   };
   render() {
     var date = new Date();
@@ -371,6 +371,17 @@ class HourCalender extends Component {
                         this.state.getDaysArray[4],
                         "saat:",
                         h
+                      );
+                      console.log(
+                        JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[4],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        )
                       );
                     }}
                   >

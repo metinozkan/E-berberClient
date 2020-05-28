@@ -43,9 +43,7 @@ const Home = () => {
   const classes = useStyles();
   const [district, setDistrict] = useState("Serdivan");
 
-  useEffect(() => {
-    console.log("hadi be abim", district);
-  });
+  useEffect(() => {});
   return (
     <>
       <Grid

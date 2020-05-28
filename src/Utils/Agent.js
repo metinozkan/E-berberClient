@@ -19,6 +19,7 @@ const Barbers = {
   getBarbers: () => requests.get("/barbers"),
   addBarbers: () => requests.post("/barbers/add"),
   getBarber: (barberId) => requests.get(`/barbers/${barberId}`),
+  getFilterByDistrict: () => requests.post("/barbers/address"),
 };
 
 const Login = {
