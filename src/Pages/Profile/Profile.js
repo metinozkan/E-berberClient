@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ConfirmModal from "../../Components/ConfirmModal/ConfirmModal";
 import styled from "styled-components";
 import { Storage, Agent, Loading } from "../../Utils/importFiles";
 import { Redirect } from "react-router-dom";
@@ -121,6 +122,7 @@ const AppointmentsComp = ({ appointment }) => {
   const [staffName, setStaffName] = useState();
   const [services, setServices] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const _getServicesBarber = () => {
     Agent.ServiceBarber.getServices(appointment.barberId).then((res) => {
       if (res.ok) {
@@ -153,6 +155,13 @@ const AppointmentsComp = ({ appointment }) => {
       }
     });
   };
+  const _deleteAppointment = () => {
+    Agent.Appointments.deleteAppointments(appointment.id).then((res) => {
+      if (res.ok) {
+        console.log(res.body);
+      }
+    });
+  };
   useEffect(() => {
     _getServicesBarber();
   }, []);
@@ -161,6 +170,17 @@ const AppointmentsComp = ({ appointment }) => {
       className={classes.paper}
       style={{ width: "100%", margin: "1em 0px" }}
     >
+      <ConfirmModal
+        openModal={openConfirmModal}
+        setOpenConfirm={(value) => {
+          setOpenConfirmModal(value);
+        }}
+        onConfirmFunction={() => {
+          _deleteAppointment();
+        }}
+        confirmMesage={"Evet"}
+        modalContent={"Silmek istediğinize emin misiniz"}
+      />
       <Grid container spacing={2}>
         <Grid item>
           {/* <ButtonBase className={classes.image}>
@@ -213,6 +233,9 @@ const AppointmentsComp = ({ appointment }) => {
                 flexDirection: "row",
                 justifyContent: "flex-end",
               }}
+              onClick={() => {
+                setOpenConfirmModal(true);
+              }}
             >
               <Typography variant="body2" style={{ cursor: "pointer" }}>
                 İptal Et
@@ -264,7 +287,8 @@ const Profile = ({}) => {
     Agent.Appointments.getCustomerAppointments(customerStorageId).then(
       (res) => {
         if (res.ok) {
-          setCustomerAppointments(res.body[0]);
+          console.log("off randevu", res.body);
+          setCustomerAppointments(res.body);
           setIsLoading(false);
         }
       }
@@ -503,8 +527,10 @@ const Profile = ({}) => {
               <>
                 {/* {customerAppointments &&
                   customerAppointments.map((appointment) => ( */}
-                {customerAppointments ? (
-                  <AppointmentsComp appointment={customerAppointments} />
+                {customerAppointments && customerAppointments.length > 0 ? (
+                  customerAppointments.map((appointment) => (
+                    <AppointmentsComp appointment={appointment} />
+                  ))
                 ) : (
                   <div>Henüz hic randevu almadınız</div>
                 )}{" "}

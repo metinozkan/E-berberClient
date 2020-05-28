@@ -12,6 +12,7 @@ const ConfirmModal = ({
   openModal,
   setOpenConfirm,
   modalContent,
+  onConfirmFunction,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -45,7 +46,16 @@ const ConfirmModal = ({
         {/* <Button onClick={handleClose} color="primary">
             Disagree
           </Button> */}
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button
+          onClick={() => {
+            handleClose();
+            if (onConfirmFunction) {
+              onConfirmFunction();
+            }
+          }}
+          color="primary"
+          autoFocus
+        >
           {confirmMesage}
         </Button>
       </DialogActions>
