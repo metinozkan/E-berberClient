@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp = (props) => {
   const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -170,6 +170,10 @@ const SignUp = () => {
                       name: res.body.name,
                       lastName: res.body.lastName,
                       eMail: res.body.eMail,
+                    });
+                    props.setCustomer({
+                      ...res.body,
+                      password: "****",
                     });
                     history.push("/");
                   }
