@@ -257,6 +257,7 @@ class Reservation extends Component {
             alignItems: "flex-start",
             width: "100%",
             height: "100%",
+            marginTop: "1em",
           }}
         >
           <Grid
@@ -274,7 +275,11 @@ class Reservation extends Component {
             <Stepper
               activeStep={activeStep}
               orientation="vertical"
-              style={{ width: "100%" }}
+              style={{
+                width: "100%",
+
+                background: "#f5f5f5",
+              }}
             >
               <Step key={1} active={true}>
                 <StepLabel>Hizmet</StepLabel>

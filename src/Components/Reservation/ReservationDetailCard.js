@@ -17,11 +17,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: 350,
-    minheight: 150
-  }
+    minheight: 150,
+  },
 }));
 
 const CardItem = ({}) => {
@@ -46,7 +46,7 @@ const ReservationDetailCard = ({ service, date, onPress }) => {
   const classes = useStyles();
 
   return (
-    <Card style={{ width: "100%", marginBottom: ".5em" }}>
+    <Card style={{ width: "100%", marginBottom: ".5em" }} elevation={0}>
       <div>
         <Grid
           container
@@ -56,7 +56,7 @@ const ReservationDetailCard = ({ service, date, onPress }) => {
           style={{
             background: "white",
             padding: "1em",
-            borderRadius: ".2em"
+            borderRadius: ".2em",
             //   boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
           }}
         >
@@ -68,7 +68,7 @@ const ReservationDetailCard = ({ service, date, onPress }) => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-start",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             {date ? (
@@ -76,8 +76,8 @@ const ReservationDetailCard = ({ service, date, onPress }) => {
             ) : (
               <>
                 <span style={{ marginRight: ".5em" }}>{service.name}</span>
-                <span style={{ marginRight: ".5em" }}>{service.time}</span>
-                <span style={{ marginRight: ".5em" }}>{service.price}</span>
+                <span style={{ marginRight: ".5em" }}>{service.time} dk</span>
+                <span style={{ marginRight: ".5em" }}>{service.price} ₺</span>
               </>
             )}
           </Grid>

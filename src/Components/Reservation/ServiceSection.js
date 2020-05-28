@@ -45,7 +45,7 @@ const ServiceSection = ({
   const inputLabel = React.useRef(null);
   return (
     <>
-      <Card style={{ marginBottom: "1em" }}>
+      <Card style={{ marginBottom: "1em" }} elevation={0}>
         <CardContent
           className={classes.cardPadding}
           style={{
@@ -63,8 +63,15 @@ const ServiceSection = ({
           >
             <Grid item>
               <div>
-                {selectedService.name} -{selectedService.time}-
-                {selectedService.price}
+                <span style={{ marginRight: ".5em" }}>
+                  {selectedService.name}
+                </span>
+                <span style={{ marginRight: ".5em" }}>
+                  {selectedService.time} dk
+                </span>
+                <span style={{ marginRight: ".5em" }}>
+                  {selectedService.price} ₺
+                </span>
               </div>
             </Grid>
             <Grid
