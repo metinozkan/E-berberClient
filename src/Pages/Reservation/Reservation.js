@@ -103,6 +103,12 @@ class Reservation extends Component {
     });
   };
 
+  setCustomerIsLogin = (boolean) => {
+    this.setState({
+      isLogin: boolean,
+    });
+  };
+
   handleNext = () => {
     this.setActiveStep(this.state.stepperActiveStep + 1);
   };
@@ -233,7 +239,9 @@ class Reservation extends Component {
   };
   render() {
     const barberId = this.props.match.params.barberId;
-    const customerId = Storage.GetItem("customer").id;
+    const customerId = Storage.GetItem("customer")
+      ? Storage.GetItem("customer").id
+      : false;
     console.log("ne imis", this.state.openModal);
     //const steps = this.getSteps();
     const activeStep = this.state.stepperActiveStep;
@@ -358,6 +366,7 @@ class Reservation extends Component {
                             setStepperLoginOrSignUp={
                               this.setStepperLoginOrSignUp
                             }
+                            setCustomerIsLogin={this.setCustomerIsLogin}
                           ></StepperEndSign>
                         </div>
                       ) : (
@@ -374,6 +383,7 @@ class Reservation extends Component {
                             setStepperLoginOrSignUp={
                               this.setStepperLoginOrSignUp
                             }
+                            setCustomerIsLogin={this.setCustomerIsLogin}
                           ></StepperEndLogin>
                         </div>
                       )

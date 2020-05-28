@@ -29,6 +29,14 @@ const newTheme = createMuiTheme({
       main: "#0091ea",
     },
   },
+  // palette: {
+  //   primary: {
+  //     main: "#000",
+  //   },
+  //   secondary: {
+  //     main: "#2c2c2c",
+  //   },
+  // },
 });
 
 function App() {

@@ -52,8 +52,8 @@ const DefaultLayout = (props) => {
   const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const customer = Storage.GetItem("customer");
+  const [customer, setCustomer] = React.useState(Storage.GetItem("customer"));
+  //const customer = Storage.GetItem("customer");
   const history = useHistory();
   const { path } = useRouteMatch();
   const handleChange = (event) => {
