@@ -91,13 +91,17 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
               })
               .then((res) => {
                 if (res.ok) {
-                  setIsLoading(false);
-                  Storage.SetItem("customer", {
-                    ...res.body,
-                    password: "****",
-                  });
-                  console.log("login", res.body);
-                  setCustomerIsLogin({ ...res.body, password: "***" });
+                  if (!res.body.Error) {
+                    setIsLoading(false);
+                    Storage.SetItem("customer", {
+                      ...res.body.data,
+                      password: "****",
+                    });
+                    console.log("login", res.body.data);
+                    setCustomerIsLogin({ ...res.body.data, password: "***" });
+                  } else {
+                    console.log("hata", res.body.Message);
+                  }
                 }
               });
           }

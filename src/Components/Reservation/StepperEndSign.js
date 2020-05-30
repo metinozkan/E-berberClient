@@ -136,15 +136,19 @@ const StepperEndSign = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
             })
             .then((res) => {
               if (res.ok) {
-                setIsLoading(false);
-                console.log("signUp succesfuly");
-                Storage.SetItem("customer", {
-                  id: res.body.id,
-                  name: res.body.name,
-                  lastName: res.body.lastName,
-                  eMail: res.body.eMail,
-                });
-                setCustomerIsLogin({ ...res.body, password: "***" });
+                if (!res.body.Error) {
+                  setIsLoading(false);
+                  console.log("signUp succesfuly");
+                  Storage.SetItem("customer", {
+                    id: res.body.data.id,
+                    name: res.body.data.name,
+                    lastName: res.body.data.lastName,
+                    eMail: res.body.data.eMail,
+                  });
+                  setCustomerIsLogin({ ...res.body.data, password: "***" });
+                } else {
+                  console.log("hata", res.body.Message);
+                }
               }
             });
         }}
