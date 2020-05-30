@@ -164,18 +164,22 @@ const SignUp = (props) => {
                 .then((res) => {
                   console.log("rRESS", res);
                   if (res.ok) {
-                    console.log("signUp succesfuly");
-                    Storage.SetItem("customer", {
-                      id: res.body.id,
-                      name: res.body.name,
-                      lastName: res.body.lastName,
-                      eMail: res.body.eMail,
-                    });
-                    props.setCustomer({
-                      ...res.body,
-                      password: "****",
-                    });
-                    history.push("/");
+                    if (!res.body.Error) {
+                      console.log("signUp succesfuly");
+                      Storage.SetItem("customer", {
+                        id: res.body.id,
+                        name: res.body.name,
+                        lastName: res.body.lastName,
+                        eMail: res.body.eMail,
+                      });
+                      props.setCustomer({
+                        ...res.body,
+                        password: "****",
+                      });
+                      history.push("/");
+                    } else {
+                      console.log("hata", res.body.Message);
+                    }
                   }
                 });
             }}

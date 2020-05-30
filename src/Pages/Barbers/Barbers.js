@@ -23,11 +23,15 @@ const Barbers = (props) => {
         .send({ district: queryDistrict })
         .then((res) => {
           if (res.ok) {
-            console.log("geldii", res.body);
-            setBarbers(res.body);
-            setLoading(false);
-            if (!res.body.length > 0) {
-              setIsEmpty(true);
+            if (!res.body.Error) {
+              console.log("geldii", res.body.data);
+              setBarbers(res.body.data);
+              setLoading(false);
+              if (!res.body.data.length > 0) {
+                setIsEmpty(true);
+              } else {
+                console.log("hata", res.body.Message);
+              }
             }
           }
         });

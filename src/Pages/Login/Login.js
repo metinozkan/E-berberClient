@@ -120,20 +120,24 @@ const Login = (props) => {
                   })
                   .then((res) => {
                     if (res.ok) {
-                      console.log("rRESS", res);
+                      if (!res.body.Error) {
+                        console.log("rRESS", res);
 
-                      setIsLoading(false);
-                      Storage.SetItem("customer", {
-                        ...res.body,
-                        password: "****",
-                      });
-                      console.log("login", res.body);
-                      history.push("/");
+                        setIsLoading(false);
+                        Storage.SetItem("customer", {
+                          ...res.body,
+                          password: "****",
+                        });
+                        console.log("login", res.body);
+                        history.push("/");
 
-                      props.setCustomer({
-                        ...res.body,
-                        password: "****",
-                      });
+                        props.setCustomer({
+                          ...res.body,
+                          password: "****",
+                        });
+                      } else {
+                        console.log("hata", res.body.Message);
+                      }
                     }
                   });
               }

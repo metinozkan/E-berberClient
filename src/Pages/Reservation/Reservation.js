@@ -157,10 +157,14 @@ class Reservation extends Component {
   _getStaffFreeHours = (personnelId) => {
     Agent.Staffs.getFreeHoursWeekly(personnelId).then((res) => {
       if (res.ok) {
-        this.setState({
-          staffFreeHoursWeekly: res.body,
-          isLoading: false,
-        });
+        if (!res.body.Error) {
+          this.setState({
+            staffFreeHoursWeekly: res.body.data,
+            isLoading: false,
+          });
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
@@ -471,37 +475,41 @@ class Reservation extends Component {
                                   .send(appointmentObject)
                                   .then((res) => {
                                     if (res.ok) {
-                                      this.setState({
-                                        isLoadingForAddAppointment: false,
-                                        openModal: true,
-                                        modalContent: (
-                                          <div
-                                            style={{
-                                              display: "flex",
-                                              flexDirection: "column",
-                                              justifyContent: "center",
-                                              alignItems: "center",
-                                            }}
-                                          >
-                                            Randevunuz Başarılı bir şekilde
-                                            alındı.
-                                            <span>
-                                              {
-                                                res.body.appointmentDate.split(
-                                                  "T"
-                                                )[0]
-                                              }
-                                            </span>
-                                            <span>
-                                              {
-                                                res.body.appointmentDate
-                                                  .split("T")[1]
-                                                  .split(".")[0]
-                                              }
-                                            </span>
-                                          </div>
-                                        ),
-                                      });
+                                      if (!res.body.Error) {
+                                        this.setState({
+                                          isLoadingForAddAppointment: false,
+                                          openModal: true,
+                                          modalContent: (
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                              }}
+                                            >
+                                              Randevunuz Başarılı bir şekilde
+                                              alındı.
+                                              <span>
+                                                {
+                                                  res.body.data.appointmentDate.split(
+                                                    "T"
+                                                  )[0]
+                                                }
+                                              </span>
+                                              <span>
+                                                {
+                                                  res.body.data.appointmentDate
+                                                    .split("T")[1]
+                                                    .split(".")[0]
+                                                }
+                                              </span>
+                                            </div>
+                                          ),
+                                        });
+                                      } else {
+                                        console.log("hata", res.body.Message);
+                                      }
                                     } else {
                                       this.setState({
                                         isLoadingForAddAppointment: false,

@@ -204,8 +204,12 @@ const BarberDetail = () => {
   const _getBarberService = () => {
     Agent.ServiceBarber.getServices(params.barberId).then((res) => {
       if (res.ok) {
-        setServices(res.body);
-        setIsLoading(false);
+        if (!res.body.Error) {
+          setServices(res.body.data);
+          setIsLoading(false);
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
@@ -220,7 +224,11 @@ const BarberDetail = () => {
   const _getBarber = () => {
     Agent.Barbers.getBarber(params.barberId).then((res) => {
       if (res.ok) {
-        setBarber(res.body);
+        if (!res.body.Error) {
+          setBarber(res.body.data);
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
