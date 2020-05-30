@@ -133,12 +133,12 @@ const SignUp = (props) => {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             // type="submit"
@@ -167,13 +167,13 @@ const SignUp = (props) => {
                     if (!res.body.Error) {
                       console.log("signUp succesfuly");
                       Storage.SetItem("customer", {
-                        id: res.body.id,
-                        name: res.body.name,
-                        lastName: res.body.lastName,
-                        eMail: res.body.eMail,
+                        id: res.body.data.data.id,
+                        name: res.body.data.name,
+                        lastName: res.body.data.lastName,
+                        eMail: res.body.data.eMail,
                       });
                       props.setCustomer({
-                        ...res.body,
+                        ...res.body.data,
                         password: "****",
                       });
                       history.push("/");
@@ -188,8 +188,8 @@ const SignUp = (props) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <Link href="/login" variant="body2">
+                Hesabın zaten var mı? Giriş Yap
               </Link>
             </Grid>
           </Grid>
