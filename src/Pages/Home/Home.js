@@ -66,37 +66,50 @@ const Home = (props) => {
             width: "100%",
             height: "100%",
             backgroundImage: `url(${Background} )`,
-            opacity: "0.5",
+            opacity: "0.7",
+            zIndex: "-1",
           }}
         ></div>
-        <Grid item xs={2}></Grid>
+
         <Grid item xs={12} md={6} style={{ zIndex: "1" }}>
-          <Grid container>
-            <Grid item xs={12} style={{ marginBottom: "1em" }}>
-              <Typography
-                variant="h2"
-                component="h3"
-                style={{ marginBottom: ".3em" }}
-              >
-                Aradığın Hizmet Burada
-              </Typography>
-              <Typography variant="h5" component="h3">
-                Sade - Kolay -Hızlı randevu
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
+          <Paper
             style={{
+              width: "80%",
+              marginLeft: "8em",
+              opacity: "0.8",
+              padding: ".5em",
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {/* <Grid item xs={6}>
+            <Grid container>
+              <Grid item xs={12} style={{ marginBottom: "1em" }}>
+                <Typography
+                  variant="h2"
+                  component="h3"
+                  style={{ marginBottom: ".3em" }}
+                >
+                  Aradığın Hizmet Burada
+                </Typography>
+                <Typography variant="h5" component="h3">
+                  Sade - Kolay -Hızlı randevu
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              {/* <Grid item xs={6}>
                 <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
@@ -112,7 +125,7 @@ const Home = (props) => {
                 />
               </Grid> */}
 
-            {/* <TextField
+              {/* <TextField
                   className={classes.margin}
                   id="input-with-icon-textfield"
                   label="İlçeye Göre Ara"
@@ -125,48 +138,50 @@ const Home = (props) => {
                     ),
                   }}
                 /> */}
-            <Autocomplete
-              //freeSolo
-              autoSelect={true}
-              id="combo-box-demo"
-              options={districts}
-              getOptionLabel={(option) => option.title}
-              style={{ width: "100%" }}
-              inputValue={district}
-              onInputChange={(event, newInputValue) => {
-                setDistrict(newInputValue);
-              }}
-              // value={district}
-              // onChange={(e, values) => {
-              //   console.log(values);
-              //   setDistrict(values.title);
-              // }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  value={district}
-                  id="outlined-full-width"
-                  label="İlçe seçin"
-                  fullWidth
-                  margin="dense"
-                  variant="outlined"
-                  value={district}
-                />
-              )}
-            ></Autocomplete>
-            {/* <IconButton
+              <Autocomplete
+                //freeSolo
+                fullWidth
+                autoSelect={true}
+                id="combo-box-demo"
+                options={districts}
+                getOptionLabel={(option) => option.title}
+                style={{ width: "100%" }}
+                inputValue={district}
+                onInputChange={(event, newInputValue) => {
+                  setDistrict(newInputValue);
+                }}
+                // value={district}
+                // onChange={(e, values) => {
+                //   console.log(values);
+                //   setDistrict(values.title);
+                // }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    value={district}
+                    id="outlined-full-width"
+                    label="İlçe seçin"
+                    fullWidth
+                    margin="dense"
+                    variant="outlined"
+                    value={district}
+                  />
+                )}
+              ></Autocomplete>
+              {/* <IconButton
                   // type="submit"
                   className={classes.iconButton}
                   aria-label="search"
                 > */}
-            <Link
-              to={`/barbers?district=${district}`}
-              style={{ color: "black" }}
-            >
-              <Search size={25} />
-            </Link>
-            {/* </IconButton> */}
-          </Grid>
+              <Link
+                to={`/barbers?district=${district}`}
+                style={{ color: "black" }}
+              >
+                <Search size={25} />
+              </Link>
+              {/* </IconButton> */}
+            </Grid>
+          </Paper>
         </Grid>
       </Grid>
       <Footer />

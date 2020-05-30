@@ -148,7 +148,7 @@ class Reservation extends Component {
             selectedPersonnel: res.body[0],
           });
           //simdiki id 4
-          this._getStaffFreeHours(4);
+          this._getStaffFreeHours(res.body[0].id);
         }
       }
     );
@@ -167,6 +167,12 @@ class Reservation extends Component {
 
   componentDidMount() {
     this._getPersonnel();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedPersonnel !== this.state.selectedPersonnel) {
+      this._getStaffFreeHours(this.state.selectedPersonnel.id);
+    }
   }
 
   modifyStartDate = (dateDay, dateHour) => {
@@ -451,13 +457,16 @@ class Reservation extends Component {
                                     (service) => service.id
                                   ),
                                   // staffId: this.state.selectedPersonnel.id,
-                                  staffId: 4,
+                                  staffId: this.state.selectedPersonnel.id,
                                 };
 
                                 this.setState({
                                   isLoadingForAddAppointment: true,
                                 });
-
+                                console.log(
+                                  "giden appo objesi",
+                                  appointmentObject
+                                );
                                 Agent.Appointments.addAppointments()
                                   .send(appointmentObject)
                                   .then((res) => {
@@ -492,6 +501,10 @@ class Reservation extends Component {
                                             </span>
                                           </div>
                                         ),
+                                      });
+                                    } else {
+                                      this.setState({
+                                        isLoadingForAddAppointment: false,
                                       });
                                     }
                                   });

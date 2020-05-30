@@ -181,7 +181,9 @@ const DefaultLayout = (props) => {
                       //            Router.push("/login");
                     }}
                   >
-                    <Link to="/login">Giriş Yap</Link>
+                    <Link to="/login" style={{ color: "white" }}>
+                      Giriş Yap
+                    </Link>
                   </Button>
                 </>
               )}

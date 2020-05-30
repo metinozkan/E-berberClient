@@ -218,16 +218,27 @@ class HourCalender extends Component {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[0],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[0] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[0],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}
@@ -253,16 +264,27 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[1],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[1] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[1],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}
@@ -291,16 +313,27 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[2],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[2] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[2],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}
@@ -327,16 +360,27 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[3],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[3] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[3],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}
@@ -439,16 +483,27 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[5],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[5] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[5],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}
@@ -474,16 +529,27 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[6],
-                        "saat:",
-                        h
-                      );
+                      this.props.updateState({
+                        selectedDate: {
+                          day:
+                            this.state.getDaysArray[6] +
+                            "/" +
+                            (this.state.getMonth + 1) +
+                            "/" +
+                            2020,
+                          hour: h,
+                        },
+                        stepThreeActive: true,
+                        selectedDateString: JSON.stringify(
+                          new Date(
+                            2020,
+                            this.state.getMonth,
+                            this.state.getDaysArray[6],
+                            h.split(":")[0],
+                            h.split(":")[1]
+                          )
+                        ),
+                      });
                     }}
                   >
                     {h}

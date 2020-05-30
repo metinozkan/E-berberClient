@@ -34,8 +34,13 @@ const Barbers = (props) => {
     } else {
       Agent.Barbers.getBarbers().then((res) => {
         if (res.ok) {
-          setBarbers(res.body);
-          setLoading(false);
+          console.log("reds", res);
+          if (!res.body.Error) {
+            setBarbers(res.body.data);
+            setLoading(false);
+          } else {
+            console.log("hata");
+          }
         }
       });
     }
