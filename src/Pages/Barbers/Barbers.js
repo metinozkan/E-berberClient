@@ -27,7 +27,7 @@ const Barbers = (props) => {
               console.log("geldii", res.body.data);
               setBarbers(res.body.data);
               setLoading(false);
-              if (!res.body.data.length > 0) {
+              if (!res.body.data.length == 0) {
                 setIsEmpty(true);
               } else {
                 console.log("hata", res.body.Message);
@@ -77,7 +77,18 @@ const Barbers = (props) => {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={4} style={{ marginTop: "2em" }}>
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                style={{
+                  marginTop: "2em",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  aligItems: "center",
+                }}
+              >
                 <MapBoxComp />
               </Grid>
             </>

@@ -12,6 +12,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import StepContent from "@material-ui/core/StepContent";
 
 import HourCalender from "../../Components/HourCalender";
+import FreeHoursComp from "../../Components/Reservation/FreeHoursComp";
 import TextField from "@material-ui/core/TextField";
 
 //signup Login
@@ -417,7 +418,13 @@ class Reservation extends Component {
                     <Typography>
                       {this.state.selectedDate == false ? (
                         this.state.staffFreeHoursWeekly && (
-                          <HourCalender
+                          // <HourCalender
+                          //   updateState={this._updateState}
+                          //   staffFreeHoursWeekly={
+                          //     this.state.staffFreeHoursWeekly
+                          //   }
+                          // />
+                          <FreeHoursComp
                             updateState={this._updateState}
                             staffFreeHoursWeekly={
                               this.state.staffFreeHoursWeekly
