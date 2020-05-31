@@ -14,11 +14,13 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    width: "100%",
   },
   paper: {
     padding: theme.spacing(2),
     margin: "auto",
-    maxWidth: 600,
+    // maxWidth: 600,
+    width: "80%",
   },
   image: {
     width: 180,

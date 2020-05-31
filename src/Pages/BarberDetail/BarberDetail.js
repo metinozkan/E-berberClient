@@ -175,16 +175,18 @@ const ClocksTable = ({ workHours }) => {
           </TableRow>
         </TableHead> */}
         <TableBody>
-          {workHours.map((day) => (
-            <TableRow key={day.name}>
-              <TableCell component="th" scope="row">
-                {day.day}
-              </TableCell>
-              <TableCell align="right">
-                {day.startHour}-{day.endHour}
-              </TableCell>
-            </TableRow>
-          ))}
+          {workHours
+            .sort((a, b) => a.id - b.id)
+            .map((day) => (
+              <TableRow key={day.name}>
+                <TableCell component="th" scope="row">
+                  {day.day}
+                </TableCell>
+                <TableCell align="right">
+                  {day.startHour}-{day.endHour}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
@@ -213,10 +215,14 @@ const BarberDetail = () => {
       }
     });
   };
-  const _getBarberWorkHours = () => {
-    Agent.WorkHours.getWorkHoursBarber(params.barberId).then((res) => {
+  const _getBarberWorkTimes = (barberId) => {
+    Agent.Barbers.getBarberWorkTimes(barberId).then((res) => {
       if (res.ok) {
-        setWorkHours(res.body);
+        if (!res.body.Error) {
+          setWorkHours(res.body.data);
+        } else {
+          console.log("hata", res.body.Error);
+        }
       }
     });
   };
@@ -226,6 +232,7 @@ const BarberDetail = () => {
       if (res.ok) {
         if (!res.body.Error) {
           setBarber(res.body.data);
+          _getBarberWorkTimes(res.body.data.id);
         } else {
           console.log("hata", res.body.Message);
         }
@@ -235,7 +242,6 @@ const BarberDetail = () => {
 
   useEffect(() => {
     _getBarberService();
-    _getBarberWorkHours();
     _getBarber();
   }, []);
   return (

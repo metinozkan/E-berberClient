@@ -210,7 +210,9 @@ class HourCalender extends Component {
           >
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>Monday</div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 1 && this.state.staffFreeHoursWeekly.Monday ? (
+              {date.getDay() != 0 &&
+              date.getDay() <= 1 &&
+              this.state.staffFreeHoursWeekly.Monday ? (
                 this.state.staffFreeHoursWeekly.Monday.map((h) => (
                   <div
                     style={{
@@ -259,7 +261,9 @@ class HourCalender extends Component {
           >
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>Tuesday</div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 2 && this.state.staffFreeHoursWeekly.Tuesday ? (
+              {date.getDay() != 0 &&
+              date.getDay() <= 2 &&
+              this.state.staffFreeHoursWeekly.Tuesday ? (
                 this.state.staffFreeHoursWeekly.Tuesday.map((h) => (
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
@@ -307,7 +311,8 @@ class HourCalender extends Component {
               Wednesday
             </div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 3 &&
+              {date.getDay() != 0 &&
+              date.getDay() <= 3 &&
               this.state.staffFreeHoursWeekly.Wednesday ? (
                 this.state.staffFreeHoursWeekly.Wednesday.map((h) => (
                   <div
@@ -354,7 +359,8 @@ class HourCalender extends Component {
           >
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>Thursday</div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 4 &&
+              {date.getDay() != 0 &&
+              date.getDay() <= 4 &&
               this.state.staffFreeHoursWeekly.Thursday ? (
                 this.state.staffFreeHoursWeekly.Thursday.map((h) => (
                   <div
@@ -401,7 +407,9 @@ class HourCalender extends Component {
           >
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>Friday</div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 5 && this.state.staffFreeHoursWeekly.Friday ? (
+              {date.getDay() != 0 &&
+              date.getDay() <= 5 &&
+              this.state.staffFreeHoursWeekly.Friday ? (
                 this.state.staffFreeHoursWeekly.Friday.map((h) => (
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
@@ -477,7 +485,8 @@ class HourCalender extends Component {
                 alignItems: "center",
               }}
             >
-              {date.getDay() <= 6 &&
+              {date.getDay() != 0 &&
+              date.getDay() <= 6 &&
               this.state.staffFreeHoursWeekly.Saturday ? (
                 this.state.staffFreeHoursWeekly.Saturday.map((h) => (
                   <div
@@ -524,7 +533,9 @@ class HourCalender extends Component {
           >
             <div style={{ fontSize: "20px", fontWeight: "bold" }}>Sunday</div>
             <Grid item xs={12} style={this.hoursColumnStyle}>
-              {date.getDay() <= 7 && this.state.staffFreeHoursWeekly.Sunday ? (
+              {date.getDay() == 0 &&
+              date.getDay() <= 7 &&
+              this.state.staffFreeHoursWeekly.Sunday ? (
                 this.state.staffFreeHoursWeekly.Sunday.map((h) => (
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
