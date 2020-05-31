@@ -25,7 +25,7 @@ import Settings from "@material-ui/icons/Settings";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import StoreIcon from "@material-ui/icons/Store";
 import styled from "styled-components";
-
+import eBerberLogo from "../../Resources/Images/e-berber.png";
 import { Link } from "react-router-dom";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -111,14 +111,17 @@ const DefaultLayout = (props) => {
         <AppBar
           position="static"
           style={{ width: "100%", position: "relative" }}
+          color="white"
+          elevation={1}
         >
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            ></IconButton>
+            <Link to="/" style={{ color: "black" }}>
+              <img
+                src={eBerberLogo}
+                style={{ width: "50px", height: "50px", marginRight: "1em" }}
+              ></img>
+            </Link>
+
             {fullScreen ? (
               <div
                 style={{
@@ -130,9 +133,10 @@ const DefaultLayout = (props) => {
                 }}
               >
                 <Typography variant="h6" className={classes.title}>
-                  <Link to="/" style={{ color: "white" }}>
+                  {/* <Link to="/" style={{ color: "black" }}>
+                 
                     E-Berber
-                  </Link>
+                  </Link> */}
                   <Button>
                     <Link
                       to="/barbers"
@@ -199,7 +203,7 @@ const DefaultLayout = (props) => {
             ) : (
               <>
                 <Typography variant="h6" className={classes.title}>
-                  E-Berber
+                  {/* E-Berber */}
                   <Button
                     style={{ marginLeft: "1em" }}
                     onClick={() => {
@@ -230,7 +234,7 @@ const DefaultLayout = (props) => {
                         alignItems: "center",
                       }}
                     >
-                      <div style={{ color: "white" }}>
+                      <div style={{ color: "black" }}>
                         {props.customer.name} {props.customer.lastName}
                       </div>
                       <IconButton
@@ -282,7 +286,7 @@ const DefaultLayout = (props) => {
                     <>
                       <Button
                         variant="outlined"
-                        style={{ marginRight: ".5em" }}
+                        style={{ marginRight: ".5em", padding: ".5em 1em" }}
                         onClick={() => {
                           //     Router.push("/signup");
                         }}
@@ -293,7 +297,8 @@ const DefaultLayout = (props) => {
                       </Button>
                       <Button
                         variant="contained"
-                        color="secondary"
+                        color="primary"
+                        style={{ padding: ".5em 1em" }}
                         className={classes.button}
                         // endIcon={<Icon>send</Icon>}
                         onClick={() => {

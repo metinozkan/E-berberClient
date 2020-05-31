@@ -22,7 +22,7 @@ export const Loading = ({ type, animateExit, fromSpeaker, emptyPage }) => {
           width: "100vw",
           height: "100%",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           // left: "50%",
@@ -42,6 +42,7 @@ export const Loading = ({ type, animateExit, fromSpeaker, emptyPage }) => {
             opacity: 0.8,
           }}
         />
+        {emptyPage && "Boş sayfa"}
       </div>
     </div>
   );

@@ -68,7 +68,7 @@ const Barbers = (props) => {
         >
           {!isEmpty ? (
             <>
-              <Grid item xs={8} style={{ marginTop: "2em" }}>
+              <Grid item xs={12} sm={8} style={{ marginTop: "2em" }}>
                 <Grid container spacing={4}>
                   {barbers.map((barber) => (
                     <Grid item xs={12}>
@@ -77,7 +77,7 @@ const Barbers = (props) => {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={4} style={{ marginTop: "2em" }}>
+              <Grid item xs={12} sm={4} style={{ marginTop: "2em" }}>
                 <MapBoxComp />
               </Grid>
             </>

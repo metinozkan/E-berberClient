@@ -66,7 +66,7 @@ const Home = (props) => {
             width: "100%",
             height: "100%",
             backgroundImage: `url(${Background} )`,
-            opacity: "0.7",
+            opacity: "0.4",
             zIndex: "-1",
           }}
         ></div>
@@ -184,7 +184,7 @@ const Home = (props) => {
           </Paper>
         </Grid>
       </Grid>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

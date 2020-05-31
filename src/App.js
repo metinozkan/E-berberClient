@@ -23,10 +23,10 @@ const blueGreyColor = blueGrey.A900;
 const newTheme = createMuiTheme({
   palette: {
     primary: {
-      main: "#0277bd",
+      main: "#0d0d0d",
     },
     secondary: {
-      main: "#0091ea",
+      main: "#000",
     },
   },
   // palette: {

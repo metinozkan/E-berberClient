@@ -208,7 +208,6 @@ const BarberDetail = () => {
       if (res.ok) {
         if (!res.body.Error) {
           setServices(res.body.data);
-          setIsLoading(false);
         } else {
           console.log("hata", res.body.Message);
         }
@@ -220,6 +219,7 @@ const BarberDetail = () => {
       if (res.ok) {
         if (!res.body.Error) {
           setWorkHours(res.body.data);
+          setIsLoading(false);
         } else {
           console.log("hata", res.body.Error);
         }
