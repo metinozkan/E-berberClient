@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Button, Card } from "@material-ui/core";
-
+import { TopDetailCard } from "./components/TopDetailCard";
 import {
   HashRouter as Router,
   Route,
@@ -247,140 +247,145 @@ const BarberDetail = () => {
   return (
     <Grid
       container
-      direction="row"
+      direction="column"
       justify="center"
       alignItems="center"
       spacing={0}
       style={{}}
     >
       {!isLoading ? (
-        <Grid
-          item
-          container
-          xs={12}
-          sm={11}
-          md={10}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-          }}
-        >
-          {/* <Grid
-            item
-            xs={12}
-            style={{
-              backgroundColor: "aqua",
-              height: "350px",
-              marginBottom: "5em",
-            }}
-          >
-            <img
-              style={{ height: "100%", width: "100%" }}
-              src={BerberMahmut}
-            ></img>
-          </Grid> */}
-          <Grid
-            item
-            xs={12}
-            sm={11}
-            md={7}
-            style={{
-              height: "auto",
-              paddingRight: "1em",
-              paddingTop: "1em",
-            }}
-          >
-            <SimpleTable
-              services={services}
-              barberId={params.barberId}
-            ></SimpleTable>
+        <>
+          <Grid item xs={12} sm={11} md={10} style={{ width: "100%" }}>
+            <TopDetailCard barber={barber} />
           </Grid>
           <Grid
             item
+            container
             xs={12}
             sm={11}
-            md={5}
+            md={10}
             style={{
-              height: "auto",
-              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
             }}
           >
-            <Grid item xs={12}>
-              <div style={{ padding: "1em" }}>
-                <Card
-                  style={{
-                    boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.50)",
-                    marginBottom: "2em",
-                  }}
-                >
-                  <CardContent>
-                    <Grid container>
-                      {/* <Grid
-                        item
-                        container
-                        xs={12}
-                        style={{
-                          marginBottom: "1em",
-                          paddingBottom: "1em",
-                          borderBottom: "1px solid #e2e2e2",
-                        }}
-                      >
-                        <Grid item xs={4} style={{}}>
-                          <span>Hakkında:</span>
-                        </Grid>
-                        <Grid item xs={8} style={{}}>
-                          acıklamaasd asd asşldk asd as ubrap rakip olarak bul
-                          sdfas
-                        </Grid>
-                      </Grid> */}
+            {/* <Grid
+           item
+           xs={12}
+           style={{
+             backgroundColor: "aqua",
+             height: "350px",
+             marginBottom: "5em",
+           }}
+         >
+           <img
+             style={{ height: "100%", width: "100%" }}
+             src={BerberMahmut}
+           ></img>
+         </Grid> */}
+            <Grid
+              item
+              xs={12}
+              sm={11}
+              md={7}
+              style={{
+                height: "auto",
+                paddingRight: "1em",
+                paddingTop: "1em",
+              }}
+            >
+              <SimpleTable
+                services={services}
+                barberId={params.barberId}
+              ></SimpleTable>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={11}
+              md={5}
+              style={{
+                height: "auto",
+                overflow: "hidden",
+              }}
+            >
+              <Grid item xs={12}>
+                <div style={{ padding: "1em" }}>
+                  <Card
+                    style={{
+                      boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.50)",
+                      marginBottom: "2em",
+                    }}
+                  >
+                    <CardContent>
+                      <Grid container>
+                        {/* <Grid
+                       item
+                       container
+                       xs={12}
+                       style={{
+                         marginBottom: "1em",
+                         paddingBottom: "1em",
+                         borderBottom: "1px solid #e2e2e2",
+                       }}
+                     >
+                       <Grid item xs={4} style={{}}>
+                         <span>Hakkında:</span>
+                       </Grid>
+                       <Grid item xs={8} style={{}}>
+                         acıklamaasd asd asşldk asd as ubrap rakip olarak bul
+                         sdfas
+                       </Grid>
+                     </Grid> */}
 
-                      <Grid
-                        item
-                        container
-                        xs={12}
-                        style={{
-                          marginBottom: "1em",
-                          paddingBottom: "1em",
-                          borderBottom: "1px solid #e2e2e2",
-                        }}
-                      >
-                        <Grid item xs={4} style={{ marginTop: "1em" }}>
-                          Çalışma Saatleri:
-                        </Grid>
-                        <Grid item xs={8} style={{}}>
-                          {workHours && (
-                            <ClocksTable workHours={workHours}></ClocksTable>
-                          )}
-                        </Grid>
-                      </Grid>
-
-                      {barber && (
                         <Grid
                           item
                           container
                           xs={12}
-                          style={{ marginBottom: "1em" }}
+                          style={{
+                            marginBottom: "1em",
+                            paddingBottom: "1em",
+                            borderBottom: "1px solid #e2e2e2",
+                          }}
                         >
-                          <Grid item xs={4} style={{}}>
-                            Adres Tarifi:
+                          <Grid item xs={4} style={{ marginTop: "1em" }}>
+                            Çalışma Saatleri:
                           </Grid>
                           <Grid item xs={8} style={{}}>
-                            {barber.adress}
+                            {workHours && (
+                              <ClocksTable workHours={workHours}></ClocksTable>
+                            )}
                           </Grid>
                         </Grid>
-                      )}
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </div>
+
+                        {barber && (
+                          <Grid
+                            item
+                            container
+                            xs={12}
+                            style={{ marginBottom: "1em" }}
+                          >
+                            <Grid item xs={4} style={{}}>
+                              Adres Tarifi:
+                            </Grid>
+                            <Grid item xs={8} style={{}}>
+                              {barber.adress}
+                            </Grid>
+                          </Grid>
+                        )}
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Grid>
+              <img
+                style={{ overflow: "hidden", height: "450px" }}
+                src={Gmap}
+              ></img>
             </Grid>
-            <img
-              style={{ overflow: "hidden", height: "450px" }}
-              src={Gmap}
-            ></img>
           </Grid>
-        </Grid>
+        </>
       ) : (
         <Loading />
       )}
