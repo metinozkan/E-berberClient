@@ -75,7 +75,7 @@ class Reservation extends Component {
       showDateDetailCard: false,
       personnels: [],
       selectedPersonnel: false,
-      openModal: false,
+      openConfirmModal: false,
       modalContent: "",
       staffFreeHoursWeekly: false,
       isLoading: true,
@@ -333,9 +333,9 @@ class Reservation extends Component {
     return (
       <div>
         <ConfirmModal
-          openModal={this.state.openModal}
-          setOpenConfirm={(value) => {
-            this.setState({ openModal: value });
+          openConfirmModal={this.state.openConfirmModal}
+          setOpenConfirmModal={(value) => {
+            this.setState({ openConfirmModal: value });
             history.push("/profile");
           }}
           confirmMesage={"Tamam"}
@@ -549,7 +549,7 @@ class Reservation extends Component {
                                       if (!res.body.Error) {
                                         this.setState({
                                           isLoadingForAddAppointment: false,
-                                          openModal: true,
+                                          openConfirmModal: true,
                                           modalContent: (
                                             <div
                                               style={{

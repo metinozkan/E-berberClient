@@ -180,8 +180,8 @@ const AppointmentsComp = ({ appointment }) => {
       style={{ width: "100%", margin: "1em 0px" }}
     >
       <ConfirmModal
-        openModal={openConfirmModal}
-        setOpenConfirm={(value) => {
+        openConfirmModal={openConfirmModal}
+        setOpenConfirmModal={(value) => {
           setOpenConfirmModal(value);
         }}
         onConfirmFunction={() => {

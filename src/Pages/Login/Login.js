@@ -14,6 +14,7 @@ import {
   Container,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import ConfirmModal from "../../Components/ConfirmModal/ConfirmModal";
 import { makeStyles } from "@material-ui/core/styles";
 
 function Copyright() {
@@ -54,6 +55,8 @@ const Login = (props) => {
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const history = useHistory();
 
   const customer = props.customer;
@@ -61,6 +64,12 @@ const Login = (props) => {
     <Container component="main" maxWidth="xs">
       {isLoading && <Loading></Loading>}
       {/* <CssBaseline /> */}
+      <ConfirmModal
+        openConfirmModal={openConfirmModal}
+        setOpenConfirmModal={setOpenConfirmModal}
+        confirmMesage={"Tamam"}
+        modalContent={modalContent}
+      />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -136,6 +145,9 @@ const Login = (props) => {
                           password: "****",
                         });
                       } else {
+                        setOpenConfirmModal(true);
+                        setIsLoading(false);
+                        setModalContent(res.body.Message);
                         console.log("hata", res.body.Message);
                       }
                     }

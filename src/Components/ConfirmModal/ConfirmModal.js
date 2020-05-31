@@ -9,8 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 const ConfirmModal = ({
   title,
   confirmMesage,
-  openModal,
-  setOpenConfirm,
+  openConfirmModal,
+  setOpenConfirmModal,
   modalContent,
   onConfirmFunction,
 }) => {
@@ -22,11 +22,11 @@ const ConfirmModal = ({
 
   const handleClose = () => {
     setOpen(false);
-    setOpenConfirm(false);
+    setOpenConfirmModal(false);
   };
 
   useEffect(() => {
-    setOpen(openModal);
+    setOpen(openConfirmModal);
   });
 
   return (
@@ -56,7 +56,7 @@ const ConfirmModal = ({
           color="primary"
           autoFocus
         >
-          {confirmMesage}
+          {confirmMesage ? confirmMesage : "Tamam"}
         </Button>
       </DialogActions>
     </Dialog>

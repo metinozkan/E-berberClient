@@ -30,7 +30,7 @@ const ServicesListModal = ({
   barberId,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClickOpen = () => {
@@ -45,12 +45,12 @@ const ServicesListModal = ({
 
   return (
     <div>
-      {openConfirm && (
+      {openConfirmModal && (
         <ConfirmModal
           title={"Çalışan seçmelisiniz"}
           confirmMesage={"Tamam"}
-          openModal={true}
-          setOpenConfirm={setOpenConfirm}
+          openConfirmModal={true}
+          setOpenConfirmModal={setOpenConfirmModal}
         ></ConfirmModal>
       )}
       <Button
