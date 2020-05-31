@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Agent, Storage, Loading } from "../../Utils/importFiles";
-import { Grid, CardContent } from "@material-ui/core";
+import { Grid, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -91,9 +91,36 @@ function SimpleTable({ services, barberId }) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Hizmetler</TableCell>
-            <TableCell align="right">Süre</TableCell>
-            <TableCell align="right">Ücret</TableCell>
+            <TableCell>
+              <Typography
+                variant="button"
+                display="block"
+                gutterBottom
+                style={{ fontWeight: 400 }}
+              >
+                Hizmetler
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography
+                variant="button"
+                display="block"
+                gutterBottom
+                style={{ fontWeight: 400 }}
+              >
+                Süre{" "}
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography
+                variant="button"
+                display="block"
+                gutterBottom
+                style={{ fontWeight: 400 }}
+              >
+                Ücret{" "}
+              </Typography>
+            </TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
@@ -101,10 +128,20 @@ function SimpleTable({ services, barberId }) {
           {services.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.name}
+                <Typography variant="button" display="block" gutterBottom>
+                  {row.name}
+                </Typography>
               </TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-              <TableCell align="right">{row.price}</TableCell>
+              <TableCell align="right">
+                <Typography variant="body2" color="textSecondary">
+                  {row.time}dk
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="subtitle2" gutterBottom>
+                  {row.price}₺
+                </Typography>
+              </TableCell>
               <TableCell
                 align="right"
                 onClick={() => {
