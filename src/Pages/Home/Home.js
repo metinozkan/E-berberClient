@@ -49,14 +49,12 @@ const Home = (props) => {
       <Grid
         container
         direction="row"
-        justify="flex-start"
+        justify="center"
         alignItems="center"
         style={{
           height: "100%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
           zIndex: "1",
-          width: "100%",
+          width: "100vw",
           position: "relative",
         }}
       >
@@ -71,7 +69,7 @@ const Home = (props) => {
           }}
         ></div>
 
-        <Grid item xs={12} md={6} style={{ zIndex: "1" }}>
+        <Grid item xs={12} md={5} style={{ zIndex: "1" }}>
           <Grid container>
             <Grid
               item
@@ -79,7 +77,6 @@ const Home = (props) => {
               style={{
                 marginBottom: "1em",
                 width: "100%",
-                marginLeft: "8em",
                 padding: ".5em",
                 display: "flex",
                 flexDirection: "column",
@@ -106,7 +103,6 @@ const Home = (props) => {
           <Paper
             style={{
               width: "100%",
-              marginLeft: "8em",
               padding: ".5em",
               display: "flex",
               flexDirection: "column",
@@ -204,6 +200,7 @@ const Home = (props) => {
             </Grid>
           </Paper>
         </Grid>
+        <Grid item xs={12} md={6}></Grid>
       </Grid>
       <Footer />
     </>
