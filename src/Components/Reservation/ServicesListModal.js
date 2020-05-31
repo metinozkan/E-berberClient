@@ -94,14 +94,6 @@ const ServicesListModal = ({
             barberId={barberId}
           ></ServicesList>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Agree
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

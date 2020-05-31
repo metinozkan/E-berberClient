@@ -102,12 +102,12 @@ class MapBoxComp extends React.Component {
   render() {
     return (
       <div style={{ width: "100%", height: "100vh", position: "relative" }}>
-        <div className="sidebarStyle">
+        {/* <div className="sidebarStyle">
           <div>
             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
             {this.state.zoom}
           </div>
-        </div>
+        </div> */}
         <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
       </div>
     );

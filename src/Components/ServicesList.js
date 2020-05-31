@@ -106,7 +106,13 @@ export const ServicesList = ({
   const _getServices = () => {
     Agent.ServiceBarber.getServices(barberId).then((res) => {
       if (res.ok) {
-        setServices(res.body);
+        {
+          if (!res.body.Error) {
+            setServices(res.body.data);
+          } else {
+            console.log("hata", res.body.Message);
+          }
+        }
       }
     });
   };

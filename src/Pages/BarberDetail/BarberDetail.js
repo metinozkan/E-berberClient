@@ -260,7 +260,7 @@ const BarberDetail = () => {
             alignItems: "flex-start",
           }}
         >
-          <Grid
+          {/* <Grid
             item
             xs={12}
             style={{
@@ -273,7 +273,7 @@ const BarberDetail = () => {
               style={{ height: "100%", width: "100%" }}
               src={BerberMahmut}
             ></img>
-          </Grid>
+          </Grid> */}
           <Grid
             item
             xs={12}
