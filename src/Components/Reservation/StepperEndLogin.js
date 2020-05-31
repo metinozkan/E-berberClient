@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { Agent, Loading, Storage } from "../../Utils/importFiles";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import ConfirmModal from "../../Components/ConfirmModal/ConfirmModal";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -38,11 +34,17 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   return (
     <form className={classes.form} noValidate>
-      {isLoading && <Loading></Loading>}
-
+      {isLoading && <Loading></Loading>}{" "}
+      <ConfirmModal
+        openConfirmModal={openConfirmModal}
+        setOpenConfirmModal={setOpenConfirmModal}
+        confirmMesage={"Tamam"}
+        modalContent={modalContent}
+      />
       <TextField
         variant="outlined"
         value={eMail}
@@ -100,6 +102,9 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
                     console.log("login", res.body.data);
                     setCustomerIsLogin({ ...res.body.data, password: "***" });
                   } else {
+                    setOpenConfirmModal(true);
+                    setIsLoading(false);
+                    setModalContent(res.body.Message);
                     console.log("hata", res.body.Message);
                   }
                 }
