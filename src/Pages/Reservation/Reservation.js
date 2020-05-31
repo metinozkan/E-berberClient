@@ -336,7 +336,7 @@ class Reservation extends Component {
           openConfirmModal={this.state.openConfirmModal}
           setOpenConfirmModal={(value) => {
             this.setState({ openConfirmModal: value });
-            history.push("/profile");
+            if (this.state.goProfile) history.push("/profile");
           }}
           confirmMesage={"Tamam"}
           modalContent={this.state.modalContent}
@@ -548,6 +548,7 @@ class Reservation extends Component {
                                     if (res.ok) {
                                       if (!res.body.Error) {
                                         this.setState({
+                                          goProfile: true,
                                           isLoadingForAddAppointment: false,
                                           openConfirmModal: true,
                                           modalContent: (
@@ -579,6 +580,11 @@ class Reservation extends Component {
                                           ),
                                         });
                                       } else {
+                                        this.setState({
+                                          isLoadingForAddAppointment: false,
+                                          openConfirmModal: true,
+                                          modalContent: res.body.Message,
+                                        });
                                         console.log("hata", res.body.Message);
                                       }
                                     } else {
