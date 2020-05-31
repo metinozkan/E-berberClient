@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, Redirect } from "react-router-dom";
-import { Agent, Storage } from "../../Utils/importFiles";
+import { Agent, Storage, Loading } from "../../Utils/importFiles";
 import {
   Avatar,
   Button,
@@ -56,12 +56,14 @@ const SignUp = (props) => {
 
   const [eMail, seteMail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const customer = Storage.GetItem("customer");
   return !customer ? (
     <Container component="main" maxWidth="xs">
       {/* <CssBaseline /> */}
+      {isLoading && <Loading />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -147,6 +149,7 @@ const SignUp = (props) => {
             color="primary"
             className={classes.submit}
             onClick={() => {
+              setIsLoading(true);
               console.log("signUp,", {
                 name: firstName,
                 lastName: lastName,
@@ -165,9 +168,10 @@ const SignUp = (props) => {
                   console.log("rRESS", res);
                   if (res.ok) {
                     if (!res.body.Error) {
+                      setIsLoading(false);
                       console.log("signUp succesfuly");
                       Storage.SetItem("customer", {
-                        id: res.body.data.data.id,
+                        id: res.body.data.id,
                         name: res.body.data.name,
                         lastName: res.body.data.lastName,
                         eMail: res.body.data.eMail,

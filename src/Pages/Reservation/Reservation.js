@@ -82,6 +82,29 @@ class Reservation extends Component {
       isLoadingForAddAppointment: false,
     };
   }
+  monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  dayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   _updateState = (state) => {
     this.setState(state);
@@ -201,13 +224,50 @@ class Reservation extends Component {
     // const numberHour = Number(stringTime[0]);
     // const numberMinute = Number(stringTime[1]);
     // const numberSecond = Number(stringTime[2]);
-    return new Date(
-      Number(2020),
-      Number(mount) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute)
+
+    console.log(
+      "dayyy",
+      this.dayNames[
+        new Date(Number(2020), Number(mount) - 1, Number(day)).getDay()
+      ]
     );
+    const dayName = this.dayNames[
+      new Date(Number(2020), Number(mount) - 1, Number(day)).getDay()
+    ];
+
+    const monthName = this.monthNames[Number(mount) - 1];
+    console.log(
+      "string",
+      JSON.stringify(
+        new Date(
+          Number(2020),
+          Number(mount) - 1,
+          Number(day),
+          Number(hour),
+          Number(minute)
+        )
+      )
+    );
+    console.log(
+      "yeni",
+      new Date(
+        `${dayName} ${monthName} ${Number(day)} 2020 ${Number(hour)}:${Number(
+          minute
+        )}:00 GMT-0000`
+      ).toUTCString()
+    );
+
+    console.log(
+      "eski",
+      new Date("Sunday May 31 2020 18:00:00 GMT-0000").toUTCString()
+    );
+
+    return new Date(
+      `${dayName} ${monthName} ${Number(day)} 2020 ${Number(hour)}:${Number(
+        minute
+      )}:00 GMT-0000`
+    ).toUTCString();
+    //return new Date("Sunday May 31 2020 18:00:00 GMT-0000").toUTCString();
   };
   modifyEndDate = (dateDay, dateHour, serviceTotalDuration) => {
     const stringdateDay = dateDay.split("/");
@@ -233,13 +293,24 @@ class Reservation extends Component {
     // }
     // console.log("asd", day, mount);
 
+    // return new Date(
+    //   2020,
+    //   Number(mount) - 1,
+    //   Number(day),
+    //   Number(hour),
+    //   Number(minute)
+    // );
+    const dayName = this.dayNames[
+      new Date(Number(2020), Number(mount) - 1, Number(day)).getDay()
+    ];
+
+    const monthName = this.monthNames[Number(mount) - 1];
     return new Date(
-      2020,
-      Number(mount) - 1,
-      Number(day),
-      Number(hour),
-      Number(minute)
-    );
+      `${dayName} ${monthName} ${Number(day)} 2020 ${Number(hour)}:${Number(
+        minute
+      )}:00  GMT-0000`
+    ).toUTCString();
+    //return new Date("Sun May 31 2020 18:10:00  GMT-0000").toUTCString();
   };
 
   serviceTimesTotal = (serviceTimes) => {

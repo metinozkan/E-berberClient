@@ -126,12 +126,17 @@ const AppointmentsComp = ({ appointment }) => {
   const _getServicesBarber = () => {
     Agent.ServiceBarber.getServices(appointment.barberId).then((res) => {
       if (res.ok) {
-        const appointmentServices = res.body.filter(
-          (service) => appointment.serviceId.indexOf(service.id) > -1 && service
-        );
-        setServices(appointmentServices);
+        if (!res.body.Error) {
+          const appointmentServices = res.body.data.filter(
+            (service) =>
+              appointment.serviceId.indexOf(service.id) > -1 && service
+          );
+          setServices(appointmentServices);
 
-        _getBarber();
+          _getBarber();
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
@@ -139,8 +144,12 @@ const AppointmentsComp = ({ appointment }) => {
   const _getBarber = () => {
     Agent.Barbers.getBarber(appointment.barberId).then((res) => {
       if (res.ok) {
-        setBarberAddress(res.body.adress);
-        _getStaffsBarber();
+        if (!res.body.Error) {
+          setBarberAddress(res.body.data.adress);
+          _getStaffsBarber();
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
@@ -158,7 +167,7 @@ const AppointmentsComp = ({ appointment }) => {
   const _deleteAppointment = () => {
     Agent.Appointments.deleteAppointments(appointment.id).then((res) => {
       if (res.ok) {
-        console.log(res.body);
+        //console.log(res.body);
       }
     });
   };
@@ -269,16 +278,20 @@ const Profile = ({}) => {
   const [customerPhoneNo, setCustomerPhoneNo] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
-
+  const [updateLoading, setUpdateLoading] = useState(false);
   const _getCustomer = (customerStorageId) => {
     Agent.Customers.getCustomer(customerStorageId).then((res) => {
       if (res.ok) {
-        setCustomer(res.body);
-        setCustomerName(res.body.name);
-        setCustomerLastName(res.body.lastName);
-        setCustomerBirthDate(res.body.saveDate);
-        setCustomereMail(res.body.eMail);
-        setCustomerPhoneNo(res.body.phoneNo);
+        if (!res.body.Error) {
+          setCustomer(res.body.data);
+          setCustomerName(res.body.data.name);
+          setCustomerLastName(res.body.data.lastName);
+          setCustomerBirthDate(res.body.data.saveDate);
+          setCustomereMail(res.body.data.eMail);
+          setCustomerPhoneNo(res.body.data.phoneNo);
+        } else {
+          console.log("hata", res.body.Message);
+        }
       }
     });
   };
@@ -287,20 +300,29 @@ const Profile = ({}) => {
     Agent.Appointments.getCustomerAppointments(customerStorageId).then(
       (res) => {
         if (res.ok) {
-          console.log("off randevu", res.body);
-          setCustomerAppointments(res.body);
-          setIsLoading(false);
+          if (!res.body.Error) {
+            setCustomerAppointments(res.body.data);
+            setIsLoading(false);
+          } else {
+            console.log("hata", res.body.Message);
+          }
         }
       }
     );
   };
 
   const _updateCustomer = (customerObject) => {
+    setUpdateLoading(true);
     Agent.Customers.updateCustomer(customerStorage.id)
-      .send(customerObject)
+      .send({ ...customerObject, password: customer.password })
       .then((res) => {
+        setUpdateLoading(false);
         if (res.ok) {
-          setCustomer(res.body);
+          if (!res.body.Error) {
+            setCustomer(res.body.data);
+          } else {
+            console.log("hata", res.body.Message);
+          }
         }
       });
   };
@@ -401,6 +423,7 @@ const Profile = ({}) => {
                   <Typography variant="h6" gutterBottom>
                     Profili Düzenle
                   </Typography>
+                  {updateLoading && <Loading />}
                   <form
                     className={classes.root}
                     noValidate

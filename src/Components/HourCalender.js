@@ -81,7 +81,7 @@ class HourCalender extends Component {
     var diffFriday =
       date.getDate() - date.getDay() + (date.getDay() === 0 ? -2 : 5);
     var diffSaturday =
-      date.getDate() - date.getDay() + (date.getDay() === 0 ? -2 : 6);
+      date.getDate() - date.getDay() + (date.getDay() === 0 ? -1 : 6);
     var diffSunday =
       date.getDate() - date.getDay() + (date.getDay() === 0 ? 0 : 7);
 
