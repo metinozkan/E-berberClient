@@ -66,17 +66,47 @@ const Home = (props) => {
             width: "100%",
             height: "100%",
             backgroundImage: `url(${Background} )`,
-            opacity: "0.4",
+            opacity: "0.7",
             zIndex: "-1",
           }}
         ></div>
 
         <Grid item xs={12} md={6} style={{ zIndex: "1" }}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              style={{
+                marginBottom: "1em",
+                width: "100%",
+                marginLeft: "8em",
+                padding: ".5em",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+              }}
+            >
+              <Typography
+                variant="h2"
+                component="h3"
+                style={{ marginBottom: ".3em", color: "white" }}
+              >
+                Aradığın Hizmet Burada
+              </Typography>
+              <Typography
+                variant="h5"
+                component="h3"
+                style={{ marginBottom: ".3em", color: "white" }}
+              >
+                Sade - Kolay -Hızlı randevu
+              </Typography>
+            </Grid>
+          </Grid>
           <Paper
             style={{
-              width: "80%",
+              width: "100%",
               marginLeft: "8em",
-              opacity: "0.8",
               padding: ".5em",
               display: "flex",
               flexDirection: "column",
@@ -84,20 +114,6 @@ const Home = (props) => {
               alignItems: "center",
             }}
           >
-            <Grid container>
-              <Grid item xs={12} style={{ marginBottom: "1em" }}>
-                <Typography
-                  variant="h2"
-                  component="h3"
-                  style={{ marginBottom: ".3em" }}
-                >
-                  Aradığın Hizmet Burada
-                </Typography>
-                <Typography variant="h5" component="h3">
-                  Sade - Kolay -Hızlı randevu
-                </Typography>
-              </Grid>
-            </Grid>
             <Grid
               item
               xs={12}
@@ -175,16 +191,21 @@ const Home = (props) => {
                 > */}
               <Link
                 to={`/barbers?district=${district}`}
-                style={{ color: "black" }}
+                style={{
+                  color: "black",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
                 <Search size={25} />
               </Link>
-              {/* </IconButton> */}
             </Grid>
           </Paper>
         </Grid>
       </Grid>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
