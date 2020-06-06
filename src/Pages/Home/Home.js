@@ -90,7 +90,7 @@ const Home = (props) => {
                 component="h3"
                 style={{ marginBottom: ".3em", color: "white" }}
               >
-                Aradığın Hizmet Burada
+                Eberber
               </Typography>
               <Typography
                 variant="h5"

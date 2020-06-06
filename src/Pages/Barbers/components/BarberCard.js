@@ -54,83 +54,85 @@ export const BarberCard = ({ barber }) => {
   const imageMahmut = "";
   return (
     <div className={classes.root}>
-      <Paper
-        className={classes.paper}
-        onMouseOver={onMouseOver}
-        onMouseOut={onMouseOut}
-        elevation={shadow}
-        onClick={() => {
-          history.push(`/barberdetail/${barber.id}`);
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={barber.photo} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm={11} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs style={{}}>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  style={{ marginBottom: "1em" }}
-                >
-                  {barber.barberName}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {barber.district}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <LocationOnSharp color="gray " fontSize="small" />
-                  {barber.adress}
-                </Typography>
-              </Grid>
-              <Grid item style={{ textAlign: "right" }}>
-                {/* <Button size="small" color="secondary">
+      <Link to={`/barberdetail/${barber.id}`}>
+        <Paper
+          className={classes.paper}
+          onMouseOver={onMouseOver}
+          onMouseOut={onMouseOut}
+          elevation={shadow}
+          onClick={() => {
+            // history.push(`/barberdetail/${barber.id}`);
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item>
+              <ButtonBase className={classes.image}>
+                <img className={classes.img} alt="complex" src={barber.photo} />
+              </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm={11} sm container>
+              <Grid item xs container direction="column" spacing={2}>
+                <Grid item xs style={{}}>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    style={{ marginBottom: "1em" }}
+                  >
+                    {barber.barberName}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {barber.district}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <LocationOnSharp color="gray " fontSize="small" />
+                    {barber.adress}
+                  </Typography>
+                </Grid>
+                <Grid item style={{ textAlign: "right" }}>
+                  {/* <Button size="small" color="secondary">
                   İncele
                 </Button> */}
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="contained"
-                  onClick={() => {
-                    //  Router.push("/barberdetail");
-                  }}
-                  style={{ marginRight: ".5em" }}
-                >
-                  <Link
-                    to={`/barberdetail/${barber.id}`}
-                    style={{ color: "white" }}
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      //  Router.push("/barberdetail");
+                    }}
+                    style={{ marginRight: ".5em" }}
                   >
-                    Randevu Al
-                  </Link>
-                </Button>
-                <IconButton
-                  aria-label="delete"
-                  className={classes.margin}
-                  size="small"
-                >
-                  <LocationOnSharp />
-                </IconButton>
+                    <Link
+                      to={`/barberdetail/${barber.id}`}
+                      style={{ color: "white" }}
+                    >
+                      Randevu Al
+                    </Link>
+                  </Button>
+                  <IconButton
+                    aria-label="delete"
+                    className={classes.margin}
+                    size="small"
+                  >
+                    <LocationOnSharp />
+                  </IconButton>
+                </Grid>
               </Grid>
-            </Grid>
-            {/* <Grid item>
+              {/* <Grid item>
                 <Typography variant="subtitle1">$19.00</Typography>
               </Grid> */}
+            </Grid>
           </Grid>
-        </Grid>
-      </Paper>
+        </Paper>
+      </Link>
     </div>
   );
 };
