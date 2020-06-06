@@ -54,7 +54,7 @@ const Home = (props) => {
         style={{
           height: "100%",
           zIndex: "1",
-          width: "100vw",
+          width: "100%",
           position: "relative",
         }}
       >
@@ -64,8 +64,9 @@ const Home = (props) => {
             width: "100%",
             height: "100%",
             backgroundImage: `url(${Background} )`,
-            opacity: "0.7",
+            opacity: "0.8",
             zIndex: "-1",
+            overflow: "hidden",
           }}
         ></div>
 
