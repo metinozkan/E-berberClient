@@ -193,15 +193,7 @@ const ClocksTable = ({ workHours }) => {
     ["Pazartesi", "08:00-24:00"],
     ["Salı", "08:00-22:00"],
   ];
-  const days = [
-    { name: "Pazartesi", time: "08:00-24:00" },
-    { name: "Salı", time: "08:50-21:00" },
-    { name: "Çarşamba", time: "08:00-24:00" },
-    { name: "Perşembe", time: "08:50-21:00" },
-    { name: "Cuma", time: "08:00-24:00" },
-    { name: "Cumartesi", time: "08:50-21:00" },
-    { name: "Pazar", time: "08:50-21:00" },
-  ];
+
   return (
     <div style={{ width: "100%", overflow: "auto" }}>
       <Table aria-label="simple table">
@@ -234,7 +226,7 @@ const BerberMahmut = "";
 const Gmap = "";
 const BarberDetail = () => {
   const [services, setServices] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [workHours, setWorkHours] = useState(false);
   const [barber, setBarber] = useState(false);
 
@@ -278,8 +270,36 @@ const BarberDetail = () => {
   };
 
   useEffect(() => {
-    _getBarberService();
-    _getBarber();
+    // _getBarberService();
+    // _getBarber();
+
+    const barbers = {
+      id: 1,
+      barberName: "Serdivan Kuafaör",
+      district: "Serdivan",
+      adress: "İstiklal mahallesi",
+    };
+
+    const services = [
+      {
+        id: 1,
+        name: "Saç",
+        price: "15",
+        time: "10",
+      },
+    ];
+    const days = [
+      { id: 1, day: "Pazartesi", startHour: "08:00", endHour: "24:00" },
+      { id: 2, day: "Salı", startHour: "08:00", endHour: "24:00" },
+      { id: 3, day: "Çarşamba", startHour: "08:00", endHour: "24:00" },
+      { id: 4, day: "Perşembe", startHour: "08:00", endHour: "24:00" },
+      { id: 5, day: "Cuma", startHour: "08:00", endHour: "24:00" },
+      { id: 6, day: "Cumartesi", startHour: "08:00", endHour: "24:00" },
+      { id: 7, day: "Pazar", startHour: "08:00", endHour: "24:00" },
+    ];
+    setBarber(barbers);
+    setServices(services);
+    setWorkHours(days);
   }, []);
   return (
     <Grid

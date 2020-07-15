@@ -11,7 +11,7 @@ import { Typography, Grid } from "@material-ui/core";
 
 const Barbers = (props) => {
   const [barbers, setBarbers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const _getBarbers = () => {
     const splitUrl = props.location.search.split("=");
@@ -51,7 +51,16 @@ const Barbers = (props) => {
   };
 
   useEffect(() => {
-    _getBarbers();
+    //  _getBarbers();
+    const barbers = [
+      {
+        id: 1,
+        barberName: "Serdivan Kuafaör",
+        district: "Serdivan",
+        adress: "İstiklal mahallesi",
+      },
+    ];
+    setBarbers(barbers);
   }, []);
   // console.log("query", props.location.search);
   return (

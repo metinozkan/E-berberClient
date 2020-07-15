@@ -172,7 +172,7 @@ class Reservation extends Component {
             selectedPersonnel: res.body[0],
           });
           //simdiki id 4
-          this._getStaffFreeHours(res.body[0].id);
+          //  this._getStaffFreeHours(res.body[0].id);
         }
       }
     );
@@ -194,12 +194,31 @@ class Reservation extends Component {
   };
 
   componentDidMount() {
-    this._getPersonnel();
+    //    this._getPersonnel();
+    const personnels = [
+      { id: 1, staffName: "Ahmet" },
+      { id: 2, staffName: "Mehmet" },
+    ];
+    const staffFree = {
+      Monday: ["20.00", "22:00"],
+      Tuesday: ["20.00", "22:00"],
+      Wednesday: ["20.00", "22:00"],
+      Thursday: ["20.00", "22:00"],
+      Friday: ["20.00", "22:00"],
+      Saturday: ["20.00", "22:00"],
+      Sunday: ["20.00", "22:00"],
+    };
+    this.setState({
+      personnels: personnels,
+      selectedPersonnel: personnels[0],
+      staffFreeHoursWeekly: staffFree,
+      isLoading: false,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedPersonnel !== this.state.selectedPersonnel) {
-      this._getStaffFreeHours(this.state.selectedPersonnel.id);
+      // this._getStaffFreeHours(this.state.selectedPersonnel.id);
     }
   }
 
@@ -516,91 +535,91 @@ class Reservation extends Component {
                             <Button
                               color="primary"
                               variant="contained"
-                              onClick={() => {
-                                const appointmentObject = {
-                                  barberId: Number(
-                                    this.props.match.params.barberId
-                                  ),
-                                  customerId: customerId,
-                                  appointmentDate: this.modifyStartDate(
-                                    this.state.selectedDate.day,
-                                    this.state.selectedDate.hour
-                                  ),
-                                  appointmentEndDate: this.modifyEndDate(
-                                    this.state.selectedDate.day,
-                                    this.state.selectedDate.hour,
-                                    this.serviceTimesTotal(
-                                      this.state.selectedServices.map(
-                                        (service) => service.time
-                                      )
-                                    )
-                                  ),
-                                  serviceId: this.state.selectedServices.map(
-                                    (service) => service.id
-                                  ),
-                                  // staffId: this.state.selectedPersonnel.id,
-                                  staffId: this.state.selectedPersonnel.id,
-                                };
+                              // onClick={() => {
+                              //   const appointmentObject = {
+                              //     barberId: Number(
+                              //       this.props.match.params.barberId
+                              //     ),
+                              //     customerId: customerId,
+                              //     appointmentDate: this.modifyStartDate(
+                              //       this.state.selectedDate.day,
+                              //       this.state.selectedDate.hour
+                              //     ),
+                              //     appointmentEndDate: this.modifyEndDate(
+                              //       this.state.selectedDate.day,
+                              //       this.state.selectedDate.hour,
+                              //       this.serviceTimesTotal(
+                              //         this.state.selectedServices.map(
+                              //           (service) => service.time
+                              //         )
+                              //       )
+                              //     ),
+                              //     serviceId: this.state.selectedServices.map(
+                              //       (service) => service.id
+                              //     ),
+                              //     // staffId: this.state.selectedPersonnel.id,
+                              //     staffId: this.state.selectedPersonnel.id,
+                              //   };
 
-                                this.setState({
-                                  isLoadingForAddAppointment: true,
-                                });
-                                console.log(
-                                  "giden appo objesi",
-                                  appointmentObject
-                                );
-                                Agent.Appointments.addAppointments()
-                                  .send(appointmentObject)
-                                  .then((res) => {
-                                    if (res.ok) {
-                                      if (!res.body.Error) {
-                                        this.setState({
-                                          goProfile: true,
-                                          isLoadingForAddAppointment: false,
-                                          openConfirmModal: true,
-                                          modalContent: (
-                                            <div
-                                              style={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                              }}
-                                            >
-                                              Randevunuz Başarılı bir şekilde
-                                              alındı.
-                                              <span>
-                                                {
-                                                  res.body.data.appointmentDate.split(
-                                                    "T"
-                                                  )[0]
-                                                }
-                                              </span>
-                                              <span>
-                                                {
-                                                  res.body.data.appointmentDate
-                                                    .split("T")[1]
-                                                    .split(".")[0]
-                                                }
-                                              </span>
-                                            </div>
-                                          ),
-                                        });
-                                      } else {
-                                        this.setState({
-                                          isLoadingForAddAppointment: false,
-                                          openConfirmModal: true,
-                                          modalContent: res.body.Message,
-                                        });
-                                        console.log("hata", res.body.Message);
-                                      }
-                                    } else {
-                                      this.setState({
-                                        isLoadingForAddAppointment: false,
-                                      });
-                                    }
-                                  });
-                              }}
+                              //   this.setState({
+                              //     isLoadingForAddAppointment: true,
+                              //   });
+                              //   console.log(
+                              //     "giden appo objesi",
+                              //     appointmentObject
+                              //   );
+                              //   Agent.Appointments.addAppointments()
+                              //     .send(appointmentObject)
+                              //     .then((res) => {
+                              //       if (res.ok) {
+                              //         if (!res.body.Error) {
+                              //           this.setState({
+                              //             goProfile: true,
+                              //             isLoadingForAddAppointment: false,
+                              //             openConfirmModal: true,
+                              //             modalContent: (
+                              //               <div
+                              //                 style={{
+                              //                   display: "flex",
+                              //                   flexDirection: "column",
+                              //                   justifyContent: "center",
+                              //                   alignItems: "center",
+                              //                 }}
+                              //               >
+                              //                 Randevunuz Başarılı bir şekilde
+                              //                 alındı.
+                              //                 <span>
+                              //                   {
+                              //                     res.body.data.appointmentDate.split(
+                              //                       "T"
+                              //                     )[0]
+                              //                   }
+                              //                 </span>
+                              //                 <span>
+                              //                   {
+                              //                     res.body.data.appointmentDate
+                              //                       .split("T")[1]
+                              //                       .split(".")[0]
+                              //                   }
+                              //                 </span>
+                              //               </div>
+                              //             ),
+                              //           });
+                              //         } else {
+                              //           this.setState({
+                              //             isLoadingForAddAppointment: false,
+                              //             openConfirmModal: true,
+                              //             modalContent: res.body.Message,
+                              //           });
+                              //           console.log("hata", res.body.Message);
+                              //         }
+                              //       } else {
+                              //         this.setState({
+                              //           isLoadingForAddAppointment: false,
+                              //         });
+                              //       }
+                              //     });
+                              // }}
                             >
                               Randevuyu Al
                             </Button>

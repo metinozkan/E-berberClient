@@ -117,7 +117,7 @@ export const ServicesList = ({
     });
   };
   useEffect(() => {
-    _getServices();
+    //  _getServices();
   }, [barberId]);
   return (
     <TableContainer component={Paper} variant="outlined">
