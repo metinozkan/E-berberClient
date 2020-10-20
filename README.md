@@ -5,13 +5,13 @@ _Made with MaterialUi_
 ## Screenshots
 
 <div align="left" style="margin-bottom:1em">
-    <img src="./screenshots/screenshot1.jpg" width="auto" height="300"/>
-    <img src="./screenshots/screenshot2.png" width="auto" height="300"/>
-    <img src="./screenshots/screenshot3.png" width="auto" height="300"/>
-    <img src="./screenshots/screenshot4.png" width="auto" height="300"/>
-    <img src="./screenshots/screenshot5.png" width="auto" height="300"/>
-    <img src="./screenshots/screenshot6.png" width="auto" height="300"/>
-    <img src="./screenshots/screenshot7.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot1.jpg" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot2.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot3.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot4.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot5.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot6.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot7.png" width="auto" height="300"/>
 </div>
 
 ## Installation :arrow_down:
@@ -35,8 +35,7 @@ $ npm install
 
 ### Start
 
+```shell
 $ npm start
 ```
-
----
 
