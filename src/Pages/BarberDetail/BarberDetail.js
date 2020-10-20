@@ -265,7 +265,7 @@ const BarberDetail = () => {
 
     const barbers = {
       id: 1,
-      barberName: "Serdivan Kuafaör",
+      barberName: "Serdivan Kuaför",
       district: "Serdivan",
       adress: "İstiklal mahallesi",
     };

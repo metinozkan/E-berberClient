@@ -55,14 +55,14 @@ const Barbers = (props) => {
     const barbers = [
       {
         id: 1,
-        barberName: "Serdivan Kuafaör",
+        barberName: "Serdivan Kuaför",
         district: "İstiklal mahallesi",
         adress: "381.sokak 21/2 no:310",
         photo: kuafor,
       },
       {
         id: 2,
-        barberName: "Bayan kuaför",
+        barberName: "Bayan Kuaför",
         district: "Esentepe mahallesi",
         adress: "381.sokak 21/2 no:310",
         photo: kadınkuafor,
