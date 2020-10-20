@@ -125,12 +125,6 @@ const StepperEndSign = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
         color="primary"
         className={classes.submit}
         onClick={() => {
-          console.log("add customer", {
-            name: firstName,
-            lastName: lastName,
-            eMail: eMail,
-            password: password,
-          });
           setIsLoading(true);
           Agent.Customers.addCustomer()
             .send({
@@ -143,7 +137,6 @@ const StepperEndSign = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
               if (res.ok) {
                 if (!res.body.Error) {
                   setIsLoading(false);
-                  console.log("signUp succesfuly");
                   Storage.SetItem("customer", {
                     id: res.body.data.id,
                     name: res.body.data.name,
@@ -155,7 +148,6 @@ const StepperEndSign = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
                   setOpenConfirmModal(true);
                   setIsLoading(false);
                   setModalContent(res.body.Message);
-                  console.log("hata", res.body.Message);
                 }
               }
             });

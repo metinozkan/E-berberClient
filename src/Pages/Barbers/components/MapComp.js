@@ -75,7 +75,6 @@ const MapComp = () => {
             style={{ cursor: "pointer" }}
             onClick={() => {
               _goToNYC({ newLongitude: 30.332368, newLatitude: 40.7417935 });
-              console.log("click");
             }}
           />
         </Marker>

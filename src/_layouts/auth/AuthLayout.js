@@ -14,7 +14,6 @@ const Header = styled.div`
 `;
 
 export default function AuthLayout({ children }) {
-  console.log(children);
   return (
     <>
       <Header />
@@ -23,5 +22,5 @@ export default function AuthLayout({ children }) {
   );
 }
 AuthLayout.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
 };

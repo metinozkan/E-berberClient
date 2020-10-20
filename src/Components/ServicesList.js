@@ -118,6 +118,22 @@ export const ServicesList = ({
   };
   useEffect(() => {
     //  _getServices();
+
+    const services = [
+      {
+        id: 1,
+        name: "Ağda",
+        price: "35",
+        time: "30",
+      },
+      {
+        id: 2,
+        name: "Ense",
+        price: "15",
+        time: "10",
+      },
+    ];
+    setServices(services);
   }, [barberId]);
   return (
     <TableContainer component={Paper} variant="outlined">

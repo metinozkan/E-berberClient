@@ -223,64 +223,20 @@ class Reservation extends Component {
   }
 
   modifyStartDate = (dateDay, dateHour) => {
-    console.log("gelen date", dateDay, dateHour);
     const stringdateDay = dateDay.split("/");
     const day = stringdateDay[0];
-    // const mountWithDay = stringdateDay[1].split(" ");
-    // const mount = mountWithDay[0];
+
     const mount = stringdateDay[1];
 
     const stringDateHour = dateHour.split(":");
     const hour = stringDateHour[0];
     const minute = stringDateHour[1];
-    // const stringYear = year.split("-");
-    // const stringTimes = time.split(".");
-    // const stringTime = stringTimes[0].split(":");
 
-    // const numberYear = Number(stringYear[0]);
-    // const numberMonth = Number(stringYear[1] - 1);
-    // const numberDay = Number(stringYear[2]);
-
-    // const numberHour = Number(stringTime[0]);
-    // const numberMinute = Number(stringTime[1]);
-    // const numberSecond = Number(stringTime[2]);
-
-    console.log(
-      "dayyy",
-      this.dayNames[
-        new Date(Number(2020), Number(mount) - 1, Number(day)).getDay()
-      ]
-    );
     const dayName = this.dayNames[
       new Date(Number(2020), Number(mount) - 1, Number(day)).getDay()
     ];
 
     const monthName = this.monthNames[Number(mount) - 1];
-    console.log(
-      "string",
-      JSON.stringify(
-        new Date(
-          Number(2020),
-          Number(mount) - 1,
-          Number(day),
-          Number(hour),
-          Number(minute)
-        )
-      )
-    );
-    console.log(
-      "yeni",
-      new Date(
-        `${dayName} ${monthName} ${Number(day)} 2020 ${Number(hour)}:${Number(
-          minute
-        )}:00 GMT-0000`
-      ).toUTCString()
-    );
-
-    console.log(
-      "eski",
-      new Date("Sunday May 31 2020 18:00:00 GMT-0000").toUTCString()
-    );
 
     return new Date(
       `${dayName} ${monthName} ${Number(day)} 2020 ${Number(hour)}:${Number(

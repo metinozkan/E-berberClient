@@ -159,12 +159,6 @@ const SignUp = (props) => {
             className={classes.submit}
             onClick={() => {
               setIsLoading(true);
-              console.log("signUp,", {
-                name: firstName,
-                lastName: lastName,
-                eMail: eMail,
-                password: password,
-              });
 
               Agent.Customers.addCustomer()
                 .send({
@@ -174,11 +168,9 @@ const SignUp = (props) => {
                   password: password,
                 })
                 .then((res) => {
-                  console.log("rRESS", res);
                   if (res.ok) {
                     if (!res.body.Error) {
                       setIsLoading(false);
-                      console.log("signUp succesfuly");
                       Storage.SetItem("customer", {
                         id: res.body.data.id,
                         name: res.body.data.name,

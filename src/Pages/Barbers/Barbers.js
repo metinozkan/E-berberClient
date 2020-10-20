@@ -5,26 +5,27 @@ import { SearchInput } from "./components/SearchInput";
 import { BarberCard } from "./components/BarberCard";
 import MapComp from "./components/MapComp";
 import MapBoxComp from "./components/MapBoxComp";
+
+import kuafor from "../../Resources/Images/kuafor.jpg";
+import kadınkuafor from "../../Resources/Images/bayankuafor.jpg";
+
 import { Typography, Grid } from "@material-ui/core";
 
 //import imageMahmut from "../../public/mahmut.jpg";
 
 const Barbers = (props) => {
   const [barbers, setBarbers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isEmpty, setIsEmpty] = useState(false);
   const _getBarbers = () => {
     const splitUrl = props.location.search.split("=");
-    console.log("split", splitUrl);
     const queryDistrict = splitUrl[1];
-    console.log("queryDistrict", queryDistrict);
     if (queryDistrict) {
       Agent.Barbers.getFilterByDistrict()
         .send({ district: queryDistrict })
         .then((res) => {
           if (res.ok) {
             if (!res.body.Error) {
-              console.log("geldii", res.body.data);
               setBarbers(res.body.data);
               setLoading(false);
               if (!res.body.data.length == 0) {
@@ -38,7 +39,6 @@ const Barbers = (props) => {
     } else {
       Agent.Barbers.getBarbers().then((res) => {
         if (res.ok) {
-          console.log("reds", res);
           if (!res.body.Error) {
             setBarbers(res.body.data);
             setLoading(false);
@@ -56,18 +56,26 @@ const Barbers = (props) => {
       {
         id: 1,
         barberName: "Serdivan Kuafaör",
-        district: "Serdivan",
-        adress: "İstiklal mahallesi",
+        district: "İstiklal mahallesi",
+        adress: "381.sokak 21/2 no:310",
+        photo: kuafor,
+      },
+      {
+        id: 2,
+        barberName: "Bayan kuaför",
+        district: "Esentepe mahallesi",
+        adress: "381.sokak 21/2 no:310",
+        photo: kadınkuafor,
       },
     ];
     setBarbers(barbers);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
   }, []);
-  // console.log("query", props.location.search);
   return (
     <Grid container direction="row" justify="center" alignItems="center">
-      {/* <Grid item xs={12} sm={8} style={{ padding: "1em 0px" }}>
-        <SearchInput />
-      </Grid> */}
       {!loading ? (
         <Grid
           container

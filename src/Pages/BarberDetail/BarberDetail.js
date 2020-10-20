@@ -66,22 +66,13 @@ const sample = [
       Seç
     </Button>,
   ],
-  // ["Cupcake", 305, 3.7, 67, 4.3],
-  // ["Gingerbread", 356, 16.0, 49, 3.9]
-]; // const rows = [];
+];
 const rows = [];
 
 for (let i = 0; i < sample.length; i += 1) {
   const randomSelection = sample[i];
   rows.push(createData(i, ...randomSelection));
 }
-// const rows = [
-//   createData("Frozen yoghurt", 159, 6.0, 24, <button>slm</button>),
-//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-//   createData("Eclair", 262, 16.0, 24, 6.0),
-//   createData("Cupcake", 305, 3.7, 67, 4.3),
-//   createData("Gingerbread", 356, 16.0, 49, 3.9)
-// ];
 
 function SimpleTable({ services, barberId }) {
   const classes = useStyles();
@@ -145,7 +136,6 @@ function SimpleTable({ services, barberId }) {
               <TableCell
                 align="right"
                 onClick={() => {
-                  console.log(row.name, row.id);
                   //updateState({ selectedService: row.id });
                 }}
               >
@@ -284,8 +274,14 @@ const BarberDetail = () => {
       {
         id: 1,
         name: "Saç",
+        price: "35",
+        time: "30",
+      },
+      {
+        id: 2,
+        name: "Sakal",
         price: "15",
-        time: "10",
+        time: "15",
       },
     ];
     const days = [

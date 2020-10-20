@@ -99,7 +99,6 @@ const StepperEndLogin = ({ setStepperLoginOrSignUp, setCustomerIsLogin }) => {
                       ...res.body.data,
                       password: "****",
                     });
-                    console.log("login", res.body.data);
                     setCustomerIsLogin({ ...res.body.data, password: "***" });
                   } else {
                     setOpenConfirmModal(true);

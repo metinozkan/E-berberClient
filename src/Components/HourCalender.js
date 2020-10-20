@@ -414,27 +414,6 @@ class HourCalender extends Component {
                   <div
                     style={{ padding: ".5em", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(
-                        "yıl:",
-                        2020,
-                        "ay:",
-                        this.state.getMonth,
-                        "gün:",
-                        this.state.getDaysArray[4],
-                        "saat:",
-                        h
-                      );
-                      console.log(
-                        JSON.stringify(
-                          new Date(
-                            2020,
-                            this.state.getMonth,
-                            this.state.getDaysArray[4],
-                            h.split(":")[0],
-                            h.split(":")[1]
-                          )
-                        )
-                      );
                       this.props.updateState({
                         selectedDate: {
                           day:

@@ -122,35 +122,6 @@ const Home = (props) => {
                 width: "100%",
               }}
             >
-              {/* <Grid item xs={6}>
-                <TextField
-                  className={classes.margin}
-                  id="input-with-icon-textfield"
-                  label="Dükkan ara"
-                  style={{ flex: 1 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <StoreMallDirectory />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid> */}
-
-              {/* <TextField
-                  className={classes.margin}
-                  id="input-with-icon-textfield"
-                  label="İlçeye Göre Ara"
-                  style={{ flex: 1 }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Navigation />
-                      </InputAdornment>
-                    ),
-                  }}
-                /> */}
               <Autocomplete
                 //freeSolo
                 fullWidth
@@ -203,7 +174,7 @@ const Home = (props) => {
         </Grid>
         <Grid item xs={12} md={6}></Grid>
       </Grid>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
