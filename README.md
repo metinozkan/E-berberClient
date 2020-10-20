@@ -1,17 +1,17 @@
-## Eberber :scissors: :convenience_store: 
+## Eberber :scissors: :convenience_store:
 
 _Made with MaterialUi_
 
 ## Screenshots
 
 <div align="left" style="margin-bottom:1em">
-    <img src="./src/screenshots/screenshot1.jpg" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot2.png" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot3.png" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot4.png" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot5.png" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot6.png" width="auto" height="300"/>
-    <img src="./src/screenshots/screenshot7.png" width="auto" height="300"/>
+    <img src="./src/screenshots/screenshot1.jpg" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot2.png" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot3.png" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot4.png" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot5.png" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot6.png" width="auto" height="200"/>
+    <img src="./src/screenshots/screenshot7.png" width="auto" height="200"/>
 </div>
 
 ## Installation :arrow_down:
@@ -38,4 +38,3 @@ $ npm install
 ```shell
 $ npm start
 ```
-
